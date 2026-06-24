@@ -12,7 +12,7 @@ const imgs = ['/images/exp-forest.jpg', '/images/exp-dunes.jpg', '/images/exp-se
     <div class="eg">
       {t.experiences.items.map((item: any, i: number) => (
         <div class="ec" style="display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(24px);">
-          <div style="position:relative;aspect-ratio:3/4;overflow:hidden;flex-shrink:0;">
+          <div style="position:relative;aspect-ratio:3/4;overflow:hidden;flex-shrink:0;border-radius:16px;">
             <img src={imgs[i]} alt={item.title} loading="lazy" class="ei"
               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(0.85) contrast(1.02);transition:transform 0.8s cubic-bezier(0.16,1,0.3,1);" />
             <div style="position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(to top,rgba(13,17,23,0.72) 0%,transparent 100%);" aria-hidden="true"></div>

@@ -5,23 +5,40 @@ const eimgs = ['/images/build-june-2025.jpg', '/images/build-march-2025.jpg', '/
 ---
 <section id="build" style="background:var(--color-linen);padding:8rem clamp(1.5rem,4vw,4rem);border-top:1px solid var(--color-border);">
   <div style="max-width:1400px;margin:0 auto;">
+
+    <!-- Section header -->
     <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.5rem;">{t.journey.label}</p>
     <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-midnight);max-width:38rem;margin-bottom:6rem;">{t.journey.heading}</h2>
 
+    <!-- Timeline -->
     <div id="timeline" style="position:relative;padding-left:3rem;display:flex;flex-direction:column;gap:6rem;">
-      <div aria-hidden="true" style="position:absolute;left:0;top:0.5rem;bottom:0;width:1px;background:var(--color-border);"></div>
+      <!-- Vertical rule -->
+      <div aria-hidden="true" id="timeline-rule" style="position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--color-border);transform-origin:top;transform:scaleY(0);"></div>
+
       {t.journey.entries.map((e: any, i: number) => (
-        <div class="te" style="position:relative;opacity:0;transform:translateY(-16px);">
-          <div aria-hidden="true" style="position:absolute;left:-3.375rem;top:0.25rem;width:0.5rem;height:0.5rem;border-radius:50%;background:var(--color-copper);"></div>
+        <div class="te" style="position:relative;opacity:0;transform:translateY(20px);">
+          <!-- Dot -->
+          <div aria-hidden="true" class="te-dot" style="position:absolute;left:-3.375rem;top:0.25rem;width:0.5rem;height:0.5rem;border-radius:50%;background:var(--color-copper);transform:scale(0);"></div>
+
+          <!-- Date -->
           <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1rem;">{e.date}</p>
+
           <div class="teg">
+            <!-- Text -->
             <div>
               <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.4rem,2.5vw,2rem);line-height:1.2;color:var(--color-midnight);margin-bottom:1rem;">{e.title}</h3>
               <p style="font-family:var(--font-body);font-size:15px;line-height:1.75;color:var(--color-forest);">{e.body}</p>
             </div>
-            <div style="overflow:hidden;aspect-ratio:16/9;">
-              <img src={eimgs[i]} alt={e.imageAlt} loading="lazy"
-                style="width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(0.7);" />
+
+            <!-- Image with clip-path reveal wrapper -->
+            <div class="te-img-wrap" style="overflow:hidden;aspect-ratio:16/9;border-radius:16px;">
+              <img
+                src={eimgs[i]}
+                alt={e.imageAlt}
+                loading="lazy"
+                class="te-img"
+                style="width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(0.75);transform:scale(1.08);transform-origin:center;"
+              />
             </div>
           </div>
         </div>
@@ -37,18 +54,72 @@ const eimgs = ['/images/build-june-2025.jpg', '/images/build-march-2025.jpg', '/
 </section>
 
 <style>
-  .teg{display:grid;grid-template-columns:1fr;gap:2rem;}
-  @media(min-width:768px){.teg{grid-template-columns:1fr 1fr;gap:3rem;}}
-  .jc:hover .arr{transform:translateX(5px);}
+  .teg { display:grid;grid-template-columns:1fr;gap:2rem; }
+  @media(min-width:768px) { .teg { grid-template-columns:1fr 1fr;gap:3rem; } }
+
+  /* Image clip reveal: starts clipped from bottom, opens upward */
+  .te-img-wrap { clip-path: inset(100% 0 0 0 round 16px); }
 </style>
 
 <script>
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   const init = () => {
-    const g = (window as any).gsap, ST = (window as any).ScrollTrigger
+    const g  = (window as any).gsap
+    const ST = (window as any).ScrollTrigger
     if (!g || !ST) { setTimeout(init, 50); return }
-    if (!rm) { document.querySelectorAll('.te').forEach(e => { g.to(e, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: e, start: 'top 82%' } }) }) }
-    else { document.querySelectorAll('.te').forEach((e: any) => { e.style.opacity = '1'; e.style.transform = 'none' }) }
+
+    if (rm) {
+      // Instant show — no animation
+      document.querySelectorAll('.te').forEach((e: any) => { e.style.opacity = '1'; e.style.transform = 'none' })
+      document.querySelectorAll('.te-img-wrap').forEach((e: any) => e.style.clipPath = 'inset(0% 0 0 0 round 16px)')
+      document.querySelectorAll('.te-dot').forEach((e: any) => e.style.transform = 'scale(1)')
+      const rule = document.getElementById('timeline-rule')
+      if (rule) rule.style.transform = 'scaleY(1)'
+      return
+    }
+
+    // 1 — Draw the vertical rule on scroll entry
+    g.to('#timeline-rule', {
+      scaleY: 1,
+      duration: 1.2,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: '#timeline', start: 'top 80%' },
+    })
+
+    // 2 — Per-entry: text slide-up + dot pop + image clip reveal
+    document.querySelectorAll('.te').forEach((entry) => {
+      const dot     = entry.querySelector<HTMLElement>('.te-dot')
+      const imgWrap = entry.querySelector<HTMLElement>('.te-img-wrap')
+      const img     = entry.querySelector<HTMLElement>('.te-img')
+
+      const tl = g.timeline({
+        scrollTrigger: { trigger: entry, start: 'top 82%' },
+      })
+
+      // Text + dot
+      tl.to(entry, { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' })
+      tl.to(dot,   { scale: 1,   duration: 0.35, ease: 'back.out(2)' }, '-=0.4')
+
+      // Image: clip wipe from bottom + simultaneous de-scale
+      if (imgWrap) {
+        tl.to(imgWrap, {
+          clipPath: 'inset(0% 0 0 0 round 16px)',
+          duration: 0.9,
+          ease: 'power3.out',
+        }, '-=0.3')
+      }
+      if (img) {
+        tl.to(img, {
+          scale: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+        }, '<') // same time as clip
+      }
+    })
   }
-  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
+
+  document.readyState === 'loading'
+    ? document.addEventListener('DOMContentLoaded', init)
+    : init()
 </script>
