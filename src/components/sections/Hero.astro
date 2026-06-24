@@ -1,0 +1,39 @@
+---
+interface Props { t: any; lang?: string }
+const { t, lang = 'en' } = Astro.props
+---
+<section style="position:relative;width:100%;height:100svh;overflow:hidden;background:var(--color-midnight);">
+  <img src="/images/hero.jpg" alt="The cliff above the Black Sea at dusk" id="hero-img" loading="eager" fetchpriority="high"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.85;" />
+  <div style="position:absolute;bottom:4rem;left:clamp(1.5rem,4vw,4rem);max-width:min(42rem,90vw);">
+    <h1 style="font-family:var(--font-display);font-weight:300;font-size:clamp(52px,7vw,96px);line-height:1.05;letter-spacing:-0.02em;color:var(--color-limestone);">
+      <span class="hw" style="display:block;opacity:0;">{t.hero.line1}</span>
+      <span class="hw" style="display:block;opacity:0;">{t.hero.line2}</span>
+      <span class="hw" style="display:block;opacity:0;">{t.hero.line3}</span>
+    </h1>
+    <div id="hero-ctas" style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:2rem;align-items:center;opacity:0;">
+      <a href={`/${lang}/#story`} class="cta-p" style="font-family:var(--font-body);font-size:15px;color:var(--color-limestone);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;border-bottom:1px solid rgba(232,228,220,0.3);padding-bottom:2px;">
+        {t.hero.cta_primary} <span class="arr" style="transition:transform 0.3s ease;">→</span>
+      </a>
+      <a href={`/${lang}/#contact`} style="font-family:var(--font-body);font-size:15px;color:var(--color-copper);text-decoration:none;border-bottom:1px solid rgba(139,111,92,0.3);padding-bottom:2px;">{t.hero.cta_secondary}</a>
+    </div>
+  </div>
+  <div style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;" aria-hidden="true">
+    <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:var(--color-seafoam);text-transform:uppercase;opacity:0.6;">scroll</span>
+    <div id="scroll-line" style="width:1px;height:0;background:var(--color-limestone);opacity:0.6;"></div>
+  </div>
+</section>
+<style>.cta-p:hover .arr{transform:translateX(5px);}</style>
+<script>
+  const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const init=()=>{
+    const g=(window as any).gsap; if(!g){setTimeout(init,50);return;}
+    if(rm){document.querySelectorAll('.hw').forEach((e:any)=>e.style.opacity='1');const c=document.getElementById('hero-ctas');if(c)c.style.opacity='1';return;}
+    const tl=g.timeline({delay:0.2})
+    tl.fromTo('#hero-img',{opacity:0.7},{opacity:1,duration:1.6,ease:'power2.out'})
+    tl.fromTo('.hw',{opacity:0,y:24},{opacity:1,y:0,duration:0.9,stagger:0.18,ease:'power3.out'},'-=1.0')
+    tl.to('#hero-ctas',{opacity:1,duration:0.7,ease:'power2.out'},'-=0.3')
+    tl.fromTo('#scroll-line',{height:0},{height:48,duration:1.1,ease:'power2.inOut',repeat:-1,yoyo:true},'+=0.6')
+  }
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init()
+</script>

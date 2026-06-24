@@ -1,0 +1,34 @@
+---
+import '../styles/tokens.css'
+import Nav from '../components/Nav.astro'
+interface Props { title?: string; description?: string; lang?: string }
+const { title = 'Green Horizon — Black Sea, Bulgaria', description = 'A boutique hotel on a cliff above the Bulgarian Black Sea. Earth, Water, Fire, Air. Opening 2026.', lang = 'en' } = Astro.props
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <Nav lang={lang} />
+  <main><slot /></main>
+  <script>
+    import gsap from 'gsap'
+    import ScrollTrigger from 'gsap/ScrollTrigger'
+    gsap.registerPlugin(ScrollTrigger)
+    ;(window as any).gsap = gsap
+    ;(window as any).ScrollTrigger = ScrollTrigger
+    window.addEventListener('load', () => { ScrollTrigger.refresh() })
+  </script>
+</body>
+</html>

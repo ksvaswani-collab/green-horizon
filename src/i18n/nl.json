@@ -1,0 +1,63 @@
+{
+  "nav": { "experiences": "Ervaringen", "story": "Het Verhaal", "rooms": "Kamers", "contact": "Contact", "registerInterest": "Registreer Interesse" },
+  "hero": { "line1": "Één overtuiging.", "line2": "Één klif.", "line3": "Één zee.", "cta_primary": "Ontdek het verhaal", "cta_secondary": "Registreer interesse" },
+  "story": {
+    "label": "De Droom · Ons Verhaal",
+    "pullquote": "De meest oprechte gastvrijheid gaat niet over service. Het gaat over plek.",
+    "body1": "Green Horizon ligt op een klif boven de Bulgaarse Zwarte Zee — tussen oerwoud en open water, gevormd door vier elementen die deze kust al millennia beheersen.",
+    "body2": "Dit is geen hotel dat kant-en-klaar verscheen. Het wordt langzaam gebouwd door één familie die gelooft dat een plek zijn verhaal moet verdienen voordat het dat vertelt.",
+    "body3": "We bouwen nog steeds. Wij willen dat u ons volgt.",
+    "cta": "Lees het volledige verhaal"
+  },
+  "elements": {
+    "label": "De Vier Elementen", "intro": "De klif geeft u vier manieren om te voelen dat u leeft.",
+    "earth": { "title": "Aarde", "body": "De oude vulkanische klif. Bosbodem tot aan de rand. Gegrond voordat het de hemel bereikt." },
+    "water": { "title": "Water", "body": "De Zwarte Zee hieronder — met minstens twaalf naties op de bodem. Ouder, rustiger en minder in kaart gebracht dan u verwacht." },
+    "fire":  { "title": "Vuur",  "body": "Een tafel verlicht in het gouden uur. Licht als warmte. Diner als het langste deel van de dag." },
+    "air":   { "title": "Lucht", "body": "Open lucht. De lichtheid van ergens hoog zitten. Ruimte die uw borst opent." }
+  },
+  "experiences": {
+    "label": "Ervaringen", "heading": "De Zwarte Zee, op uw manier.",
+    "items": [
+      { "label": "Het Woud",  "title": "Strandzha Wandelingen",    "body": "Het oudste bos van Europa staat achter de klif. Eik, haagbeuk en zomerse stilte." },
+      { "label": "De Oever",  "title": "Zonsopgang op de Duinen",  "body": "De Zwarte Zee kust bij dageraad is bleek, stil en ongerept. Loop het voordat iemand anders aankomt." },
+      { "label": "De Zee",    "title": "De Zee bij Schemering",     "body": "Een boot, een anker, een uitzicht op de klif vanuit het water. Schemer over tweeënveertig graden noorderbreedte." }
+    ]
+  },
+  "journey": {
+    "label": "De Bouw · Live Updates",
+    "heading": "De klif rijst al boven de boomgrens uit sinds april 2024.",
+    "cta": "Bekijk alle updates",
+    "entries": [
+      { "date": "Juni 2025",     "title": "De terras fundamenten zijn gelegd.",          "body": "Het betonnen gieten is klaar op het Water terras. Eerste blik op hoe de zitpositie vanaf de rand zal aanvoelen.", "imageAlt": "Terras fundering werk, juni 2025" },
+      { "date": "Maart 2025",    "title": "De Aarde suite muren bereiken twee meter.",   "body": "Steen afkomstig van de klif zelf — donker vulkanisch basalt, geen geïmporteerde render. De kleur past bij wat er al was.", "imageAlt": "Aarde suite muren in aanbouw, maart 2025" },
+      { "date": "November 2024", "title": "Het eerste eikenframe gaat omhoog.",           "body": "Lokaal hout. Een timmerman uit Tsarevo die al dertig jaar bouwt in de Strandzha. Geen plannen, alleen een gesprek en een meetlint.", "imageAlt": "Eikenframe bouw, november 2024" }
+    ]
+  },
+  "rooms": {
+    "label": "De Suites", "heading": "Vier kamers. Vier elementen.",
+    "items": [
+      { "element": "01", "name": "De Aarde Suite", "body": "Stenen vloer. Bosplafond. Een privé terras dat eindigt bij de boomgrens." },
+      { "element": "02", "name": "De Water Suite", "body": "Vol zeeuitzicht. Een bad dat op de horizon is gericht. Stilte met diepte." },
+      { "element": "03", "name": "De Vuur Suite",  "body": "Een open haard. Warmte op het zuiden. De langste avonden van Bulgarije." },
+      { "element": "04", "name": "De Lucht Suite", "body": "Hoogste op de klif. Open lucht aan drie kanten. Nergens anders te kijken dan naar buiten." }
+    ],
+    "villas_note": "Zes privévilla's ook beschikbaar — elk met zijn eigen benadering van de zee.",
+    "cta": "Informeer naar kamers"
+  },
+  "register": {
+    "heading": "Wees de eerste aan de horizon.",
+    "body": "Green Horizon opent in 2026. Registreer uw interesse voor vroege toegang tot kamerselectie, updates van de bouw en een eerste aanbod van het team.",
+    "fields": { "firstname": "Voornaam", "lastname": "Achternaam", "email": "E-mailadres", "interest": "Selecteer uw interesse", "interest_options": ["Kamers","Villa's","Beide","Ervaringen","Alles van het bovenstaande"], "note": "Een notitie aan Hanneke (optioneel)" },
+    "submit": "Stuur mijn interesse",
+    "note": "We reageren persoonlijk binnen 48 uur."
+  },
+  "footer": {
+    "tagline": "Een familieplek aan de Zwarte Zee.",
+    "coordinates": "42°N · 27°E · Zwarte Zee, Bulgarije",
+    "nav": ["Ons Verhaal","De Elementen","Kamers","Ervaringen","Bouwjournaal"],
+    "contact_label": "Contact",
+    "legal": "Privacybeleid",
+    "copyright": "© 2025 Green Horizon"
+  }
+}

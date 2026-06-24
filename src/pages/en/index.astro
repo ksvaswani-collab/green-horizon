@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro'
+import Hero from '../../components/sections/Hero.astro'
+import OurStory from '../../components/sections/OurStory.astro'
+import FourElements from '../../components/sections/FourElements.astro'
+import Experiences from '../../components/sections/Experiences.astro'
+import ConstructionJourney from '../../components/sections/ConstructionJourney.astro'
+import Rooms from '../../components/sections/Rooms.astro'
+import RegisterInterest from '../../components/sections/RegisterInterest.astro'
+import Footer from '../../components/sections/Footer.astro'
+import t from '../../i18n/en.json'
+const lang = 'en'
+---
+<Base lang={lang} title="Green Horizon — Black Sea, Bulgaria">
+  <Hero t={t} lang={lang} />
+  <OurStory t={t} lang={lang} />
+  <FourElements t={t} />
+  <Experiences t={t} />
+  <ConstructionJourney t={t} lang={lang} />
+  <Rooms t={t} lang={lang} />
+  <RegisterInterest t={t} lang={lang} />
+  <Footer t={t} lang={lang} />
+</Base>

@@ -1,0 +1,64 @@
+---
+interface Props { t: any; lang?: string }
+const { t, lang = 'en' } = Astro.props
+const lp=`/${lang}`
+const navLinks=[
+  {label:t.footer.nav[0],href:`${lp}/#story`},
+  {label:t.footer.nav[1],href:`${lp}/#elements`},
+  {label:t.footer.nav[2],href:`${lp}/#rooms`},
+  {label:t.footer.nav[3],href:`${lp}/#experiences`},
+  {label:t.footer.nav[4],href:`${lp}/journal`},
+]
+---
+<footer style="background:var(--color-forest);padding:5rem clamp(1.5rem,4vw,4rem) 2.5rem;border-top:1px solid rgba(232,228,220,0.12);">
+  <div style="max-width:1400px;margin:0 auto;">
+    <div class="fg">
+      <div>
+        <a href={`${lp}/`} style="display:block;font-family:var(--font-display);font-weight:300;font-size:1.25rem;color:var(--color-limestone);text-decoration:none;letter-spacing:-0.01em;margin-bottom:0.75rem;">HORIZON</a>
+        <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--color-seafoam);margin-bottom:1.5rem;max-width:18rem;">{t.footer.tagline}</p>
+        <div style="display:flex;gap:1.25rem;">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="sl">IG</a>
+          <a href="https://facebook.com"  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  class="sl">FB</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Navigate</p>
+        <nav aria-label="Footer navigation">
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;">
+            {navLinks.map(l=>(<li><a href={l.href} class="fl">{l.label}</a></li>))}
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">{t.footer.contact_label}</p>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+          <a href="mailto:hello@greenhorizon.bg" class="fl">hello@greenhorizon.bg</a>
+          <p style="font-family:var(--font-body);font-size:14px;color:var(--color-seafoam);">Black Sea Coast, Bulgaria</p>
+          <a href={`${lp}/#contact`} style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;margin-top:0.5rem;">Register Interest →</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Language</p>
+        <div style="display:flex;gap:1rem;margin-bottom:2rem;">
+          {[{c:'en',l:'EN'},{c:'nl',l:'NL'},{c:'bg',l:'BG'}].map(x=>(
+            <a href={`/${x.c}/`} style={`font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;text-decoration:none;color:${x.c===lang?'var(--color-limestone)':'var(--color-seafoam)'};`} aria-current={x.c===lang?'page':undefined}>{x.l}</a>
+          ))}
+        </div>
+        <a href={`${lp}/privacy`} class="fl">{t.footer.legal}</a>
+      </div>
+    </div>
+    <div style="margin-top:4rem;padding-top:1.5rem;border-top:1px solid rgba(232,228,220,0.1);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
+      <p style="font-family:var(--font-mono);font-size:11px;color:rgba(197,212,206,0.6);letter-spacing:0.15em;">{t.footer.coordinates}</p>
+      <p style="font-family:var(--font-mono);font-size:11px;color:rgba(197,212,206,0.6);letter-spacing:0.15em;">{t.footer.copyright}</p>
+    </div>
+  </div>
+</footer>
+<style>
+  .fg{display:grid;grid-template-columns:1fr;gap:3rem;}
+  @media(min-width:640px){.fg{grid-template-columns:repeat(2,1fr);}}
+  @media(min-width:1024px){.fg{grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;}}
+  .fl{font-family:var(--font-body);font-size:14px;color:var(--color-seafoam);text-decoration:none;transition:color 0.2s ease;}
+  .fl:hover{color:var(--color-limestone);}
+  .sl{font-family:var(--font-mono);font-size:11px;color:var(--color-seafoam);text-decoration:none;letter-spacing:0.15em;transition:color 0.2s ease;}
+  .sl:hover{color:var(--color-limestone);}
+</style>

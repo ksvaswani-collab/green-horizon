@@ -1,0 +1,63 @@
+{
+  "nav": { "experiences": "Experiences", "story": "The Story", "rooms": "Rooms", "contact": "Contact", "registerInterest": "Register Interest" },
+  "hero": { "line1": "One conviction.", "line2": "One cliff.", "line3": "One sea.", "cta_primary": "Discover the story", "cta_secondary": "Register interest" },
+  "story": {
+    "label": "The Dream · Our Story",
+    "pullquote": "The most profound hospitality is not about service. It is about place.",
+    "body1": "Green Horizon sits on a cliff above the Bulgarian Black Sea — between ancient forest and open water, shaped by four elements that have governed this coast for millennia.",
+    "body2": "This is not a hotel that appeared fully formed. It is being built, slowly, by one family who believes a place should earn its story before it tells it.",
+    "body3": "We are still building. We would like you to follow.",
+    "cta": "Read the full story"
+  },
+  "elements": {
+    "label": "The Four Elements", "intro": "The cliff gives you four ways to feel alive.",
+    "earth": { "title": "Earth", "body": "The ancient volcanic cliff. Forest floor to the edge. Grounded before it reaches the sky." },
+    "water": { "title": "Water", "body": "The Black Sea below — with at least twelve nations at its floor. Older, calmer, and less charted than you expect." },
+    "fire":  { "title": "Fire",  "body": "A table lit at golden hour. Light as warmth. Dinner as the longest part of the day." },
+    "air":   { "title": "Air",   "body": "Open sky. The lightness of sitting somewhere high. Space that opens your chest." }
+  },
+  "experiences": {
+    "label": "Experiences", "heading": "The Black Sea, your way.",
+    "items": [
+      { "label": "The Forest", "title": "Strandzha Walks",      "body": "The oldest forest in Europe stands behind the cliff. Oak, hornbeam, and summer silence." },
+      { "label": "The Shore",  "title": "Sunrise on the Dunes", "body": "The Black Sea coast at dawn is pale, still, and unmarked. Walk it before anyone else arrives." },
+      { "label": "The Sea",    "title": "The Sea at Dusk",       "body": "A boat, an anchor, a view of the cliff from water level. Dusk over forty-two degrees north." }
+    ]
+  },
+  "journey": {
+    "label": "The Build · Live Updates",
+    "heading": "The cliff has been rising above the treeline since April 2024.",
+    "cta": "View all updates",
+    "entries": [
+      { "date": "June 2025",     "title": "The terrace foundations are set.",          "body": "The concrete pours are done on the Water terrace. First view of what the sitting position will feel like from the edge.",                                                                          "imageAlt": "Terrace foundation work, June 2025" },
+      { "date": "March 2025",    "title": "The Earth suite walls reach two metres.",   "body": "Stone sourced from the cliff itself — dark volcanic basalt, not imported render. The colour matches what was already there.",                                                                       "imageAlt": "Earth suite walls under construction, March 2025" },
+      { "date": "November 2024", "title": "The first oak frame goes up.",              "body": "Local timber. A carpenter from Tsarevo who has been building in the Strandzha for thirty years. No plans, just a conversation and a tape measure.",                                                 "imageAlt": "Oak frame construction, November 2024" }
+    ]
+  },
+  "rooms": {
+    "label": "The Suites", "heading": "Four rooms. Four elements.",
+    "items": [
+      { "element": "01", "name": "The Earth Suite", "body": "Stone floor. Forest ceiling. A private deck that ends at the treeline." },
+      { "element": "02", "name": "The Water Suite", "body": "Full sea view. A bathtub that faces the horizon. Silence with depth." },
+      { "element": "03", "name": "The Fire Suite",  "body": "An open hearth. South-facing warmth. The longest evenings in Bulgaria." },
+      { "element": "04", "name": "The Air Suite",   "body": "Highest on the cliff. Open sky on three sides. Nowhere to look but out." }
+    ],
+    "villas_note": "Six private villas also available — each with its own approach to the sea.",
+    "cta": "Enquire about rooms"
+  },
+  "register": {
+    "heading": "Be first on the horizon.",
+    "body": "Green Horizon opens in 2026. Register your interest for early access to room selection, updates from the build, and a first offer from the team.",
+    "fields": { "firstname": "First name", "lastname": "Last name", "email": "Email address", "interest": "Select your interest", "interest_options": ["Rooms","Villas","Both","Experiences","All of the above"], "note": "A note to Hanneke (optional)" },
+    "submit": "Send my interest",
+    "note": "We respond personally within 48 hours."
+  },
+  "footer": {
+    "tagline": "A family place on the Black Sea.",
+    "coordinates": "42°N · 27°E · Black Sea, Bulgaria",
+    "nav": ["Our Story","The Elements","Rooms","Experiences","Construction Journal"],
+    "contact_label": "Contact",
+    "legal": "Privacy Policy",
+    "copyright": "© 2025 Green Horizon"
+  }
+}
