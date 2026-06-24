@@ -1,68 +1,190 @@
 ---
 interface Props { t: any }
 const { t } = Astro.props
+
 const els = [
-  { key:'earth', idx:'01', bg:'#1A2420', data:t.elements.earth, img:'/images/earth.jpg', alt:'Cliff soil and ancient forest floor' },
-  { key:'water', idx:'02', bg:'#0D1C22', data:t.elements.water, img:'/images/water.jpg', alt:'Black Sea surface at dusk' },
-  { key:'fire',  idx:'03', bg:'#1A1210', data:t.elements.fire,  img:'/images/fire.jpg',  alt:'Open fire close-up' },
-  { key:'air',   idx:'04', bg:'#111318', data:t.elements.air,   img:'/images/air.jpg',   alt:'Horizon line — sea meets sky' },
+  {
+    key: 'earth', idx: '01',
+    bg: 'var(--color-earth-light)',           /* warm cream */
+    accent: '#8B6F5C',                         /* copper */
+    textHead: 'var(--color-midnight)',
+    textBody: '#4A4035',
+    textLabel: '#8B7B6B',
+    data: t.elements.earth,
+    img: '/images/earth.jpg', alt: 'Cliff soil and ancient forest floor',
+  },
+  {
+    key: 'water', idx: '02',
+    bg: 'var(--color-water-light)',            /* pale blue-tint */
+    accent: '#2E5F7A',
+    textHead: 'var(--color-midnight)',
+    textBody: '#2D3F4A',
+    textLabel: '#6B7C85',
+    data: t.elements.water,
+    img: '/images/water.jpg', alt: 'Black Sea surface at dusk',
+  },
+  {
+    key: 'fire', idx: '03',
+    bg: 'var(--color-fire-light)',             /* pale terracotta */
+    accent: '#C2603A',
+    textHead: 'var(--color-midnight)',
+    textBody: '#4A2E22',
+    textLabel: '#8B6055',
+    data: t.elements.fire,
+    img: '/images/fire.jpg', alt: 'Open fire close-up',
+  },
+  {
+    key: 'air', idx: '04',
+    bg: 'var(--color-air-light)',              /* pale sage */
+    accent: '#4A6B5A',
+    textHead: 'var(--color-midnight)',
+    textBody: '#2D3F35',
+    textLabel: '#6B7C72',
+    data: t.elements.air,
+    img: '/images/air.jpg', alt: 'Horizon line — sea meets sky',
+  },
 ]
 ---
+
 <section id="elements" style="position:relative;">
+  <!-- Desktop: horizontal scroll pin -->
   <div id="epw" style="height:400vh;">
     <div id="es" style="position:sticky;top:0;width:100%;height:100svh;overflow:hidden;display:flex;">
       <div id="et" style="display:flex;width:400vw;height:100%;will-change:transform;">
-        {els.map(el=>(
-          <div class="ep" style={`width:100vw;height:100%;display:flex;align-items:center;position:relative;background:${el.bg};`}>
-            <span style="position:absolute;top:2rem;left:clamp(1.5rem,4vw,4rem);font-family:var(--font-mono);font-size:11px;color:var(--color-seafoam);letter-spacing:0.15em;text-transform:uppercase;">{el.idx} {el.data.title.toUpperCase()}</span>
+        {els.map(el => (
+          <div
+            class="ep"
+            style={`
+              width:100vw;height:100%;
+              display:flex;align-items:center;
+              position:relative;
+              background:${el.bg};
+            `}
+          >
+            <!-- Panel label top-left -->
+            <span style={`
+              position:absolute;top:2rem;left:clamp(1.5rem,4vw,4rem);
+              font-family:var(--font-mono);font-size:11px;
+              color:${el.textLabel};
+              letter-spacing:0.15em;text-transform:uppercase;
+            `}>{el.idx} {el.data.title.toUpperCase()}</span>
+
+            <!-- Text content -->
             <div style="padding-left:clamp(1.5rem,8vw,8rem);max-width:50%;position:relative;z-index:2;">
-              <h2 class="eh" style="font-family:var(--font-display);font-weight:300;font-size:clamp(80px,10vw,140px);line-height:0.9;color:var(--color-limestone);opacity:0;transform:translateX(40px);">{el.data.title}</h2>
-              <p class="eb" style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-seafoam);margin-top:1.5rem;max-width:22rem;opacity:0;">{el.data.body}</p>
+              <!-- Thin accent line above headline -->
+              <div style={`width:2rem;height:2px;background:${el.accent};margin-bottom:1.5rem;`} aria-hidden="true"></div>
+
+              <h2 class="eh" style={`
+                font-family:var(--font-display);font-weight:300;
+                font-size:clamp(80px,10vw,140px);line-height:0.9;
+                color:${el.textHead};
+                opacity:0;transform:translateX(40px);
+              `}>{el.data.title}</h2>
+
+              <p class="eb" style={`
+                font-family:var(--font-body);font-size:16px;line-height:1.75;
+                color:${el.textBody};
+                margin-top:1.5rem;max-width:22rem;opacity:0;
+              `}>{el.data.body}</p>
             </div>
+
+            <!-- Right-side image — desaturated to blend with light bg -->
             <div style="position:absolute;right:0;top:0;width:45%;height:100%;overflow:hidden;">
-              <img src={el.img} alt={el.alt} loading="lazy" style="width:100%;height:100%;object-fit:cover;filter:saturate(0.75) contrast(1.1);" />
+              <img
+                src={el.img} alt={el.alt} loading="lazy"
+                style="width:100%;height:100%;object-fit:cover;filter:saturate(0.55) contrast(1.05) brightness(1.05);"
+              />
+              <!-- Soft fade from image to bg on the left edge -->
+              <div style={`
+                position:absolute;top:0;left:0;width:6rem;height:100%;
+                background:linear-gradient(to right,${el.bg},transparent);
+              `} aria-hidden="true"></div>
             </div>
           </div>
         ))}
       </div>
     </div>
   </div>
+
+  <!-- Mobile: vertical fallback -->
   <div class="em" style="display:none;">
-    {els.map(el=>(
-      <div style={`min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;background:${el.bg};padding:4rem 1.5rem;`}>
-        <img src={el.img} alt={el.alt} loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(0.75) contrast(1.1);opacity:0.4;" />
+    {els.map(el => (
+      <div style={`
+        min-height:100svh;display:flex;flex-direction:column;
+        justify-content:flex-end;position:relative;
+        background:${el.bg};padding:4rem 1.5rem;
+      `}>
+        <img src={el.img} alt={el.alt} loading="lazy"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(0.5) contrast(1.05) brightness(1.05);opacity:0.3;" />
         <div style="position:relative;z-index:2;">
-          <span style="display:block;font-family:var(--font-mono);font-size:11px;color:var(--color-seafoam);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">{el.idx} {el.data.title.toUpperCase()}</span>
-          <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(3rem,12vw,6rem);line-height:1;color:var(--color-limestone);margin-bottom:1.25rem;">{el.data.title}</h2>
-          <p style="font-family:var(--font-body);font-size:15px;line-height:1.7;color:var(--color-seafoam);max-width:24rem;">{el.data.body}</p>
+          <div style={`width:1.5rem;height:2px;background:${el.accent};margin-bottom:1.25rem;`} aria-hidden="true"></div>
+          <span style={`display:block;font-family:var(--font-mono);font-size:11px;color:${el.textLabel};letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem;`}>
+            {el.idx}
+          </span>
+          <h2 style={`font-family:var(--font-display);font-weight:300;font-size:clamp(3rem,12vw,6rem);line-height:1;color:${el.textHead};margin-bottom:1.25rem;`}>
+            {el.data.title}
+          </h2>
+          <p style={`font-family:var(--font-body);font-size:15px;line-height:1.7;color:${el.textBody};max-width:24rem;`}>
+            {el.data.body}
+          </p>
         </div>
       </div>
     ))}
   </div>
 </section>
+
 <style>
-  @media(max-width:767px){#epw{display:none!important;}.em{display:block!important;}}
+  @media (max-width: 767px) {
+    #epw { display: none !important; }
+    .em  { display: block !important; }
+  }
 </style>
+
 <script>
-  const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const mob=window.matchMedia('(max-width:767px)').matches
-  if(!mob&&!rm){
-    const init=()=>{
-      const g=(window as any).gsap,ST=(window as any).ScrollTrigger
-      if(!g||!ST){setTimeout(init,50);return;}
-      const track=document.getElementById('et')
-      const hls=document.querySelectorAll<HTMLElement>('.eh')
-      const bds=document.querySelectorAll<HTMLElement>('.eb')
-      if(!track)return
-      let last=-1
-      g.to('#et',{x:()=>-(track.scrollWidth-window.innerWidth),ease:'none',scrollTrigger:{trigger:'#epw',pin:'#es',scrub:1,start:'top top',end:'bottom bottom',onUpdate:(s:any)=>{
-        const pi=Math.min(3,Math.floor(s.progress*4))
-        if(pi===last)return; last=pi
-        if(hls[pi])g.to(hls[pi],{opacity:1,x:0,duration:0.6,ease:'power3.out'})
-        if(bds[pi])g.to(bds[pi],{opacity:1,duration:0.6,delay:0.12,ease:'power2.out'})
-      }}})
-      ST.create({trigger:'#epw',start:'bottom bottom',onEnter:()=>{if(track)track.style.willChange='auto'}})
+  const rm  = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const mob = window.matchMedia('(max-width: 767px)').matches
+
+  if (!mob && !rm) {
+    const init = () => {
+      const g  = (window as any).gsap
+      const ST = (window as any).ScrollTrigger
+      if (!g || !ST) { setTimeout(init, 50); return }
+
+      const track = document.getElementById('et')
+      const hls   = document.querySelectorAll<HTMLElement>('.eh')
+      const bds   = document.querySelectorAll<HTMLElement>('.eb')
+      if (!track) return
+
+      let last = -1
+
+      g.to('#et', {
+        x: () => -(track.scrollWidth - window.innerWidth),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#epw',
+          pin: '#es',
+          scrub: 1,
+          start: 'top top',
+          end: 'bottom bottom',
+          onUpdate: (s: any) => {
+            const pi = Math.min(3, Math.floor(s.progress * 4))
+            if (pi === last) return
+            last = pi
+            if (hls[pi]) g.to(hls[pi], { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' })
+            if (bds[pi]) g.to(bds[pi], { opacity: 1, duration: 0.6, delay: 0.12, ease: 'power2.out' })
+          },
+        },
+      })
+
+      ST.create({
+        trigger: '#epw',
+        start: 'bottom bottom',
+        onEnter: () => { if (track) track.style.willChange = 'auto' },
+      })
     }
-    document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init()
+
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', init)
+      : init()
   }
 </script>

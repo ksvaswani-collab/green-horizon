@@ -2,43 +2,55 @@
 interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
 ---
-<section id="story" style="background:var(--color-midnight);padding:8rem clamp(1.5rem,4vw,4rem);">
+<section id="story" style="background:var(--color-linen);padding:8rem clamp(1.5rem,4vw,4rem);">
   <div class="sg" style="display:grid;grid-template-columns:1fr;gap:4rem;max-width:1400px;margin:0 auto;">
     <div style="max-width:56rem;">
-      <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-seafoam);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:3rem;">{t.story.label}</p>
-      <blockquote id="pull-quote" style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-limestone);margin-bottom:3rem;">{t.story.pullquote}</blockquote>
-      <div style="width:100%;height:1px;background:rgba(232,228,220,0.15);margin-bottom:3rem;" aria-hidden="true"></div>
+      <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:3rem;">
+        {t.story.label}
+      </p>
+      <blockquote id="pull-quote"
+        style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-midnight);margin-bottom:3rem;">
+        {t.story.pullquote}
+      </blockquote>
+      <div style="width:100%;height:1px;background:var(--color-border);margin-bottom:3rem;" aria-hidden="true"></div>
       <div class="sb" style="display:flex;flex-direction:column;gap:1.5rem;max-width:36rem;">
-        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-seafoam);">{t.story.body1}</p>
-        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-seafoam);">{t.story.body2}</p>
-        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-seafoam);">{t.story.body3}</p>
+        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-forest);">{t.story.body1}</p>
+        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-forest);">{t.story.body2}</p>
+        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-forest);">{t.story.body3}</p>
       </div>
-      <a href={`/${lang}/story`} class="sc" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:2.5rem;font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;">
+      <a href={`/${lang}/story`} class="sc"
+        style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:2.5rem;font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;">
         {t.story.cta} <span class="arr" style="transition:transform 0.3s ease;">→</span>
       </a>
     </div>
     <div class="si" aria-hidden="true" style="overflow:hidden;">
-      <img src="/images/story.jpg" alt="Construction on the cliff" loading="lazy" style="width:100%;height:100%;object-fit:cover;filter:contrast(1.1) saturate(0.65);" />
+      <img src="/images/story.jpg" alt="Construction on the cliff" loading="lazy"
+        style="width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(0.75);" />
     </div>
   </div>
 </section>
+
 <style>
-  @media(min-width:768px){.sg{grid-template-columns:7fr 3fr!important;align-items:start;}.si{margin-right:-4rem;margin-top:-8rem;margin-bottom:-8rem;min-height:560px;}}
+  @media(min-width:768px){
+    .sg{grid-template-columns:7fr 3fr!important;align-items:start;}
+    .si{margin-right:-4rem;margin-top:-8rem;margin-bottom:-8rem;min-height:560px;}
+  }
   @media(max-width:767px){.si{display:none;}}
   .sc:hover .arr{transform:translateX(5px);}
 </style>
+
 <script>
-  const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const init=()=>{
-    const g=(window as any).gsap,ST=(window as any).ScrollTrigger
-    if(!g||!ST){setTimeout(init,50);return;}
-    const q=document.getElementById('pull-quote')
-    if(q&&!rm){
-      const words=(q.textContent?.trim()??'').split(' ')
-      q.innerHTML=words.map(w=>`<span class="qw" style="display:inline-block;opacity:0;">${w}&nbsp;</span>`).join('')
-      g.to('.qw',{opacity:1,duration:0.35,stagger:0.04,ease:'power2.out',scrollTrigger:{trigger:'#pull-quote',start:'top 75%'}})
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const init = () => {
+    const g = (window as any).gsap, ST = (window as any).ScrollTrigger
+    if (!g || !ST) { setTimeout(init, 50); return }
+    const q = document.getElementById('pull-quote')
+    if (q && !rm) {
+      const words = (q.textContent?.trim() ?? '').split(' ')
+      q.innerHTML = words.map(w => `<span class="qw" style="display:inline-block;opacity:0;">${w}&nbsp;</span>`).join('')
+      g.to('.qw', { opacity: 1, duration: 0.35, stagger: 0.04, ease: 'power2.out', scrollTrigger: { trigger: '#pull-quote', start: 'top 75%' } })
     }
-    if(!rm)g.fromTo('.sb',{opacity:0,y:20},{opacity:1,y:0,duration:0.8,ease:'power3.out',scrollTrigger:{trigger:'.sb',start:'top 80%'}})
+    if (!rm) g.fromTo('.sb', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.sb', start: 'top 80%' } })
   }
-  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init()
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 </script>

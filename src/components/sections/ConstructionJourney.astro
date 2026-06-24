@@ -1,47 +1,53 @@
 ---
 interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
-const eimgs=['/images/build-june-2025.jpg','/images/build-march-2025.jpg','/images/build-nov-2024.jpg']
+const eimgs = ['/images/build-june-2025.jpg', '/images/build-march-2025.jpg', '/images/build-nov-2024.jpg']
 ---
-<section id="build" style="background:var(--color-midnight);padding:8rem clamp(1.5rem,4vw,4rem);">
+<section id="build" style="background:var(--color-linen);padding:8rem clamp(1.5rem,4vw,4rem);border-top:1px solid var(--color-border);">
   <div style="max-width:1400px;margin:0 auto;">
-    <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-seafoam);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.5rem;">{t.journey.label}</p>
-    <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-limestone);max-width:38rem;margin-bottom:6rem;">{t.journey.heading}</h2>
+    <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.5rem;">{t.journey.label}</p>
+    <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-midnight);max-width:38rem;margin-bottom:6rem;">{t.journey.heading}</h2>
+
     <div id="timeline" style="position:relative;padding-left:3rem;display:flex;flex-direction:column;gap:6rem;">
-      <div aria-hidden="true" style="position:absolute;left:0;top:0.5rem;bottom:0;width:1px;background:rgba(232,228,220,0.18);"></div>
-      {t.journey.entries.map((e:any,i:number)=>(
+      <div aria-hidden="true" style="position:absolute;left:0;top:0.5rem;bottom:0;width:1px;background:var(--color-border);"></div>
+      {t.journey.entries.map((e: any, i: number) => (
         <div class="te" style="position:relative;opacity:0;transform:translateY(-16px);">
           <div aria-hidden="true" style="position:absolute;left:-3.375rem;top:0.25rem;width:0.5rem;height:0.5rem;border-radius:50%;background:var(--color-copper);"></div>
           <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1rem;">{e.date}</p>
           <div class="teg">
             <div>
-              <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.4rem,2.5vw,2rem);line-height:1.2;color:var(--color-limestone);margin-bottom:1rem;">{e.title}</h3>
-              <p style="font-family:var(--font-body);font-size:15px;line-height:1.75;color:var(--color-seafoam);">{e.body}</p>
+              <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.4rem,2.5vw,2rem);line-height:1.2;color:var(--color-midnight);margin-bottom:1rem;">{e.title}</h3>
+              <p style="font-family:var(--font-body);font-size:15px;line-height:1.75;color:var(--color-forest);">{e.body}</p>
             </div>
             <div style="overflow:hidden;aspect-ratio:16/9;">
-              <img src={eimgs[i]} alt={e.imageAlt} loading="lazy" style="width:100%;height:100%;object-fit:cover;filter:contrast(1.1) saturate(0.6);" />
+              <img src={eimgs[i]} alt={e.imageAlt} loading="lazy"
+                style="width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(0.7);" />
             </div>
           </div>
         </div>
       ))}
     </div>
-    <a href={`/${lang}/journal`} class="jc" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:5rem;font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;">
+
+    <a href={`/${lang}/journal`} class="jc"
+      style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:5rem;font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;">
       {t.journey.cta} <span class="arr" style="transition:transform 0.3s ease;">→</span>
     </a>
   </div>
 </section>
+
 <style>
   .teg{display:grid;grid-template-columns:1fr;gap:2rem;}
   @media(min-width:768px){.teg{grid-template-columns:1fr 1fr;gap:3rem;}}
   .jc:hover .arr{transform:translateX(5px);}
 </style>
+
 <script>
-  const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const init=()=>{
-    const g=(window as any).gsap,ST=(window as any).ScrollTrigger
-    if(!g||!ST){setTimeout(init,50);return;}
-    if(!rm){document.querySelectorAll('.te').forEach(e=>{g.to(e,{opacity:1,y:0,duration:0.7,ease:'power3.out',scrollTrigger:{trigger:e,start:'top 82%'}})})}
-    else{document.querySelectorAll('.te').forEach((e:any)=>{e.style.opacity='1';e.style.transform='none';})}
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const init = () => {
+    const g = (window as any).gsap, ST = (window as any).ScrollTrigger
+    if (!g || !ST) { setTimeout(init, 50); return }
+    if (!rm) { document.querySelectorAll('.te').forEach(e => { g.to(e, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: e, start: 'top 82%' } }) }) }
+    else { document.querySelectorAll('.te').forEach((e: any) => { e.style.opacity = '1'; e.style.transform = 'none' }) }
   }
-  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init()
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 </script>

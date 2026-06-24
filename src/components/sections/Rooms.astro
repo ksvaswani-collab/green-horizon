@@ -1,50 +1,55 @@
 ---
 interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
-const rimgs=['/images/room-earth.jpg','/images/room-water.jpg','/images/room-fire.jpg','/images/room-air.jpg']
+const rimgs = ['/images/room-earth.jpg', '/images/room-water.jpg', '/images/room-fire.jpg', '/images/room-air.jpg']
 ---
-<section id="rooms" style="background:var(--color-midnight);padding:8rem clamp(1.5rem,4vw,4rem);border-top:1px solid rgba(232,228,220,0.1);">
+<section id="rooms" style="background:var(--color-limestone);padding:8rem clamp(1.5rem,4vw,4rem);border-top:1px solid var(--color-border);">
   <div style="max-width:1400px;margin:0 auto;">
     <div style="margin-bottom:5rem;">
-      <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-seafoam);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">{t.rooms.label}</p>
-      <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-limestone);">{t.rooms.heading}</h2>
+      <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">{t.rooms.label}</p>
+      <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-midnight);">{t.rooms.heading}</h2>
     </div>
     <div class="rg">
-      {t.rooms.items.map((r:any,i:number)=>(
+      {t.rooms.items.map((r: any, i: number) => (
         <article class="rc" style="display:flex;flex-direction:column;opacity:0;transform:translateY(20px);">
           <div style="position:relative;aspect-ratio:4/3;overflow:hidden;margin-bottom:1.5rem;">
-            <img src={rimgs[i]} alt={r.name} loading="lazy" class="ri" style="width:100%;height:100%;object-fit:cover;filter:saturate(0.85);transition:transform 0.9s cubic-bezier(0.16,1,0.3,1);" />
+            <img src={rimgs[i]} alt={r.name} loading="lazy" class="ri"
+              style="width:100%;height:100%;object-fit:cover;filter:saturate(0.88) contrast(1.02);transition:transform 0.9s cubic-bezier(0.16,1,0.3,1);" />
           </div>
           <span style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);letter-spacing:0.15em;margin-bottom:0.5rem;display:block;">{r.element}</span>
-          <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.2;color:var(--color-limestone);margin-bottom:0.75rem;">{r.name}</h3>
-          <p style="font-family:var(--font-body);font-size:14px;line-height:1.7;color:var(--color-seafoam);flex:1;">{r.body}</p>
-          <a href={`/${lang}/#contact`} class="rca" style="display:inline-flex;align-items:center;gap:0.4rem;margin-top:1.25rem;font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;border-bottom:1px solid rgba(139,111,92,0.3);padding-bottom:2px;align-self:flex-start;">
+          <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.2;color:var(--color-midnight);margin-bottom:0.75rem;">{r.name}</h3>
+          <p style="font-family:var(--font-body);font-size:14px;line-height:1.7;color:var(--color-forest);flex:1;">{r.body}</p>
+          <a href={`/${lang}/#contact`} class="rca"
+            style="display:inline-flex;align-items:center;gap:0.4rem;margin-top:1.25rem;font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;border-bottom:1px solid rgba(139,111,92,0.25);padding-bottom:2px;align-self:flex-start;">
             Enquire <span class="arr" style="transition:transform 0.3s ease;">→</span>
           </a>
         </article>
       ))}
     </div>
-    <p style="font-family:var(--font-body);font-size:14px;line-height:1.7;color:var(--color-seafoam);margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(232,228,220,0.12);max-width:40rem;">{t.rooms.villas_note}</p>
-    <a href={`/${lang}/#contact`} class="rmc" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:2rem;font-family:var(--font-mono);font-size:11px;color:var(--color-limestone);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;">
+    <p style="font-family:var(--font-body);font-size:14px;line-height:1.7;color:var(--color-muted);margin-top:3rem;padding-top:2rem;border-top:1px solid var(--color-border);max-width:40rem;">{t.rooms.villas_note}</p>
+    <a href={`/${lang}/#contact`} class="rmc"
+      style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:2rem;font-family:var(--font-mono);font-size:11px;color:var(--color-midnight);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;">
       {t.rooms.cta} <span class="arr" style="transition:transform 0.3s ease;">→</span>
     </a>
   </div>
 </section>
+
 <style>
   .rg{display:grid;grid-template-columns:1fr;gap:3rem;}
   @media(min-width:640px){.rg{grid-template-columns:repeat(2,1fr);}}
   @media(min-width:1024px){.rg{grid-template-columns:repeat(4,1fr);gap:2rem;}}
   .rc:hover .ri{transform:scale(1.04);}
-  .rca:hover,.rmc:hover{border-color:var(--color-copper);}
+  .rca:hover{border-color:var(--color-copper);}
   .rca:hover .arr,.rmc:hover .arr{transform:translateX(5px);}
 </style>
+
 <script>
-  const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const init=()=>{
-    const g=(window as any).gsap,ST=(window as any).ScrollTrigger
-    if(!g||!ST){setTimeout(init,50);return;}
-    if(!rm){document.querySelectorAll('.rc').forEach((c,i)=>{g.to(c,{opacity:1,y:0,duration:0.7,delay:i*0.1,ease:'power3.out',scrollTrigger:{trigger:'#rooms',start:'top 70%'}})})}
-    else{document.querySelectorAll('.rc').forEach((e:any)=>{e.style.opacity='1';e.style.transform='none';})}
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const init = () => {
+    const g = (window as any).gsap, ST = (window as any).ScrollTrigger
+    if (!g || !ST) { setTimeout(init, 50); return }
+    if (!rm) { document.querySelectorAll('.rc').forEach((c, i) => { g.to(c, { opacity: 1, y: 0, duration: 0.7, delay: i * 0.1, ease: 'power3.out', scrollTrigger: { trigger: '#rooms', start: 'top 70%' } }) }) }
+    else { document.querySelectorAll('.rc').forEach((e: any) => { e.style.opacity = '1'; e.style.transform = 'none' }) }
   }
-  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init()
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 </script>

@@ -6,36 +6,47 @@
 @import '@fontsource/dm-serif-display/400-italic.css';
 
 @theme {
+  /* Core palette */
   --color-midnight: #0D1117;
-  --color-forest: #1A2420;
-  --color-linen: #F0EDE6;
-  --color-limestone: #E8E4DC;
-  --color-seafoam: #C5D4CE;
-  --color-copper: #8B6F5C;
-  --color-earth: #1A2420;
-  --color-water: #0D1C22;
-  --color-fire: #1A1210;
-  --color-air: #111318;
+  --color-forest:   #1A2420;
+  --color-linen:    #F0EDE6;
+  --color-limestone:#E8E4DC;
+  --color-seafoam:  #C5D4CE;
+  --color-copper:   #8B6F5C;
+
+  /* Light theme surfaces */
+  --color-surface:  #F8F5F0;   /* card / subtle raised bg */
+  --color-border:   rgba(13,17,23,0.09);
+  --color-muted:    #6B7870;   /* body secondary text */
+
+  /* Element panel bg accents (light, tinted) */
+  --color-earth-light: #F2EDE4;   /* warm cream */
+  --color-water-light: #E7EEF1;   /* cool blue-tint */
+  --color-fire-light:  #F5EBE6;   /* pale terracotta */
+  --color-air-light:   #EAF0EC;   /* pale sage */
+
+  /* Typography */
   --font-display: 'DM Serif Display', 'Alegreya', Georgia, serif;
-  --font-body: 'Manrope', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-slow: 1200ms;
+  --font-body:    'Manrope', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Motion */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-slow:   1200ms;
   --duration-medium: 600ms;
-  --duration-fast: 300ms;
+  --duration-fast:   300ms;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background-color: var(--color-midnight);
-  color: var(--color-limestone);
-  font-family: var(--font-display);
+  background-color: var(--color-linen);   /* light theme base */
+  color: var(--color-midnight);
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
 }
-body { font-family: var(--font-body); }
 :lang(bg) { --font-display: 'Alegreya', Georgia, serif; }
 
 .text-hero    { font-size: clamp(52px,7vw,96px);   line-height: 1.05; letter-spacing: -0.02em; }
