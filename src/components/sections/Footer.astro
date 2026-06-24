@@ -1,64 +1,159 @@
 ---
 interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
-const lp=`/${lang}`
-const navLinks=[
-  {label:t.footer.nav[0],href:`${lp}/#story`},
-  {label:t.footer.nav[1],href:`${lp}/#elements`},
-  {label:t.footer.nav[2],href:`${lp}/#rooms`},
-  {label:t.footer.nav[3],href:`${lp}/#experiences`},
-  {label:t.footer.nav[4],href:`${lp}/journal`},
+const lp = `/${lang}`
+
+const navLinks = [
+  { label: t.footer.nav[0], href: `${lp}/#story` },
+  { label: t.footer.nav[1], href: `${lp}/#elements` },
+  { label: t.footer.nav[2], href: `${lp}/#rooms` },
+  { label: t.footer.nav[3], href: `${lp}/#experiences` },
+  { label: t.footer.nav[4], href: `${lp}/journal` },
 ]
 ---
-<footer style="background:var(--color-forest);padding:5rem clamp(1.5rem,4vw,4rem) 2.5rem;border-top:1px solid rgba(232,228,220,0.12);">
-  <div style="max-width:1400px;margin:0 auto;">
-    <div class="fg">
-      <div>
-        <a href={`${lp}/`} style="display:block;font-family:var(--font-display);font-weight:300;font-size:1.25rem;color:var(--color-limestone);text-decoration:none;letter-spacing:-0.01em;margin-bottom:0.75rem;">HORIZON</a>
-        <p style="font-family:var(--font-body);font-size:14px;line-height:1.6;color:var(--color-seafoam);margin-bottom:1.5rem;max-width:18rem;">{t.footer.tagline}</p>
-        <div style="display:flex;gap:1.25rem;">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="sl">IG</a>
-          <a href="https://facebook.com"  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  class="sl">FB</a>
-        </div>
-      </div>
-      <div>
-        <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Navigate</p>
-        <nav aria-label="Footer navigation">
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;">
-            {navLinks.map(l=>(<li><a href={l.href} class="fl">{l.label}</a></li>))}
-          </ul>
-        </nav>
-      </div>
-      <div>
-        <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">{t.footer.contact_label}</p>
-        <div style="display:flex;flex-direction:column;gap:0.75rem;">
-          <a href="mailto:hello@greenhorizon.bg" class="fl">hello@greenhorizon.bg</a>
-          <p style="font-family:var(--font-body);font-size:14px;color:var(--color-seafoam);">Black Sea Coast, Bulgaria</p>
-          <a href={`${lp}/#contact`} style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;margin-top:0.5rem;">Register Interest →</a>
-        </div>
-      </div>
-      <div>
-        <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Language</p>
-        <div style="display:flex;gap:1rem;margin-bottom:2rem;">
-          {[{c:'en',l:'EN'},{c:'nl',l:'NL'},{c:'bg',l:'BG'}].map(x=>(
-            <a href={`/${x.c}/`} style={`font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;text-decoration:none;color:${x.c===lang?'var(--color-limestone)':'var(--color-seafoam)'};`} aria-current={x.c===lang?'page':undefined}>{x.l}</a>
-          ))}
-        </div>
-        <a href={`${lp}/privacy`} class="fl">{t.footer.legal}</a>
-      </div>
+
+<footer style="background:var(--color-forest);color:var(--color-limestone);overflow:hidden;">
+
+  <!-- ── UPPER STATEMENT ─────────────────────────────── -->
+  <div style="
+    padding:7rem clamp(1.5rem,5vw,5rem) 5rem;
+    display:flex;flex-direction:column;
+    gap:3rem;
+    border-bottom:1px solid rgba(232,228,220,0.1);
+  ">
+
+    <!-- Editorial tagline — large display type -->
+    <div style="display:flex;flex-direction:column;gap:0;max-width:56rem;">
+      <p style="
+        font-family:var(--font-display);font-weight:300;
+        font-size:clamp(2.5rem,5.5vw,5.5rem);
+        line-height:1.08;letter-spacing:-0.02em;
+        color:var(--color-limestone);
+      ">The Black Sea.</p>
+      <p style="
+        font-family:var(--font-display);font-weight:300;
+        font-size:clamp(2.5rem,5.5vw,5.5rem);
+        line-height:1.08;letter-spacing:-0.02em;
+        color:rgba(232,228,220,0.4);
+      ">The Forest.</p>
+      <p style="
+        font-family:var(--font-display);font-weight:300;
+        font-size:clamp(2.5rem,5.5vw,5.5rem);
+        line-height:1.08;letter-spacing:-0.02em;
+        color:rgba(232,228,220,0.2);
+      ">The Horizon.</p>
     </div>
-    <div style="margin-top:4rem;padding-top:1.5rem;border-top:1px solid rgba(232,228,220,0.1);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
-      <p style="font-family:var(--font-mono);font-size:11px;color:rgba(197,212,206,0.6);letter-spacing:0.15em;">{t.footer.coordinates}</p>
-      <p style="font-family:var(--font-mono);font-size:11px;color:rgba(197,212,206,0.6);letter-spacing:0.15em;">{t.footer.copyright}</p>
+
+    <!-- Sub-row: coords + CTA -->
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:2rem;">
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;color:rgba(232,228,220,0.45);letter-spacing:0.15em;margin-bottom:0.75rem;">
+          {t.footer.coordinates}
+        </p>
+        <p style="font-family:var(--font-body);font-size:15px;color:rgba(232,228,220,0.6);max-width:24rem;line-height:1.65;">
+          {t.footer.tagline}
+        </p>
+      </div>
+
+      <!-- CTA + socials -->
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:1.25rem;">
+        <a href={`${lp}/#contact`} class="btn" style="
+          background:transparent;
+          color:var(--color-limestone);
+          border:1px solid rgba(232,228,220,0.3);
+          padding:0.8rem 1.75rem;
+          font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;
+          display:inline-flex;align-items:center;gap:0.5rem;
+          transition:border-color 0.2s ease,background 0.2s ease;
+        "
+          onmouseover="this.style.borderColor='rgba(232,228,220,0.7)';this.style.background='rgba(232,228,220,0.06)'"
+          onmouseout="this.style.borderColor='rgba(232,228,220,0.3)';this.style.background='transparent'"
+        >
+          Register Interest <span style="transition:transform 0.3s ease;" class="foot-arr">→</span>
+        </a>
+        <!-- Social -->
+        <div style="display:flex;gap:1.25rem;align-items:center;">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+            class="soc-link">Instagram</a>
+          <span style="color:rgba(232,228,220,0.2);font-size:10px;">·</span>
+          <a href="https://facebook.com"  target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+            class="soc-link">Facebook</a>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- ── LOWER BAR ───────────────────────────────────── -->
+  <div style="
+    padding:2rem clamp(1.5rem,5vw,5rem);
+    display:flex;flex-wrap:wrap;
+    align-items:center;justify-content:space-between;
+    gap:1.5rem;
+  ">
+
+    <!-- Wordmark + nav links inline -->
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2rem;">
+      <a href={`${lp}/`} class="foot-wordmark">HORIZON</a>
+      <nav aria-label="Footer navigation" style="display:flex;flex-wrap:wrap;gap:0.1rem;align-items:center;">
+        {navLinks.map((link, i) => (
+          <>
+            <a href={link.href} class="foot-nav-link">{link.label}</a>
+            {i < navLinks.length - 1 && (
+              <span aria-hidden="true" style="font-size:10px;color:rgba(232,228,220,0.2);margin:0 0.25rem;">·</span>
+            )}
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Right: contact + lang + legal -->
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;">
+      <a href="mailto:hello@greenhorizon.bg" class="foot-nav-link">hello@greenhorizon.bg</a>
+
+      <!-- Language switcher -->
+      <div style="display:flex;gap:0.6rem;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;">
+        {[{c:'en',l:'EN'},{c:'nl',l:'NL'},{c:'bg',l:'БГ'}].map(x => (
+          <a href={`/${x.c}/`} class={`foot-lang${x.c===lang?' foot-lang-active':''}`}
+            aria-current={x.c===lang ? 'page' : undefined}>{x.l}</a>
+        ))}
+      </div>
+
+      <span style="color:rgba(232,228,220,0.2);font-size:10px;" aria-hidden="true">·</span>
+      <a href={`${lp}/privacy`} class="foot-nav-link">{t.footer.legal}</a>
+      <span style="font-family:var(--font-mono);font-size:10px;color:rgba(232,228,220,0.3);letter-spacing:0.1em;">{t.footer.copyright}</span>
+    </div>
+  </div>
+
 </footer>
+
 <style>
-  .fg{display:grid;grid-template-columns:1fr;gap:3rem;}
-  @media(min-width:640px){.fg{grid-template-columns:repeat(2,1fr);}}
-  @media(min-width:1024px){.fg{grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;}}
-  .fl{font-family:var(--font-body);font-size:14px;color:var(--color-seafoam);text-decoration:none;transition:color 0.2s ease;}
-  .fl:hover{color:var(--color-limestone);}
-  .sl{font-family:var(--font-mono);font-size:11px;color:var(--color-seafoam);text-decoration:none;letter-spacing:0.15em;transition:color 0.2s ease;}
-  .sl:hover{color:var(--color-limestone);}
+  .foot-wordmark {
+    font-family:var(--font-display);font-weight:300;font-size:1rem;
+    color:var(--color-limestone);text-decoration:none;letter-spacing:-0.01em;
+    transition:opacity 0.2s ease;
+  }
+  .foot-wordmark:hover { opacity:0.6; }
+
+  .foot-nav-link {
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+    color:rgba(232,228,220,0.45);text-decoration:none;
+    transition:color 0.2s ease;
+  }
+  .foot-nav-link:hover { color:rgba(232,228,220,0.9); }
+
+  .soc-link {
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+    color:rgba(232,228,220,0.45);text-decoration:none;transition:color 0.2s ease;
+  }
+  .soc-link:hover { color:rgba(232,228,220,0.9); }
+
+  .foot-lang {
+    color:rgba(232,228,220,0.4);text-decoration:none;transition:color 0.2s ease;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
+  }
+  .foot-lang:hover,.foot-lang-active { color:rgba(232,228,220,0.9); }
+  .foot-lang-active { text-decoration:underline;text-underline-offset:3px; }
+
+  .foot-arr { display:inline-block; }
+  footer a:hover .foot-arr { transform:translateX(4px); }
 </style>

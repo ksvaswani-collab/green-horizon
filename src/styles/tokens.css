@@ -58,5 +58,61 @@ body {
 .font-body    { font-family: var(--font-body); }
 .font-mono    { font-family: var(--font-mono); }
 
+/* ─── Buttons ─────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+.btn .arr { transition: transform 0.3s ease; }
+.btn:hover .arr { transform: translateX(4px); }
+
+/* Primary: filled, dark */
+.btn-primary {
+  background: var(--color-midnight);
+  color: var(--color-linen);
+  border: 1px solid var(--color-midnight);
+}
+.btn-primary:hover { opacity: 0.82; }
+
+/* Primary inverted: filled, linen (for use on dark bg) */
+.btn-primary-inv {
+  background: var(--color-linen);
+  color: var(--color-midnight);
+  border: 1px solid var(--color-linen);
+}
+.btn-primary-inv:hover { opacity: 0.85; }
+
+/* Secondary: outlined */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-midnight);
+  border: 1px solid rgba(13,17,23,0.3);
+}
+.btn-secondary:hover {
+  border-color: var(--color-midnight);
+  background: rgba(13,17,23,0.04);
+}
+
+/* Ghost: minimal, copper text */
+.btn-ghost {
+  background: transparent;
+  color: var(--color-copper);
+  border: 1px solid rgba(139,111,92,0.3);
+  padding: 0.7rem 1.5rem;
+}
+.btn-ghost:hover { border-color: var(--color-copper); background: rgba(139,111,92,0.05); }
+
+/* ─── Misc ────────────────────────────────────── */
 ::selection { background-color: var(--color-copper); color: var(--color-linen); }
 :focus-visible { outline: 1px solid var(--color-copper); outline-offset: 4px; }
