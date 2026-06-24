@@ -1,61 +1,247 @@
 ---
 interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
-// t.register may not exist in OurStory context — safe fallback handled in template
 ---
-<section id="story" style="background:var(--color-linen);padding:8rem clamp(1.5rem,4vw,4rem);">
-  <div class="sg" style="display:grid;grid-template-columns:1fr;gap:4rem;max-width:1400px;margin:0 auto;">
-    <div style="max-width:56rem;">
-      <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:3rem;">
-        {t.story.label}
-      </p>
-      <blockquote id="pull-quote"
-        style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-midnight);margin-bottom:3rem;">
-        {t.story.pullquote}
-      </blockquote>
-      <div style="width:100%;height:1px;background:var(--color-border);margin-bottom:3rem;" aria-hidden="true"></div>
-      <div class="sb" style="display:flex;flex-direction:column;gap:1.5rem;max-width:36rem;">
-        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-forest);">{t.story.body1}</p>
-        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-forest);">{t.story.body2}</p>
-        <p style="font-family:var(--font-body);font-size:16px;line-height:1.75;color:var(--color-forest);">{t.story.body3}</p>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2.5rem;">
-        <a href={`/${lang}/story`} class="btn btn-primary">
-          {t.story.cta} <span class="arr">→</span>
-        </a>
-        <a href={`/${lang}/#contact`} class="btn btn-secondary">
-          Register interest
-        </a>
-      </div>
+
+<!--
+  Section 2 — Our Story
+  Full-height editorial split: text panel left, image bleeds to right viewport edge.
+  Connects to the hero by mirroring its left-content / right-visual grammar.
+-->
+<section
+  id="story"
+  style="
+    background: var(--color-linen);
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100svh;
+  "
+  class="story-section"
+>
+  <!-- ── LEFT: Text panel ──────────────────────── -->
+  <div
+    class="story-text"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 7rem clamp(2rem, 6vw, 6rem) 5rem;
+    "
+  >
+    <!-- Geographic accent — design element, not just metadata -->
+    <div class="story-geo" style="display:flex;align-items:center;gap:1rem;margin-bottom:3.5rem;opacity:0;">
+      <div style="width:2rem;height:1px;background:var(--color-copper);" aria-hidden="true"></div>
+      <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--color-copper);">
+        42°N · 27°E · BLACK SEA
+      </span>
     </div>
-    <div class="si" aria-hidden="true" style="overflow:hidden;">
-      <img src="/images/story.jpg" alt="Construction on the cliff" loading="lazy"
-        style="width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(0.75);" />
+
+    <!-- Pull-quote: the centrepiece -->
+    <blockquote
+      id="pull-quote"
+      style="
+        font-family: var(--font-display);
+        font-weight: 300;
+        font-size: clamp(28px, 3.5vw, 52px);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--color-midnight);
+        margin-bottom: 2.5rem;
+        max-width: 30rem;
+      "
+    >
+      {t.story.pullquote}
+    </blockquote>
+
+    <!-- Thin rule -->
+    <div
+      class="story-rule"
+      style="width:3rem;height:1px;background:var(--color-border);margin-bottom:2.5rem;opacity:0;"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Body -->
+    <div
+      class="story-body"
+      style="
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        max-width: 30rem;
+        opacity: 0;
+      "
+    >
+      <p style="font-family:var(--font-body);font-size:16px;line-height:1.8;color:var(--color-forest);">
+        {t.story.body1}
+      </p>
+      <p style="font-family:var(--font-body);font-size:16px;line-height:1.8;color:var(--color-forest);">
+        {t.story.body2}
+      </p>
+      <p style="font-family:var(--font-body);font-size:15px;line-height:1.8;color:var(--color-muted);">
+        {t.story.body3}
+      </p>
+    </div>
+
+    <!-- Buttons -->
+    <div
+      class="story-ctas"
+      style="
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 2.5rem;
+        opacity: 0;
+      "
+    >
+      <a href={`/${lang}/story`} class="btn btn-primary">
+        {t.story.cta} <span class="arr">→</span>
+      </a>
+      <a href={`/${lang}/#contact`} class="btn btn-secondary">
+        Register interest
+      </a>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Image panel ─────────────────────── -->
+  <!--
+    Bleeds to the right edge of the viewport on desktop.
+    16px radius on the left edge only — so it reads as a panel, not a frame.
+  -->
+  <div
+    class="story-img-panel"
+    style="position:relative;overflow:hidden;"
+  >
+    <!-- Image reveal wrapper (clip-path animated in) -->
+    <div
+      class="story-img-clip"
+      style="position:absolute;inset:0;clip-path:inset(0 100% 0 0);"
+    >
+      <img
+        src="/images/story.jpg"
+        alt="The cliff and the forest — the land on which Green Horizon is being built"
+        loading="lazy"
+        style="
+          width:100%;height:100%;
+          object-fit:cover;
+          object-position:center;
+          filter:contrast(1.06) saturate(0.72);
+        "
+      />
+    </div>
+
+    <!-- Subtle label in corner — editorial detail -->
+    <div style="
+      position:absolute;bottom:2rem;left:1.75rem;
+      font-family:var(--font-mono);font-size:10px;
+      letter-spacing:0.12em;color:rgba(248,245,240,0.55);
+      text-transform:uppercase;
+      z-index:2;
+    " class="story-img-caption" aria-hidden="true">
+      Strandzha · 2024
     </div>
   </div>
 </section>
 
 <style>
-  @media(min-width:768px){
-    .sg{grid-template-columns:7fr 3fr!important;align-items:start;}
-    .si{margin-right:-4rem;margin-top:-8rem;margin-bottom:-8rem;min-height:560px;}
+  /* Desktop: side-by-side split */
+  @media (min-width: 900px) {
+    .story-section {
+      grid-template-columns: 55fr 45fr !important;
+    }
+    .story-img-panel {
+      /* Bleed to the right viewport edge — no right margin */
+      border-radius: 16px 0 0 16px;
+      min-height: 100svh;
+    }
   }
-  @media(max-width:767px){.si{display:none;}}
-  .sc:hover .arr{transform:translateX(5px);}
+
+  /* Mobile: stacked, image below, fixed height */
+  @media (max-width: 899px) {
+    .story-img-panel {
+      min-height: 55vw;
+      border-radius: 16px;
+      margin: 0 1.5rem 4rem;
+    }
+    .story-img-clip {
+      position: absolute !important;
+      inset: 0 !important;
+    }
+  }
 </style>
 
 <script>
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   const init = () => {
-    const g = (window as any).gsap, ST = (window as any).ScrollTrigger
+    const g  = (window as any).gsap
+    const ST = (window as any).ScrollTrigger
     if (!g || !ST) { setTimeout(init, 50); return }
-    const q = document.getElementById('pull-quote')
-    if (q && !rm) {
-      const words = (q.textContent?.trim() ?? '').split(' ')
-      q.innerHTML = words.map(w => `<span class="qw" style="display:inline-block;opacity:0;">${w}&nbsp;</span>`).join('')
-      g.to('.qw', { opacity: 1, duration: 0.35, stagger: 0.04, ease: 'power2.out', scrollTrigger: { trigger: '#pull-quote', start: 'top 75%' } })
+
+    if (rm) {
+      // Instant show
+      document.querySelectorAll<HTMLElement>('.story-geo,.story-rule,.story-body,.story-ctas')
+        .forEach(el => { el.style.opacity = '1' })
+      const clip = document.querySelector<HTMLElement>('.story-img-clip')
+      if (clip) clip.style.clipPath = 'inset(0 0% 0 0)'
+      const q = document.getElementById('pull-quote')
+      if (q) q.style.opacity = '1'
+      return
     }
-    if (!rm) g.fromTo('.sb', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.sb', start: 'top 80%' } })
+
+    // ── Word-by-word pull-quote reveal ──
+    const q = document.getElementById('pull-quote')
+    if (q) {
+      const raw = q.textContent?.trim() ?? ''
+      q.innerHTML = raw
+        .split(' ')
+        .map(w => `<span class="qw" style="display:inline-block;opacity:0;transform:translateY(8px);">${w}&nbsp;</span>`)
+        .join('')
+
+      g.to('.qw', {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        stagger: 0.045,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: '#pull-quote', start: 'top 78%' },
+      })
+    }
+
+    // ── Geo accent line ──
+    g.fromTo('.story-geo',
+      { opacity: 0, x: -16 },
+      { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out',
+        scrollTrigger: { trigger: '#story', start: 'top 70%' } }
+    )
+
+    // ── Rule ──
+    g.to('.story-rule',
+      { opacity: 1, width: '3rem', duration: 0.5, ease: 'power2.out',
+        scrollTrigger: { trigger: '.story-rule', start: 'top 85%' } }
+    )
+
+    // ── Body + CTAs stagger ──
+    g.fromTo('.story-body',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out',
+        scrollTrigger: { trigger: '.story-body', start: 'top 82%' } }
+    )
+    g.fromTo('.story-ctas',
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+        scrollTrigger: { trigger: '.story-ctas', start: 'top 90%' } }
+    )
+
+    // ── Image panel: clip-path wipe from left ──
+    g.to('.story-img-clip', {
+      clipPath: 'inset(0 0% 0 0)',
+      duration: 1.1,
+      ease: 'power3.inOut',
+      scrollTrigger: { trigger: '.story-img-panel', start: 'top 75%' },
+    })
   }
-  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
+
+  document.readyState === 'loading'
+    ? document.addEventListener('DOMContentLoaded', init)
+    : init()
 </script>
