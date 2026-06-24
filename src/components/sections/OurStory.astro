@@ -3,96 +3,66 @@ interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
 ---
 
-<!--
-  Section 2 — Our Story
-  Full-height editorial split: text panel left, image bleeds to right viewport edge.
-  Connects to the hero by mirroring its left-content / right-visual grammar.
--->
 <section
   id="story"
   style="
     background: var(--color-linen);
-    display: grid;
-    grid-template-columns: 1fr;
     min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem clamp(1.5rem, 6vw, 8rem);
   "
-  class="story-section"
 >
-  <!-- ── LEFT: Text panel ──────────────────────── -->
-  <div
-    class="story-text"
-    style="
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 7rem clamp(2rem, 6vw, 6rem) 5rem;
-    "
-  >
-    <!-- Geographic accent — design element, not just metadata -->
-    <div class="story-geo" style="display:flex;align-items:center;gap:1rem;margin-bottom:3.5rem;opacity:0;">
+  <div style="max-width: 52rem; width: 100%; text-align: center;">
+
+    <!-- Geographic accent -->
+    <div class="story-geo" style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:3rem;opacity:0;">
       <div style="width:2rem;height:1px;background:var(--color-copper);" aria-hidden="true"></div>
       <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--color-copper);">
         42°N · 27°E · BLACK SEA
       </span>
+      <div style="width:2rem;height:1px;background:var(--color-copper);" aria-hidden="true"></div>
     </div>
 
-    <!-- Pull-quote: the centrepiece -->
+    <!-- Pull-quote -->
     <blockquote
       id="pull-quote"
       style="
         font-family: var(--font-display);
         font-weight: 300;
-        font-size: clamp(28px, 3.5vw, 52px);
+        font-size: clamp(28px, 3.8vw, 56px);
         line-height: 1.15;
         letter-spacing: -0.02em;
         color: var(--color-midnight);
-        margin-bottom: 2.5rem;
-        max-width: 30rem;
+        margin-bottom: 3rem;
       "
     >
       {t.story.pullquote}
     </blockquote>
 
-    <!-- Thin rule -->
+    <!-- Thin centred rule -->
     <div
       class="story-rule"
-      style="width:3rem;height:1px;background:var(--color-border);margin-bottom:2.5rem;opacity:0;"
+      style="width:3rem;height:1px;background:var(--color-border);margin:0 auto 3rem;opacity:0;"
       aria-hidden="true"
     ></div>
 
-    <!-- Body -->
-    <div
-      class="story-body"
-      style="
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-        max-width: 30rem;
-        opacity: 0;
-      "
-    >
-      <p style="font-family:var(--font-body);font-size:16px;line-height:1.8;color:var(--color-forest);">
+    <!-- Body text -->
+    <div class="story-body" style="display:flex;flex-direction:column;gap:1.25rem;opacity:0;">
+      <p style="font-family:var(--font-body);font-size:17px;line-height:1.8;color:var(--color-forest);">
         {t.story.body1}
       </p>
-      <p style="font-family:var(--font-body);font-size:16px;line-height:1.8;color:var(--color-forest);">
+      <p style="font-family:var(--font-body);font-size:17px;line-height:1.8;color:var(--color-forest);">
         {t.story.body2}
       </p>
-      <p style="font-family:var(--font-body);font-size:15px;line-height:1.8;color:var(--color-muted);">
+      <p style="font-family:var(--font-body);font-size:16px;line-height:1.8;color:var(--color-muted);">
         {t.story.body3}
       </p>
     </div>
 
     <!-- Buttons -->
-    <div
-      class="story-ctas"
-      style="
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 2.5rem;
-        opacity: 0;
-      "
-    >
+    <div class="story-ctas" style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:2.5rem;opacity:0;">
       <a href={`/${lang}/story`} class="btn btn-primary">
         {t.story.cta} <span class="arr">→</span>
       </a>
@@ -100,74 +70,9 @@ const { t, lang = 'en' } = Astro.props
         Register interest
       </a>
     </div>
-  </div>
 
-  <!-- ── RIGHT: Image panel ─────────────────────── -->
-  <!--
-    Bleeds to the right edge of the viewport on desktop.
-    16px radius on the left edge only — so it reads as a panel, not a frame.
-  -->
-  <div
-    class="story-img-panel"
-    style="position:relative;overflow:hidden;"
-  >
-    <!-- Image reveal wrapper (clip-path animated in) -->
-    <div
-      class="story-img-clip"
-      style="position:absolute;inset:0;clip-path:inset(0 100% 0 0);"
-    >
-      <img
-        src="/images/story.jpg"
-        alt="The cliff and the forest — the land on which Green Horizon is being built"
-        loading="lazy"
-        style="
-          width:100%;height:100%;
-          object-fit:cover;
-          object-position:center;
-          filter:contrast(1.06) saturate(0.72);
-        "
-      />
-    </div>
-
-    <!-- Subtle label in corner — editorial detail -->
-    <div style="
-      position:absolute;bottom:2rem;left:1.75rem;
-      font-family:var(--font-mono);font-size:10px;
-      letter-spacing:0.12em;color:rgba(248,245,240,0.55);
-      text-transform:uppercase;
-      z-index:2;
-    " class="story-img-caption" aria-hidden="true">
-      Strandzha · 2024
-    </div>
   </div>
 </section>
-
-<style>
-  /* Desktop: side-by-side split */
-  @media (min-width: 900px) {
-    .story-section {
-      grid-template-columns: 55fr 45fr !important;
-    }
-    .story-img-panel {
-      /* Bleed to the right viewport edge — no right margin */
-      border-radius: 16px 0 0 16px;
-      min-height: 100svh;
-    }
-  }
-
-  /* Mobile: stacked, image below, fixed height */
-  @media (max-width: 899px) {
-    .story-img-panel {
-      min-height: 55vw;
-      border-radius: 16px;
-      margin: 0 1.5rem 4rem;
-    }
-    .story-img-clip {
-      position: absolute !important;
-      inset: 0 !important;
-    }
-  }
-</style>
 
 <script>
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -178,67 +83,55 @@ const { t, lang = 'en' } = Astro.props
     if (!g || !ST) { setTimeout(init, 50); return }
 
     if (rm) {
-      // Instant show
       document.querySelectorAll<HTMLElement>('.story-geo,.story-rule,.story-body,.story-ctas')
         .forEach(el => { el.style.opacity = '1' })
-      const clip = document.querySelector<HTMLElement>('.story-img-clip')
-      if (clip) clip.style.clipPath = 'inset(0 0% 0 0)'
       const q = document.getElementById('pull-quote')
       if (q) q.style.opacity = '1'
       return
     }
 
-    // ── Word-by-word pull-quote reveal ──
+    // Geo accent line
+    g.fromTo('.story-geo',
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+        scrollTrigger: { trigger: '#story', start: 'top 70%' } }
+    )
+
+    // Word-by-word pull-quote
     const q = document.getElementById('pull-quote')
     if (q) {
       const raw = q.textContent?.trim() ?? ''
       q.innerHTML = raw
         .split(' ')
-        .map(w => `<span class="qw" style="display:inline-block;opacity:0;transform:translateY(8px);">${w}&nbsp;</span>`)
+        .map(w => `<span class="qw" style="display:inline-block;opacity:0;transform:translateY(10px);">${w}&nbsp;</span>`)
         .join('')
-
       g.to('.qw', {
-        opacity: 1,
-        y: 0,
-        duration: 0.45,
-        stagger: 0.045,
-        ease: 'power2.out',
+        opacity: 1, y: 0,
+        duration: 0.45, stagger: 0.045, ease: 'power2.out',
         scrollTrigger: { trigger: '#pull-quote', start: 'top 78%' },
       })
     }
 
-    // ── Geo accent line ──
-    g.fromTo('.story-geo',
-      { opacity: 0, x: -16 },
-      { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out',
-        scrollTrigger: { trigger: '#story', start: 'top 70%' } }
-    )
-
-    // ── Rule ──
-    g.to('.story-rule',
+    // Rule draws in
+    g.fromTo('.story-rule',
+      { opacity: 0, width: 0 },
       { opacity: 1, width: '3rem', duration: 0.5, ease: 'power2.out',
-        scrollTrigger: { trigger: '.story-rule', start: 'top 85%' } }
+        scrollTrigger: { trigger: '.story-rule', start: 'top 88%' } }
     )
 
-    // ── Body + CTAs stagger ──
+    // Body
     g.fromTo('.story-body',
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out',
-        scrollTrigger: { trigger: '.story-body', start: 'top 82%' } }
+        scrollTrigger: { trigger: '.story-body', start: 'top 85%' } }
     )
+
+    // CTAs
     g.fromTo('.story-ctas',
       { opacity: 0, y: 12 },
       { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
-        scrollTrigger: { trigger: '.story-ctas', start: 'top 90%' } }
+        scrollTrigger: { trigger: '.story-ctas', start: 'top 92%' } }
     )
-
-    // ── Image panel: clip-path wipe from left ──
-    g.to('.story-img-clip', {
-      clipPath: 'inset(0 0% 0 0)',
-      duration: 1.1,
-      ease: 'power3.inOut',
-      scrollTrigger: { trigger: '.story-img-panel', start: 'top 75%' },
-    })
   }
 
   document.readyState === 'loading'
