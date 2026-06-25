@@ -17,31 +17,29 @@ const navLinks = [
   <!-- ── UPPER STATEMENT ─────────────────────────────── -->
   <div style="
     padding:7rem clamp(1.5rem,5vw,5rem) 5rem;
-    display:flex;flex-direction:column;
-    gap:3rem;
     border-bottom:1px solid rgba(232,228,220,0.1);
+    display:flex;flex-direction:column;gap:3rem;
   ">
 
-    <!-- Editorial tagline — large display type -->
-    <div style="display:flex;flex-direction:column;gap:0;max-width:56rem;">
-      <p style="
-        font-family:var(--font-display);font-weight:300;
-        font-size:clamp(2.5rem,5.5vw,5.5rem);
-        line-height:1.08;letter-spacing:-0.02em;
-        color:var(--color-limestone);
-      ">The Black Sea.</p>
-      <p style="
-        font-family:var(--font-display);font-weight:300;
-        font-size:clamp(2.5rem,5.5vw,5.5rem);
-        line-height:1.08;letter-spacing:-0.02em;
-        color:rgba(232,228,220,0.4);
-      ">The Forest.</p>
-      <p style="
-        font-family:var(--font-display);font-weight:300;
-        font-size:clamp(2.5rem,5.5vw,5.5rem);
-        line-height:1.08;letter-spacing:-0.02em;
-        color:rgba(232,228,220,0.2);
-      ">The Horizon.</p>
+    <!-- Display heading + nav links side by side -->
+    <div class="foot-top-row">
+
+      <!-- Left: editorial tagline -->
+      <div style="flex:1;min-width:0;">
+        <p class="foot-line" style="color:var(--color-limestone);">The Black Sea.</p>
+        <p class="foot-line" style="color:rgba(232,228,220,0.4);">The Forest.</p>
+        <p class="foot-line" style="color:rgba(232,228,220,0.2);">The Horizon.</p>
+      </div>
+
+      <!-- Right: nav links stacked, aligned top -->
+      <nav
+        aria-label="Footer navigation"
+        style="display:flex;flex-direction:column;gap:0.6rem;padding-top:0.5rem;flex-shrink:0;"
+      >
+        {navLinks.map(link => (
+          <a href={link.href} class="foot-nav-link">{link.label}</a>
+        ))}
+      </nav>
     </div>
 
     <!-- Sub-row: coords + CTA -->
@@ -58,8 +56,7 @@ const navLinks = [
       <!-- CTA + socials -->
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:1.25rem;">
         <a href={`${lp}/#contact`} class="btn" style="
-          background:transparent;
-          color:var(--color-limestone);
+          background:transparent;color:var(--color-limestone);
           border:1px solid rgba(232,228,220,0.3);border-radius:16px;
           padding:0.8rem 1.75rem;
           font-family:var(--font-body);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;text-decoration:none;
@@ -69,15 +66,12 @@ const navLinks = [
           onmouseover="this.style.borderColor='rgba(232,228,220,0.7)';this.style.background='rgba(232,228,220,0.06)'"
           onmouseout="this.style.borderColor='rgba(232,228,220,0.3)';this.style.background='transparent'"
         >
-          Register Interest <span style="transition:transform 0.3s ease;" class="foot-arr">→</span>
+          Register Interest <span class="foot-arr">→</span>
         </a>
-        <!-- Social -->
         <div style="display:flex;gap:1.25rem;align-items:center;">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-            class="soc-link">Instagram</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="soc-link">Instagram</a>
           <span style="color:rgba(232,228,220,0.2);font-size:10px;">·</span>
-          <a href="https://facebook.com"  target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-            class="soc-link">Facebook</a>
+          <a href="https://facebook.com"  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  class="soc-link">Facebook</a>
         </div>
       </div>
     </div>
@@ -90,34 +84,16 @@ const navLinks = [
     align-items:center;justify-content:space-between;
     gap:1.5rem;
   ">
+    <a href={`${lp}/`} class="foot-wordmark">HORIZON</a>
 
-    <!-- Wordmark + nav links inline -->
-    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2rem;">
-      <a href={`${lp}/`} class="foot-wordmark">HORIZON</a>
-      <nav aria-label="Footer navigation" style="display:flex;flex-wrap:wrap;gap:0.1rem;align-items:center;">
-        {navLinks.map((link, i) => (
-          <>
-            <a href={link.href} class="foot-nav-link">{link.label}</a>
-            {i < navLinks.length - 1 && (
-              <span aria-hidden="true" style="font-size:10px;color:rgba(232,228,220,0.2);margin:0 0.25rem;">·</span>
-            )}
-          </>
-        ))}
-      </nav>
-    </div>
-
-    <!-- Right: contact + lang + legal -->
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;">
       <a href="mailto:hello@greenhorizon.bg" class="foot-nav-link">hello@greenhorizon.bg</a>
-
-      <!-- Language switcher -->
       <div style="display:flex;gap:0.6rem;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;">
         {[{c:'en',l:'EN'},{c:'nl',l:'NL'},{c:'bg',l:'БГ'}].map(x => (
           <a href={`/${x.c}/`} class={`foot-lang${x.c===lang?' foot-lang-active':''}`}
             aria-current={x.c===lang ? 'page' : undefined}>{x.l}</a>
         ))}
       </div>
-
       <span style="color:rgba(232,228,220,0.2);font-size:10px;" aria-hidden="true">·</span>
       <a href={`${lp}/privacy`} class="foot-nav-link">{t.footer.legal}</a>
       <span style="font-family:var(--font-mono);font-size:10px;color:rgba(232,228,220,0.3);letter-spacing:0.1em;">{t.footer.copyright}</span>
@@ -127,33 +103,52 @@ const navLinks = [
 </footer>
 
 <style>
-  .foot-wordmark {
-    font-family:var(--font-display);font-weight:300;font-size:1rem;
-    color:var(--color-limestone);text-decoration:none;letter-spacing:-0.01em;
-    transition:opacity 0.2s ease;
+  /* Display heading lines */
+  .foot-line {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
   }
-  .foot-wordmark:hover { opacity:0.6; }
+
+  /* Top row: heading left, nav right */
+  .foot-top-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+  @media (max-width: 640px) {
+    .foot-top-row { flex-direction: column; gap: 2.5rem; }
+  }
+
+  .foot-wordmark {
+    font-family: var(--font-display); font-weight: 300; font-size: 1rem;
+    color: var(--color-limestone); text-decoration: none; letter-spacing: -0.01em;
+    transition: opacity 0.2s ease;
+  }
+  .foot-wordmark:hover { opacity: 0.6; }
 
   .foot-nav-link {
-    font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
-    color:rgba(232,228,220,0.45);text-decoration:none;
-    transition:color 0.2s ease;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    color: rgba(232,228,220,0.55); text-decoration: none;
+    transition: color 0.2s ease;
   }
-  .foot-nav-link:hover { color:rgba(232,228,220,0.9); }
+  .foot-nav-link:hover { color: rgba(232,228,220,0.95); }
 
   .soc-link {
-    font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
-    color:rgba(232,228,220,0.45);text-decoration:none;transition:color 0.2s ease;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(232,228,220,0.45); text-decoration: none; transition: color 0.2s ease;
   }
-  .soc-link:hover { color:rgba(232,228,220,0.9); }
+  .soc-link:hover { color: rgba(232,228,220,0.9); }
 
   .foot-lang {
-    color:rgba(232,228,220,0.4);text-decoration:none;transition:color 0.2s ease;
-    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
+    color: rgba(232,228,220,0.4); text-decoration: none; transition: color 0.2s ease;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
   }
-  .foot-lang:hover,.foot-lang-active { color:rgba(232,228,220,0.9); }
-  .foot-lang-active { text-decoration:underline;text-underline-offset:3px; }
+  .foot-lang:hover, .foot-lang-active { color: rgba(232,228,220,0.9); }
+  .foot-lang-active { text-decoration: underline; text-underline-offset: 3px; }
 
-  .foot-arr { display:inline-block; }
-  footer a:hover .foot-arr { transform:translateX(4px); }
+  .foot-arr { display: inline-block; transition: transform 0.3s ease; }
+  footer a:hover .foot-arr { transform: translateX(4px); }
 </style>
