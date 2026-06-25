@@ -1,0 +1,277 @@
+---
+// V2 JourneySection — vertical build log + animated stat counters
+const buildEntries = [
+  {
+    date: 'Nov 2024',
+    heading: 'Ground broken',
+    body: 'The first foundations poured on the cliff site. The soil is chalk and clay — the same that defines the Strandzha forest floor. Nothing is moved that does not have to be.',
+    image: '/images/build-nov-2024.jpg',
+    alt: 'Construction workers on the cliff site in November 2024, early foundation stage',
+  },
+  {
+    date: 'Mar 2025',
+    heading: 'Walls find form',
+    body: 'Raw concrete frames emerge. The main structure follows the cliff\'s natural contour, stepping down rather than imposing. Material deliveries begin: reclaimed oak, hand-cut stone.',
+    image: '/images/build-march-2025.jpg',
+    alt: 'Concrete walls of Green Horizon rising from the hillside in March 2025',
+  },
+  {
+    date: 'Jun 2025',
+    heading: 'The roof closes',
+    body: 'Watertight. The first time you can see the building as a whole — its relationship to the sea, to the treeline. The view from the main terrace is everything we hoped.',
+    image: '/images/build-june-2025.jpg',
+    alt: 'Completed roof structure of Green Horizon hotel in June 2025, sea view behind',
+  },
+]
+
+const stats = [
+  { value: 4, label: 'Rooms', suffix: '' },
+  { value: 6, label: 'Villas', suffix: '' },
+  { value: 2026, label: 'Opening', suffix: '' },
+]
+---
+<section id="journey" aria-labelledby="journey-heading" class="journey-section">
+  <div class="journey-inner">
+    <header class="journey-header">
+      <span class="journey-label">The Build</span>
+      <h2 id="journey-heading" class="journey-title">A record of progress</h2>
+    </header>
+
+    <!-- Stats counters -->
+    <div class="journey-stats" role="list" aria-label="Hotel statistics">
+      {stats.map((stat, i) => (
+        <div class="stat-item" role="listitem">
+          <div
+            class="stat-number"
+            data-target={stat.value}
+            data-index={i}
+            aria-label={`${stat.value} ${stat.label}`}
+          >
+            0
+          </div>
+          <div class="stat-label" aria-hidden="true">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Build log entries -->
+    <div class="journey-entries">
+      {buildEntries.map((entry, i) => (
+        <article class="journey-entry" aria-label={`Build update: ${entry.date} — ${entry.heading}`}>
+          <div class="entry-date" aria-hidden="true">{entry.date}</div>
+          <div class="entry-content">
+            <h3 class="entry-heading">{entry.heading}</h3>
+            <p class="entry-body">{entry.body}</p>
+            <div class="entry-image-wrap">
+              <img
+                src={entry.image}
+                alt={entry.alt}
+                loading="lazy"
+                class="entry-image"
+              />
+            </div>
+          </div>
+          {i < buildEntries.length - 1 && (
+            <hr class="entry-rule" aria-hidden="true" />
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .journey-section {
+    background: #0D1410;
+    padding: 8rem clamp(2rem, 6vw, 8rem);
+  }
+
+  .journey-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .journey-header {
+    margin-bottom: 4rem;
+  }
+
+  .journey-label {
+    display: block;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A8C84;
+    margin-bottom: 0.75rem;
+  }
+
+  .journey-title {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #EAE6DE;
+  }
+
+  /* Stats */
+  .journey-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 5rem;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(234, 230, 222, 0.1);
+    border-bottom: 1px solid rgba(234, 230, 222, 0.1);
+  }
+
+  .stat-item {
+    text-align: left;
+  }
+
+  .stat-number {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #EAE6DE;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7A8C84;
+  }
+
+  /* Build entries */
+  .journey-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .journey-entry {
+    padding: 3.5rem 0;
+  }
+
+  .entry-rule {
+    border: none;
+    border-top: 1px solid rgba(234, 230, 222, 0.1);
+    margin: 0;
+  }
+
+  .entry-date {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #C4876A;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+
+  .entry-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .entry-heading {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    letter-spacing: -0.02em;
+    color: #EAE6DE;
+    line-height: 1.2;
+  }
+
+  .entry-body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #7A8C84;
+    line-height: 1.8;
+    max-width: 58ch;
+  }
+
+  .entry-image-wrap {
+    margin-top: 1rem;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .entry-image {
+    width: 100%;
+    height: clamp(200px, 35vw, 420px);
+    object-fit: cover;
+  }
+
+  :focus-visible {
+    outline: 2px solid #A8D5C2;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .journey-stats {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const initCounters = () => {
+      const g = (window as any).gsap
+      const ST = (window as any).ScrollTrigger
+      if (!g || !ST) return
+
+      document.querySelectorAll('.stat-number').forEach((el) => {
+        const target = parseInt((el as HTMLElement).dataset.target || '0', 10)
+
+        if (prefersReduced) {
+          el.textContent = String(target)
+          return
+        }
+
+        let started = false
+
+        ST.create({
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+          onEnter: () => {
+            if (started) return
+            started = true
+            const obj = { val: 0 }
+            const duration = target > 1000 ? 2 : 1.5
+            g.to(obj, {
+              val: target,
+              duration,
+              ease: 'power2.out',
+              onUpdate: () => {
+                el.textContent = Math.round(obj.val).toString()
+              },
+              onComplete: () => {
+                el.textContent = String(target)
+              },
+            })
+          },
+        })
+      })
+    }
+
+    if ((window as any).gsap && (window as any).ScrollTrigger) {
+      initCounters()
+    } else {
+      window.addEventListener('load', initCounters)
+    }
+  })()
+</script>

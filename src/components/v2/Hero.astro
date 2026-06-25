@@ -1,0 +1,341 @@
+---
+// V2 Hero — full viewport, centred content, char-by-char GSAP stagger
+---
+<section id="v2-hero" aria-label="Hero — Green Horizon hotel">
+  <div class="hero-bg" aria-hidden="true">
+    <img
+      src="/images/hero.jpg"
+      alt=""
+      class="hero-img"
+      fetchpriority="high"
+      loading="eager"
+    />
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline" aria-label="The Horizon Calls.">
+      <span class="hero-line" id="hero-line-1" aria-hidden="true">
+        <!-- Chars injected by JS; fallback text in aria-label on h1 -->
+      </span>
+      <span class="hero-line hero-line-bright" id="hero-line-2" aria-hidden="true"></span>
+    </h1>
+
+    <p class="hero-sub" id="hero-sub">
+      A cliff above the Black Sea. Between ancient forest and open water.
+    </p>
+
+    <div class="hero-actions" id="hero-actions">
+      <a
+        href="#story"
+        class="v2-btn v2-btn-primary"
+        data-magnetic
+        aria-label="Discover the story of Green Horizon"
+      >
+        Discover the story
+      </a>
+      <a
+        href="#register"
+        class="v2-btn v2-btn-outline"
+        data-magnetic
+        aria-label="Register your interest in Green Horizon"
+      >
+        Register interest
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee strip immediately below hero -->
+<div class="v2-marquee-strip" aria-hidden="true" role="presentation">
+  <div class="v2-marquee-inner" id="v2-marquee-text">
+    EARTH&nbsp;&nbsp;·&nbsp;&nbsp;WATER&nbsp;&nbsp;·&nbsp;&nbsp;FIRE&nbsp;&nbsp;·&nbsp;&nbsp;AIR&nbsp;&nbsp;·&nbsp;&nbsp;BLACK SEA&nbsp;&nbsp;·&nbsp;&nbsp;BULGARIA&nbsp;&nbsp;·&nbsp;&nbsp;42°N&nbsp;&nbsp;·&nbsp;&nbsp;27°E&nbsp;&nbsp;·&nbsp;&nbsp;OPENING 2026&nbsp;&nbsp;·&nbsp;&nbsp;
+    EARTH&nbsp;&nbsp;·&nbsp;&nbsp;WATER&nbsp;&nbsp;·&nbsp;&nbsp;FIRE&nbsp;&nbsp;·&nbsp;&nbsp;AIR&nbsp;&nbsp;·&nbsp;&nbsp;BLACK SEA&nbsp;&nbsp;·&nbsp;&nbsp;BULGARIA&nbsp;&nbsp;·&nbsp;&nbsp;42°N&nbsp;&nbsp;·&nbsp;&nbsp;27°E&nbsp;&nbsp;·&nbsp;&nbsp;OPENING 2026&nbsp;&nbsp;·&nbsp;&nbsp;
+  </div>
+</div>
+
+<style>
+  #v2-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 10, 8, 0.55);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 6rem);
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .hero-headline {
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+  .hero-line {
+    display: block;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(64px, 12vw, 160px);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: #EAE6DE;
+  }
+
+  .hero-line-bright {
+    color: #A8D5C2;
+  }
+
+  /* Individual char spans — set by JS */
+  .hero-line :global(.char) {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  .hero-sub {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #7A8C84;
+    max-width: 44ch;
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+  }
+
+  /* Button styles (self-contained) */
+  .v2-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    text-decoration: none;
+    cursor: none;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    white-space: nowrap;
+    transition: background 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
+    will-change: transform;
+  }
+
+  .v2-btn-primary {
+    background: #2B4A3C;
+    color: #EAE6DE;
+    border-color: #2B4A3C;
+  }
+
+  .v2-btn-primary:hover {
+    background: #3a6352;
+    border-color: #3a6352;
+  }
+
+  .v2-btn-outline {
+    background: transparent;
+    color: #A8D5C2;
+    border-color: #A8D5C2;
+  }
+
+  .v2-btn-outline:hover {
+    background: rgba(168, 213, 194, 0.08);
+  }
+
+  :focus-visible {
+    outline: 2px solid #A8D5C2;
+    outline-offset: 4px;
+  }
+
+  /* Marquee */
+  .v2-marquee-strip {
+    background: #060A08;
+    border-top: 1px solid rgba(234, 230, 222, 0.1);
+    border-bottom: 1px solid rgba(234, 230, 222, 0.1);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 1rem 0;
+    user-select: none;
+  }
+
+  .v2-marquee-inner {
+    display: inline-block;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    color: #7A8C84;
+    will-change: transform;
+  }
+
+  @media (max-width: 600px) {
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .v2-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    // ── Split text into char spans ────────────────────────────
+    const line1El = document.getElementById('hero-line-1')
+    const line2El = document.getElementById('hero-line-2')
+    const subEl   = document.getElementById('hero-sub')
+    const actEl   = document.getElementById('hero-actions')
+
+    const lines = [
+      { el: line1El, text: 'THE HORIZON' },
+      { el: line2El, text: 'CALLS.' },
+    ]
+
+    const allChars: HTMLElement[] = []
+
+    lines.forEach(({ el, text }) => {
+      if (!el) return
+      el.innerHTML = ''
+      text.split('').forEach((ch) => {
+        const span = document.createElement('span')
+        span.className = 'char'
+        span.textContent = ch === ' ' ? ' ' : ch
+        el.appendChild(span)
+        allChars.push(span)
+      })
+    })
+
+    // Wait for GSAP to be registered from BaseV2
+    const initAnim = () => {
+      const g = (window as any).gsap
+      if (!g) return
+
+      if (prefersReduced) {
+        // Instant reveal
+        allChars.forEach((c) => { c.style.opacity = '1' })
+        if (subEl) subEl.style.opacity = '1'
+        if (actEl) actEl.style.opacity = '1'
+        return
+      }
+
+      // Set initial state
+      g.set(allChars, { y: -60, opacity: 0 })
+      g.set([subEl, actEl], { opacity: 0, y: 20 })
+
+      const tl = g.timeline({ delay: 0.2 })
+
+      tl.to(allChars, {
+        y: 0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'power4.out',
+        stagger: 0.03,
+      })
+      .to(subEl, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+      }, '-=0.3')
+      .to(actEl, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+      }, '-=0.4')
+    }
+
+    if ((window as any).gsap) {
+      initAnim()
+    } else {
+      window.addEventListener('load', initAnim)
+    }
+
+    // ── Magnetic buttons ──────────────────────────────────────
+    document.querySelectorAll('[data-magnetic]').forEach((btn) => {
+      const el = btn as HTMLElement
+      if (!window.matchMedia('(pointer: fine)').matches) return
+
+      el.addEventListener('mousemove', (e: Event) => {
+        const me = e as MouseEvent
+        const g = (window as any).gsap
+        if (!g) return
+        const rect = el.getBoundingClientRect()
+        const cx = rect.left + rect.width / 2
+        const cy = rect.top + rect.height / 2
+        const dx = (me.clientX - cx) * 0.28
+        const dy = (me.clientY - cy) * 0.28
+        g.to(el, { x: dx, y: dy, duration: 0.4, ease: 'power3.out' })
+      })
+
+      el.addEventListener('mouseleave', () => {
+        const g = (window as any).gsap
+        if (!g) return
+        g.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' })
+      })
+    })
+
+    // ── Marquee ───────────────────────────────────────────────
+    const marqueeEl = document.getElementById('v2-marquee-text')
+    if (marqueeEl && !prefersReduced) {
+      const g = (window as any).gsap
+      const startAnim = () => {
+        if (!g) return
+        const width = marqueeEl.scrollWidth / 2
+        g.set(marqueeEl, { x: 0 })
+        g.to(marqueeEl, {
+          x: -width,
+          duration: 28,
+          ease: 'none',
+          repeat: -1,
+        })
+      }
+      if (g) {
+        startAnim()
+      } else {
+        window.addEventListener('load', startAnim)
+      }
+    }
+  })()
+</script>

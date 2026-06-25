@@ -1,0 +1,66 @@
+---
+import BaseV2 from '../../layouts/BaseV2.astro'
+import Nav from '../../components/v2/Nav.astro'
+import Hero from '../../components/v2/Hero.astro'
+import StorySection from '../../components/v2/StorySection.astro'
+import ElementsSection from '../../components/v2/ElementsSection.astro'
+import ExperiencesSection from '../../components/v2/ExperiencesSection.astro'
+import JourneySection from '../../components/v2/JourneySection.astro'
+import SuitesSection from '../../components/v2/SuitesSection.astro'
+import RegisterSection from '../../components/v2/RegisterSection.astro'
+import FooterV2 from '../../components/v2/FooterV2.astro'
+---
+<BaseV2
+  title="Green Horizon — Version 2"
+  description="A boutique hotel on a cliff above the Bulgarian Black Sea. Four rooms. Six villas. Earth, Water, Fire, Air. Opening 2026."
+  lang="en"
+>
+  <!-- Skip to main content — visible only on focus -->
+  <a href="#main" class="v2-skip-main-link">Skip to main content</a>
+
+  <Nav />
+
+  <main id="main" tabindex="-1">
+    <Hero />
+    <StorySection />
+    <ElementsSection />
+    <ExperiencesSection />
+    <JourneySection />
+    <SuitesSection />
+    <RegisterSection />
+  </main>
+
+  <FooterV2 />
+</BaseV2>
+
+<style>
+  /*
+    Page-level skip link (the nav also has one pointing to #main;
+    this one is a belt-and-suspenders for assistive tech).
+  */
+  .v2-skip-main-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    background: #A8D5C2;
+    color: #060A08;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 12px 12px;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: top 0.2s;
+  }
+
+  .v2-skip-main-link:focus {
+    top: 0;
+  }
+
+  /* Ensure main receives focus cleanly */
+  #main:focus {
+    outline: none;
+  }
+</style>

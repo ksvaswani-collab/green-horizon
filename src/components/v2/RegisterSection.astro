@@ -1,0 +1,295 @@
+---
+// V2 RegisterSection — centred form, Netlify, dark inputs with bright bottom-border
+---
+<section id="register" aria-labelledby="register-heading" class="register-section">
+  <div class="register-inner">
+    <div class="register-text">
+      <span class="register-label">Register interest</span>
+      <h2 id="register-heading" class="register-heading">Be first.</h2>
+      <p class="register-sub">
+        We open in 2026. Tell us a little about what you are looking for and we will be in touch when
+        rooms become available to book.
+      </p>
+    </div>
+
+    <form
+      class="register-form"
+      name="v2-interest"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      aria-label="Register your interest in Green Horizon"
+      novalidate
+    >
+      <!-- Netlify bot field -->
+      <div class="sr-only" aria-hidden="true">
+        <label>
+          Don't fill this out if you are human:
+          <input name="bot-field" tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
+      <input type="hidden" name="form-name" value="v2-interest" />
+
+      <div class="form-row form-row-2">
+        <div class="form-group">
+          <label for="reg-first" class="form-label">First name <span class="req" aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="reg-first"
+            name="first_name"
+            class="form-input"
+            required
+            aria-required="true"
+            aria-label="First name (required)"
+            autocomplete="given-name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="reg-last" class="form-label">Last name <span class="req" aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="reg-last"
+            name="last_name"
+            class="form-input"
+            required
+            aria-required="true"
+            aria-label="Last name (required)"
+            autocomplete="family-name"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-email" class="form-label">Email <span class="req" aria-hidden="true">*</span></label>
+        <input
+          type="email"
+          id="reg-email"
+          name="email"
+          class="form-input"
+          required
+          aria-required="true"
+          aria-label="Email address (required)"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="reg-interest" class="form-label">What are you looking for?</label>
+        <select
+          id="reg-interest"
+          name="interest_type"
+          class="form-input form-select"
+          aria-label="What type of stay interests you?"
+        >
+          <option value="">Select an option</option>
+          <option value="room">One of the four rooms</option>
+          <option value="villa">One of the six villas</option>
+          <option value="both">Both — tell me more</option>
+          <option value="event">Private event or group booking</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-message" class="form-label">Anything else you want to tell us</label>
+        <textarea
+          id="reg-message"
+          name="message"
+          class="form-input form-textarea"
+          rows="4"
+          aria-label="Additional message or questions"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="register-submit"
+        aria-label="Send your interest to Green Horizon"
+      >
+        Send my interest
+      </button>
+
+      <p class="form-note">
+        We do not share your details. No mailing list. We will contact you directly when bookings open.
+      </p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .register-section {
+    background: #0D1410;
+    padding: 8rem clamp(2rem, 6vw, 8rem);
+  }
+
+  .register-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .register-label {
+    display: block;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A8C84;
+    margin-bottom: 0.75rem;
+  }
+
+  .register-heading {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: #EAE6DE;
+    margin-bottom: 1.5rem;
+  }
+
+  .register-sub {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #7A8C84;
+    line-height: 1.75;
+    max-width: 48ch;
+    margin: 0 auto 3rem;
+  }
+
+  /* Form */
+  .register-form {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-label {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    color: #7A8C84;
+    letter-spacing: 0.02em;
+  }
+
+  .req {
+    color: #C4876A;
+  }
+
+  .form-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #A8D5C2;
+    color: #EAE6DE;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.75rem 0;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s ease;
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .form-input:focus {
+    border-bottom-color: #EAE6DE;
+  }
+
+  .form-input::placeholder {
+    color: #7A8C84;
+    opacity: 1;
+  }
+
+  .form-input:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A8C84' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.25rem center;
+    padding-right: 1.5rem;
+  }
+
+  .form-select option {
+    background: #0D1410;
+    color: #EAE6DE;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  /* Submit button */
+  .register-submit {
+    display: block;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: #2B4A3C;
+    color: #EAE6DE;
+    border: 1px solid #2B4A3C;
+    border-radius: 16px;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease;
+    margin-top: 0.5rem;
+  }
+
+  .register-submit:hover {
+    background: #3a6352;
+    border-color: #3a6352;
+  }
+
+  .register-submit:focus-visible {
+    outline: 2px solid #A8D5C2;
+    outline-offset: 4px;
+  }
+
+  .form-note {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #7A8C84;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  @media (max-width: 600px) {
+    .form-row-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

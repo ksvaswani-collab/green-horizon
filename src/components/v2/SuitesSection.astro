@@ -1,0 +1,276 @@
+---
+// V2 SuitesSection — large numbered list, hover thumbnail reveal
+const suites = [
+  {
+    number: '01',
+    name: 'The Earth Suite',
+    body: 'Limestone and raw oak. South-facing, directly above the forest. Views that stop at the horizon.',
+    image: '/images/room-earth.jpg',
+    alt: 'The Earth Suite interior — raw limestone walls, reclaimed oak furnishings, forest view window',
+    href: '#register',
+  },
+  {
+    number: '02',
+    name: 'The Water Suite',
+    body: 'The full breadth of the Black Sea from a single window. Open, spare, oriented west.',
+    image: '/images/room-water.jpg',
+    alt: 'The Water Suite — minimalist interior with panoramic sea view window, morning light',
+    href: '#register',
+  },
+  {
+    number: '03',
+    name: 'The Fire Suite',
+    body: 'Copper finish fittings, terracotta plaster. Built to face the sunset. The light in this room is unrepeatable.',
+    image: '/images/room-fire.jpg',
+    alt: 'The Fire Suite — copper-toned finishes, warm terracotta plaster walls, sunset light',
+    href: '#register',
+  },
+  {
+    number: '04',
+    name: 'The Air Suite',
+    body: 'The highest room. Three exposures. Wind on the terrace before everyone else wakes.',
+    image: '/images/room-air.jpg',
+    alt: 'The Air Suite — elevated room with three-directional windows, outdoor terrace with sea view',
+    href: '#register',
+  },
+]
+---
+<section id="suites" aria-labelledby="suites-heading" class="suites-section">
+  <div class="suites-inner">
+    <header class="suites-header">
+      <span class="suites-label">Accommodation</span>
+      <h2 id="suites-heading" class="suites-title">Four rooms. Four orientations.</h2>
+    </header>
+
+    <div class="suites-list" role="list">
+      {suites.map((suite, i) => (
+        <article
+          class="suite-row"
+          role="listitem"
+          data-suite-index={i}
+          aria-label={suite.name}
+        >
+          <!-- Hover thumbnail (desktop) -->
+          <div class="suite-thumb" aria-hidden="true">
+            <img
+              src={suite.image}
+              alt=""
+              loading="lazy"
+            />
+          </div>
+
+          <div class="suite-row-inner">
+            <div class="suite-left">
+              <span class="suite-number" aria-hidden="true">{suite.number}</span>
+            </div>
+            <div class="suite-center">
+              <h3 class="suite-name">{suite.name}</h3>
+              <p class="suite-body">{suite.body}</p>
+            </div>
+            <div class="suite-right">
+              <a
+                href={suite.href}
+                class="suite-cta"
+                aria-label={`Enquire about ${suite.name}`}
+              >
+                Enquire →
+              </a>
+            </div>
+          </div>
+
+          <div class="suite-rule" aria-hidden="true"></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .suites-section {
+    background: #060A08;
+    padding: 8rem clamp(2rem, 6vw, 8rem);
+  }
+
+  .suites-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .suites-header {
+    margin-bottom: 4rem;
+  }
+
+  .suites-label {
+    display: block;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A8C84;
+    margin-bottom: 0.75rem;
+  }
+
+  .suites-title {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #EAE6DE;
+  }
+
+  .suites-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .suite-row {
+    position: relative;
+    cursor: default;
+  }
+
+  /* Hover thumbnail — absolute, positioned near the suite name */
+  .suite-thumb {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 240px;
+    height: 160px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+  }
+
+  .suite-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .suite-row:hover .suite-thumb {
+    opacity: 1;
+  }
+
+  .suite-row-inner {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    transition: padding 0.2s ease;
+  }
+
+  .suite-row:hover .suite-row-inner {
+    padding-left: 1rem;
+  }
+
+  .suite-number {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    color: #7A8C84;
+    line-height: 1;
+    display: block;
+    transition: color 0.2s ease;
+  }
+
+  .suite-row:hover .suite-number {
+    color: #A8D5C2;
+  }
+
+  .suite-name {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #EAE6DE;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s ease;
+  }
+
+  .suite-row:hover .suite-name {
+    color: #A8D5C2;
+  }
+
+  .suite-body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: #7A8C84;
+    line-height: 1.7;
+    max-width: 52ch;
+  }
+
+  .suite-cta {
+    display: inline-block;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: #A8D5C2;
+    text-decoration: none;
+    white-space: nowrap;
+    position: relative;
+    padding-right: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .suite-cta::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: #A8D5C2;
+    transition: width 0.3s ease;
+  }
+
+  .suite-cta:hover::after {
+    width: calc(100% - 1rem);
+  }
+
+  .suite-rule {
+    height: 1px;
+    background: rgba(234, 230, 222, 0.1);
+  }
+
+  :focus-visible {
+    outline: 2px solid #A8D5C2;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .suite-thumb {
+      display: none;
+    }
+
+    .suite-row-inner {
+      grid-template-columns: 60px 1fr;
+      gap: 1.25rem;
+    }
+
+    .suite-right {
+      grid-column: 2;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .suite-row-inner {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .suite-number {
+      font-size: 1.25rem;
+    }
+
+    .suite-name {
+      font-size: clamp(1.75rem, 8vw, 2.5rem);
+    }
+  }
+</style>

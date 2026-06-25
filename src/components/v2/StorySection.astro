@@ -1,0 +1,200 @@
+---
+// V2 StorySection — two-column layout, clip-path reveal on scroll
+---
+<section id="story" aria-labelledby="story-heading" class="story-section">
+  <div class="story-inner">
+    <!-- LEFT: index + label -->
+    <div class="story-left" aria-hidden="true">
+      <div class="story-index">—01—</div>
+      <div class="story-label">The Dream</div>
+    </div>
+
+    <!-- RIGHT: content -->
+    <div class="story-right">
+      <blockquote class="story-pullquote v2-reveal" id="story-quote">
+        <p>"The most profound hospitality is not about service. It is about place."</p>
+      </blockquote>
+
+      <div class="story-body v2-reveal" id="story-body">
+        <p>
+          Green Horizon is not a hotel in the way you might imagine one. It is a small, deliberate
+          collection of rooms and villas on the edge of Strandzha — Bulgaria's last great coastal
+          wilderness, where the mountain meets the Black Sea without apology.
+        </p>
+        <p>
+          Four rooms. Six villas. Each oriented to a different quality of light. Each built to stand
+          in the landscape rather than above it. The cliff is not a backdrop. It is the point.
+        </p>
+      </div>
+
+      <a
+        href="#journey"
+        class="story-cta v2-reveal"
+        id="story-cta"
+        aria-label="Read the full story of Green Horizon"
+      >
+        Read the story →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story-section {
+    background: #0D1410;
+    padding: 8rem clamp(2rem, 6vw, 8rem);
+  }
+
+  .story-inner {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Left column */
+  .story-left {
+    padding-top: 0.5rem;
+  }
+
+  .story-index {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: #7A8C84;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .story-label {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A8C84;
+  }
+
+  /* Right column */
+  .story-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .story-pullquote {
+    margin: 0;
+  }
+
+  .story-pullquote p {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: #EAE6DE;
+  }
+
+  .story-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .story-body p {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #7A8C84;
+  }
+
+  .story-cta {
+    display: inline-block;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #A8D5C2;
+    text-decoration: none;
+    position: relative;
+    width: fit-content;
+    transition: color 0.2s ease;
+  }
+
+  .story-cta::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: #A8D5C2;
+    transition: width 0.3s ease;
+  }
+
+  .story-cta:hover::after {
+    width: 100%;
+  }
+
+  /* Clip-path reveal */
+  .v2-reveal {
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+  }
+
+  :focus-visible {
+    outline: 2px solid #A8D5C2;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .story-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .story-left {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding-top: 0;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const initReveal = () => {
+      const g = (window as any).gsap
+      const ST = (window as any).ScrollTrigger
+      if (!g || !ST) return
+
+      const reveals = document.querySelectorAll('#story .v2-reveal')
+      reveals.forEach((el, i) => {
+        if (prefersReduced) {
+          ;(el as HTMLElement).style.clipPath = 'none'
+          return
+        }
+        g.to(el, {
+          clipPath: 'inset(0% 0 0 0)',
+          duration: 0.9,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          delay: i * 0.1,
+        })
+      })
+    }
+
+    if ((window as any).gsap && (window as any).ScrollTrigger) {
+      initReveal()
+    } else {
+      window.addEventListener('load', initReveal)
+    }
+  })()
+</script>

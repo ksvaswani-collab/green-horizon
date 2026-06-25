@@ -1,0 +1,46 @@
+---
+// pages/v3/index.astro — Green Horizon V3 "Paper & Grain"
+// Assembles all V3 components under BaseV3 layout
+
+import BaseV3 from '../../layouts/BaseV3.astro';
+import Hero from '../../components/v3/Hero.astro';
+import StorySection from '../../components/v3/StorySection.astro';
+import ElementsSection from '../../components/v3/ElementsSection.astro';
+import ExperiencesSection from '../../components/v3/ExperiencesSection.astro';
+import JourneySection from '../../components/v3/JourneySection.astro';
+import SuitesSection from '../../components/v3/SuitesSection.astro';
+import RegisterSection from '../../components/v3/RegisterSection.astro';
+import FooterV3 from '../../components/v3/FooterV3.astro';
+---
+
+<BaseV3
+  title="Green Horizon — Version 3"
+  description="Green Horizon is a family-built boutique hotel perched on an ancient volcanic cliff above the Black Sea, on the southern coast of Bulgaria. Opening 2026."
+  ogImage="/images/og-image.jpg"
+>
+
+  <!-- Hero — full viewport -->
+  <Hero />
+
+  <!-- 01 — Our Story -->
+  <StorySection />
+
+  <!-- 02 — Elements -->
+  <ElementsSection />
+
+  <!-- 03 — Experiences -->
+  <ExperiencesSection />
+
+  <!-- 04 — The Build / Journey -->
+  <JourneySection />
+
+  <!-- 05 — Suites & Rooms -->
+  <SuitesSection />
+
+  <!-- 06 — Register Interest -->
+  <RegisterSection />
+
+  <!-- Footer -->
+  <FooterV3 />
+
+</BaseV3>

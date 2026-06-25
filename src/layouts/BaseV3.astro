@@ -1,0 +1,142 @@
+---
+// BaseV3.astro — Green Horizon V3 "Paper & Grain"
+// Left sidebar layout, no GSAP, DM Serif Display throughout
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = "Green Horizon — A cliff-edge hotel on Bulgaria's Black Sea coast",
+  description = 'Green Horizon is a family-built boutique hotel perched on an ancient volcanic cliff above the Black Sea, on the southern coast of Bulgaria. Opening 2026.',
+  ogImage = '/images/og-image.jpg',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://greenhorizon.bg');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- Primary meta -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL.toString()} />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content={canonicalURL.toString()} />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image"       content={ogImage} />
+  <meta property="og:locale"      content="en_GB" />
+  <meta property="og:site_name"   content="Green Horizon" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={ogImage} />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Stylesheet — v3 only, no Tailwind, no external UI libraries -->
+  <link rel="stylesheet" href="/src/styles/v3.css" />
+
+  <!-- Preconnect for Google Fonts fallback (fontsource handles primary) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+
+<body>
+  <!-- Skip to main content -->
+  <a href="#main-content" class="v3-skip-link">Skip to main content</a>
+
+  <div class="v3-body-wrapper">
+
+    <!-- ── Left Sidebar Navigation ─────────────────────────────── -->
+    <aside class="v3-sidebar" role="complementary" aria-label="Site navigation">
+
+      <nav class="v3-sidebar__nav" role="navigation" aria-label="Main" id="main-nav">
+        <a href="#story"       aria-label="Go to Our Story section">Our Story</a>
+        <a href="#elements"    aria-label="Go to Elements section">Elements</a>
+        <a href="#experiences" aria-label="Go to Experiences section">Experiences</a>
+        <a href="#build"       aria-label="Go to The Build section">The Build</a>
+        <a href="#suites"      aria-label="Go to Suites section">Suites</a>
+        <a href="#register"    aria-label="Go to Register Interest section">Register</a>
+      </nav>
+
+      <!-- Wordmark — rotated vertical at bottom of sidebar -->
+      <span class="v3-sidebar__wordmark" aria-hidden="true">Green Horizon</span>
+
+    </aside>
+
+    <!-- Mobile nav toggle -->
+    <button
+      class="v3-mobile-nav-toggle"
+      aria-controls="main-nav"
+      aria-expanded="false"
+      aria-label="Toggle navigation menu"
+      type="button"
+    >
+      Menu
+    </button>
+
+    <!-- ── Main Content ──────────────────────────────────────────── -->
+    <main class="v3-main" id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+  </div>
+
+  <!-- ── Mobile nav script (no GSAP — plain JS) ───────────────── -->
+  <script>
+    const toggle = document.querySelector('.v3-mobile-nav-toggle') as HTMLButtonElement | null;
+    const nav    = document.querySelector('.v3-sidebar__nav') as HTMLElement | null;
+
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        toggle.textContent = isOpen ? 'Close' : 'Menu';
+      });
+
+      // Close nav when a link is clicked (mobile UX)
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.textContent = 'Menu';
+        });
+      });
+    }
+  </script>
+
+  <!-- ── Global scroll-reveal IntersectionObserver ───────────── -->
+  <script>
+    const reveals = document.querySelectorAll('.v3-reveal');
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('v3-visible');
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.15 }
+    );
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
+
+<style is:global>
+  /* Any page-level overrides that must be global go here */
+  /* All component styles live in v3.css or component <style> blocks */
+</style>

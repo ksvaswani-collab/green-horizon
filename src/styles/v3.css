@@ -1,0 +1,446 @@
+/* =============================================================
+   Green Horizon V3 — "Paper & Grain"
+   Full stylesheet — no Tailwind, no framework utilities
+   ============================================================= */
+
+/* --- Font imports ------------------------------------------- */
+@import '@fontsource/dm-serif-display/400.css';
+@import '@fontsource/dm-serif-display/400-italic.css';
+@import '@fontsource/manrope/400.css';
+
+/* --- Design tokens ------------------------------------------ */
+:root {
+  --v3-bg:       #F7F2EA;
+  --v3-surface:  #EDE8DF;
+  --v3-ink:      #1A1510;
+  --v3-muted:    #8C7B6A;
+  --v3-rust:     #B85C38;
+  --v3-rule:     rgba(26, 21, 16, 0.15);
+  --v3-dark:     #2A1F16;
+
+  --font-v3-primary: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-v3-fine:    'Manrope', system-ui, sans-serif;
+
+  --v3-sidebar-width: 220px;
+
+  /* Baseline rhythm */
+  --v3-space-xs:  0.5rem;
+  --v3-space-sm:  1rem;
+  --v3-space-md:  2rem;
+  --v3-space-lg:  4rem;
+  --v3-space-xl:  8rem;
+
+  /* Content max width */
+  --v3-content-max: 1200px;
+  --v3-content-pad: 4rem;
+}
+
+/* --- Reset -------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+/* --- Body & grain texture ----------------------------------- */
+body {
+  background-color: var(--v3-bg);
+  color: var(--v3-ink);
+  font-family: var(--font-v3-primary);
+  font-size: 18px;
+  line-height: 1.9;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Grain overlay — subtle SVG noise applied over everything */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+}
+
+/* --- Typography system -------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-v3-primary);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--v3-ink);
+}
+
+h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+h4 { font-size: 1.25rem; }
+
+p {
+  font-family: var(--font-v3-primary);
+  font-size: 18px;
+  line-height: 1.9;
+  color: var(--v3-ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- Fine print (Manrope only) ------------------------------ */
+.v3-fine {
+  font-family: var(--font-v3-fine);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--v3-muted);
+}
+
+/* --- Labels / overlines (italic small caps sim) ------------ */
+.v3-label {
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--v3-muted);
+  text-transform: uppercase;
+}
+
+/* --- Section numbers --------------------------------------- */
+.v3-section-number {
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 6rem;
+  color: var(--v3-muted);
+  opacity: 0.35;
+  line-height: 1;
+  user-select: none;
+}
+
+/* --- Horizontal rules -------------------------------------- */
+.v3-rule {
+  border: none;
+  border-top: 1px solid var(--v3-rule);
+  margin: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--v3-rule);
+}
+
+/* --- Buttons & CTA links ----------------------------------- */
+/* All CTAs are <a> tags styled as flat, square-edged links */
+.v3-cta {
+  display: inline-block;
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  border-radius: 0;
+  border: 1px solid currentColor;
+  padding: 0.65em 1.4em;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.v3-cta:hover {
+  text-decoration: none;
+  background-color: var(--v3-ink);
+  color: var(--v3-bg);
+  border-color: var(--v3-ink);
+}
+
+.v3-cta--ghost {
+  border-color: var(--v3-bg);
+  color: var(--v3-bg);
+}
+
+.v3-cta--ghost:hover {
+  background-color: var(--v3-bg);
+  color: var(--v3-ink);
+}
+
+/* Submit button gets 4px radius only */
+.v3-submit {
+  display: inline-block;
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  padding: 0.8em 2em;
+  background-color: #2B4A3C;
+  color: var(--v3-bg);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.v3-submit:hover {
+  background-color: #1e3529;
+  text-decoration: none;
+}
+
+/* Inline text CTA */
+.v3-text-link {
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 16px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.v3-text-link:hover {
+  text-decoration: none;
+  color: var(--v3-rust);
+  border-bottom-color: var(--v3-rust);
+}
+
+/* --- Images: always B&W ------------------------------------ */
+img {
+  display: block;
+  filter: grayscale(1) contrast(1.1);
+  transition: filter 0.4s ease;
+}
+
+img:hover {
+  filter: grayscale(0.7) contrast(1.05);
+}
+
+/* --- Layout: sidebar + content ----------------------------- */
+.v3-body-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.v3-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--v3-sidebar-width);
+  height: 100vh;
+  background-color: var(--v3-bg);
+  border-right: 1px solid var(--v3-rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 100;
+  padding: 2.5rem 0;
+  overflow: hidden;
+}
+
+.v3-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  padding-top: 1rem;
+}
+
+.v3-sidebar__nav a {
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--v3-muted);
+  padding: 0.65rem 2rem;
+  display: block;
+  border-bottom: 1px solid var(--v3-rule);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.v3-sidebar__nav a:first-child {
+  border-top: 1px solid var(--v3-rule);
+}
+
+.v3-sidebar__nav a:hover {
+  color: var(--v3-ink);
+  text-decoration: none;
+}
+
+.v3-sidebar__wordmark {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  color: var(--v3-ink);
+  padding: 0 2rem 0.5rem;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Main content area */
+.v3-main {
+  margin-left: var(--v3-sidebar-width);
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Section base ------------------------------------------ */
+.v3-section {
+  padding: var(--v3-space-xl) var(--v3-content-pad);
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .v3-section {
+    padding: var(--v3-space-lg) 2rem;
+  }
+}
+
+/* --- Scroll reveal ----------------------------------------- */
+.v3-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.v3-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --- Skip link --------------------------------------------- */
+.v3-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  font-family: var(--font-v3-primary);
+  font-size: 14px;
+  background: var(--v3-rust);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.v3-skip-link:focus {
+  top: 1rem;
+}
+
+/* --- Focus visible ----------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--v3-rust);
+  outline-offset: 3px;
+}
+
+/* --- Mobile nav toggle ------------------------------------- */
+.v3-mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 200;
+  font-family: var(--font-v3-primary);
+  font-style: italic;
+  font-size: 13px;
+  background: var(--v3-bg);
+  border: 1px solid var(--v3-rule);
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  color: var(--v3-ink);
+}
+
+/* --- Responsive: mobile sidebar → top bar ------------------ */
+@media (max-width: 768px) {
+  .v3-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid var(--v3-rule);
+    z-index: 100;
+  }
+
+  .v3-sidebar__nav {
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    background: var(--v3-bg);
+    border-bottom: 1px solid var(--v3-rule);
+    flex-direction: column;
+    padding: 0;
+    gap: 0;
+  }
+
+  .v3-sidebar__nav.is-open {
+    display: flex;
+  }
+
+  .v3-sidebar__nav a {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--v3-rule);
+    border-top: none;
+  }
+
+  .v3-sidebar__nav a:first-child {
+    border-top: none;
+  }
+
+  .v3-sidebar__wordmark {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 15px;
+    padding: 0;
+  }
+
+  .v3-main {
+    margin-left: 0;
+    padding-top: 56px;
+  }
+
+  .v3-mobile-nav-toggle {
+    display: block;
+  }
+}
+
+/* --- Utility helpers --------------------------------------- */
+.v3-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.v3-text-muted { color: var(--v3-muted); }
+.v3-text-rust  { color: var(--v3-rust); }

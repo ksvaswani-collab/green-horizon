@@ -1,0 +1,262 @@
+---
+// ExperiencesSection.astro — V3 "Paper & Grain"
+// Magazine spread layout: two portrait images left, one tall landscape right
+// Background: v3-bg
+
+const experiences = [
+  {
+    id: 'walking',
+    title: 'On the cliff path',
+    subtitle: 'Two hours. No guide required.',
+    body: 'The path runs north along the cliff top for eleven kilometres, passing three villages and two cape headlands before turning inland near the nature reserve at Yailata. Start from the hotel gate at first light. Return for lunch.',
+    image: '/images/exp-walking.jpg',
+    imageAlt: 'Narrow coastal path along the cliff top, early morning, sea to the right, scrub vegetation to the left',
+    portrait: true,
+  },
+  {
+    id: 'sea',
+    title: 'On the water',
+    subtitle: 'By kayak, by boat, or by swimming down.',
+    body: 'At the base of the cliff, accessed by a cut staircase through the rock, a single landing dock. Kayaks available for independent use. Fishing trips can be arranged with the men from Kamen Bryag — they have been fishing this stretch of coast since before there was a coast road.',
+    image: '/images/exp-sea.jpg',
+    imageAlt: 'Two kayaks pulled up on a small rocky cove at the foot of the cliff, sea visible in the distance',
+    portrait: true,
+  },
+  {
+    id: 'table',
+    title: 'At the table',
+    subtitle: 'Lunch. Dinner. Not breakfast — breakfast is left to you.',
+    body: 'The kitchen is not a restaurant. There is one sitting, one menu per service, built from what has arrived that morning. Wine is Bulgarian, mostly from the Danube Plain. We do not serve international brands. You may bring your own wine from anywhere you like — we will not charge corkage.',
+    image: '/images/exp-table.jpg',
+    imageAlt: 'Long stone table set for dinner on the cliff terrace, candles, simple ceramic plates, the sea dark behind',
+    portrait: false,
+  },
+];
+
+const portrait = experiences.filter(e => e.portrait);
+const landscape = experiences.filter(e => !e.portrait);
+---
+
+<section id="experiences" class="v3-section v3-experiences" aria-labelledby="experiences-heading">
+
+  <hr class="v3-rule" aria-hidden="true" />
+
+  <!-- Section header -->
+  <div class="v3-experiences__header v3-reveal">
+    <p class="v3-label" aria-hidden="true">—03—</p>
+    <div class="v3-experiences__header-text">
+      <p class="v3-label">Experiences</p>
+      <h2 id="experiences-heading">The Black Sea, your way.</h2>
+    </div>
+  </div>
+
+  <!-- Magazine spread -->
+  <div class="v3-experiences__spread v3-reveal" role="list">
+
+    <!-- Left column: two portrait images -->
+    <div class="v3-experiences__col-left" role="listitem">
+      {portrait.map(exp => (
+        <article class="v3-experiences__item" aria-label={exp.title}>
+          <figure class="v3-experiences__figure">
+            <img
+              src={exp.image}
+              alt={exp.imageAlt}
+              class="v3-experiences__img v3-experiences__img--portrait"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="v3-experiences__caption">
+              <em>{exp.subtitle}</em>
+            </figcaption>
+          </figure>
+          <div class="v3-experiences__text">
+            <h3 class="v3-experiences__title">{exp.title}</h3>
+            <p>{exp.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Right column: one tall landscape image -->
+    <div class="v3-experiences__col-right" role="listitem">
+      {landscape.map(exp => (
+        <article class="v3-experiences__item v3-experiences__item--tall" aria-label={exp.title}>
+          <figure class="v3-experiences__figure">
+            <img
+              src={exp.image}
+              alt={exp.imageAlt}
+              class="v3-experiences__img v3-experiences__img--landscape"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="v3-experiences__caption">
+              <em>{exp.subtitle}</em>
+            </figcaption>
+          </figure>
+          <div class="v3-experiences__text">
+            <h3 class="v3-experiences__title">{exp.title}</h3>
+            <p>{exp.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+
+  <hr class="v3-rule v3-experiences__bottom-rule" aria-hidden="true" />
+
+</section>
+
+<style>
+  .v3-experiences {
+    background-color: var(--v3-bg);
+    padding-top: 0;
+  }
+
+  /* Section header */
+  .v3-experiences__header {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 2rem;
+    align-items: end;
+    padding: 3rem 0 3rem;
+  }
+
+  .v3-experiences__header > .v3-label {
+    font-size: 13px;
+    color: var(--v3-muted);
+    line-height: 1;
+    padding-bottom: 0.25em;
+    text-align: right;
+  }
+
+  .v3-experiences__header-text .v3-label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .v3-experiences__header-text h2 {
+    font-family: var(--font-v3-primary);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  /* ── Magazine spread ─────────────────────────────────────── */
+  .v3-experiences__spread {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-bottom: 5rem;
+  }
+
+  /* Left column: two stacked portrait items */
+  .v3-experiences__col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  /* Right column: one tall item */
+  .v3-experiences__col-right {
+    position: sticky;
+    top: 4rem;
+  }
+
+  /* Individual experience item */
+  .v3-experiences__item {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Figure */
+  .v3-experiences__figure {
+    margin: 0;
+  }
+
+  /* Portrait images */
+  .v3-experiences__img--portrait {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    /* B&W — enforced globally, restated for clarity */
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  /* Landscape (tall) image */
+  .v3-experiences__img--landscape {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  /* Caption */
+  .v3-experiences__caption {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--v3-muted);
+    margin-top: 0.6rem;
+    display: block;
+  }
+
+  /* Experience title */
+  .v3-experiences__title {
+    font-family: var(--font-v3-primary);
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--v3-ink);
+    margin-bottom: 0.5rem;
+  }
+
+  /* Body text */
+  .v3-experiences__text p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--v3-ink);
+  }
+
+  .v3-experiences__bottom-rule {
+    margin: 0;
+  }
+
+  /* ── Tablet ─────────────────────────────────────────────── */
+  @media (max-width: 960px) {
+    .v3-experiences__spread {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .v3-experiences__col-right {
+      position: static;
+    }
+
+    .v3-experiences__col-left {
+      gap: 3rem;
+    }
+
+    .v3-experiences__img--landscape {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  /* ── Mobile ─────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .v3-experiences__header {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .v3-experiences__header > .v3-label {
+      text-align: left;
+    }
+
+    .v3-experiences__spread {
+      margin-bottom: 3rem;
+    }
+  }
+</style>

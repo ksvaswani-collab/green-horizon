@@ -1,0 +1,185 @@
+---
+// V2 FooterV2 — minimal, wordmark left, links right
+const currentYear = new Date().getFullYear()
+---
+<footer id="v2-footer" role="contentinfo" aria-label="Site footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <!-- Wordmark -->
+      <div class="footer-wordmark-wrap">
+        <span class="footer-wordmark" aria-label="Green Horizon">HORIZON</span>
+        <p class="footer-tagline">A cliff above the Black Sea.<br />Bulgaria. Opening 2026.</p>
+      </div>
+
+      <!-- Links -->
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <ul role="list">
+          <li><a href="#story">The story</a></li>
+          <li><a href="#elements">The elements</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#suites">Rooms &amp; villas</a></li>
+          <li><a href="#journey">The build</a></li>
+          <li><a href="#register">Register interest</a></li>
+        </ul>
+        <div class="footer-contact">
+          <a
+            href="mailto:hello@greenhorizonhotel.com"
+            aria-label="Email Green Horizon at hello@greenhorizonhotel.com"
+            class="footer-email"
+          >
+            hello@greenhorizonhotel.com
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer-rule" role="separator" aria-hidden="true"></div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        &copy; {currentYear} Green Horizon. All rights reserved.
+      </p>
+      <div class="footer-legal">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  #v2-footer {
+    background: #060A08;
+    border-top: 1px solid rgba(234, 230, 222, 0.1);
+    padding: 5rem clamp(2rem, 6vw, 8rem) 3rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: flex-start;
+    margin-bottom: 4rem;
+  }
+
+  .footer-wordmark {
+    display: block;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    color: #EAE6DE;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-tagline {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: #7A8C84;
+    line-height: 1.7;
+  }
+
+  /* Nav links */
+  .footer-nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-nav a {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: #7A8C84;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-nav a:hover {
+    color: #A8D5C2;
+  }
+
+  .footer-contact {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(234, 230, 222, 0.1);
+  }
+
+  .footer-email {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: #A8D5C2;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer-email:hover {
+    opacity: 0.75;
+  }
+
+  /* Rule */
+  .footer-rule {
+    height: 1px;
+    background: rgba(234, 230, 222, 0.1);
+    margin-bottom: 2rem;
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .footer-copy {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #7A8C84;
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-legal a {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.8125rem;
+    color: #7A8C84;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-legal a:hover {
+    color: #EAE6DE;
+  }
+
+  :focus-visible {
+    outline: 2px solid #A8D5C2;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+</style>

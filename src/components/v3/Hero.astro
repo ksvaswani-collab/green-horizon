@@ -1,0 +1,219 @@
+---
+// Hero.astro — V3 "Paper & Grain"
+// Full viewport, B&W background image, typographic text top-left
+// No GSAP — CSS keyframe animation only
+---
+
+<section class="v3-hero" aria-label="Hero — Green Horizon">
+
+  <!-- Full-bleed B&W background image -->
+  <div class="v3-hero__image-wrap" aria-hidden="true">
+    <img
+      src="/images/hero.jpg"
+      alt=""
+      class="v3-hero__bg-img"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+
+  <!-- Text content — positioned top-left -->
+  <div class="v3-hero__content">
+
+    <p class="v3-hero__overline v3-label" aria-hidden="true">— Bulgaria · Black Sea Coast</p>
+
+    <h1 class="v3-hero__headline">
+      One conviction.<br />
+      One cliff.<br />
+      One sea.
+    </h1>
+
+    <p class="v3-hero__subheadline">
+      A family. A cliff. The Black Sea coast of Bulgaria.
+    </p>
+
+    <div class="v3-hero__ctas" role="list">
+      <a
+        href="#story"
+        class="v3-cta"
+        role="listitem"
+        aria-label="Discover the story of Green Horizon"
+      >
+        Discover the story
+      </a>
+      <a
+        href="#register"
+        class="v3-cta v3-cta--ghost"
+        role="listitem"
+        aria-label="Register your interest in Green Horizon"
+      >
+        Register interest
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Scroll indicator -->
+  <p class="v3-hero__scroll-hint v3-fine" aria-hidden="true">Scroll</p>
+
+</section>
+
+<style>
+  /* Hero uses full viewport height minus sidebar width (already offset by margin-left on .v3-main) */
+  .v3-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  /* ── Background image ──────────────────────────────────── */
+  .v3-hero__image-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .v3-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    /* B&W treatment — no overlay */
+    filter: grayscale(1) contrast(1.1);
+    transition: filter 0.4s ease;
+    display: block;
+  }
+
+  /* Override global img hover for the hero bg — no desaturation change */
+  .v3-hero__bg-img:hover {
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  /* ── Text content ──────────────────────────────────────── */
+  .v3-hero__content {
+    position: relative;
+    z-index: 2;
+    padding: 5rem 4rem 4rem;
+    max-width: 640px;
+
+    /* CSS animation: fade up on load — no GSAP */
+    opacity: 0;
+    animation: v3HeroFadeIn 1.2s 0.3s ease forwards;
+  }
+
+  @keyframes v3HeroFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v3-hero__content {
+      opacity: 1;
+      animation: none;
+    }
+  }
+
+  /* Overline label */
+  .v3-hero__overline {
+    display: block;
+    margin-bottom: 2rem;
+    /* v3-label class from global provides the styling */
+    /* Override color for legibility on image */
+    color: rgba(247, 242, 234, 0.75);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+  }
+
+  /* Main headline */
+  .v3-hero__headline {
+    font-family: var(--font-v3-primary);
+    font-weight: 400;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.1;
+    color: var(--v3-bg);
+    margin-bottom: 2rem;
+    /* Subtle text shadow for legibility on image */
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Subheadline */
+  .v3-hero__subheadline {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+    color: rgba(247, 242, 234, 0.85);
+    margin-bottom: 3rem;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* CTAs container */
+  .v3-hero__ctas {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  /* First CTA (Discover the story) — light background on image */
+  .v3-hero__ctas .v3-cta:first-child {
+    background-color: var(--v3-bg);
+    color: var(--v3-ink);
+    border-color: var(--v3-bg);
+  }
+
+  .v3-hero__ctas .v3-cta:first-child:hover {
+    background-color: var(--v3-ink);
+    color: var(--v3-bg);
+    border-color: var(--v3-ink);
+  }
+
+  /* Scroll hint */
+  .v3-hero__scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: rgba(247, 242, 234, 0.5);
+    writing-mode: horizontal-tb;
+    font-family: var(--font-v3-fine);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── Mobile ─────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .v3-hero__content {
+      padding: 3rem 1.5rem 2rem;
+      max-width: 100%;
+    }
+
+    .v3-hero__headline {
+      font-size: clamp(2.4rem, 10vw, 3.5rem);
+    }
+
+    .v3-hero__subheadline {
+      font-size: 17px;
+    }
+
+    .v3-hero__ctas {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .v3-hero__ctas .v3-cta {
+      text-align: center;
+    }
+  }
+</style>

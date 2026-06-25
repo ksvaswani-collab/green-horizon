@@ -1,0 +1,160 @@
+---
+// StorySection.astro — V3 "Paper & Grain"
+// Wide typographic spread, no image, pullquote centred, 2-column body
+// Section 01 — Our Story
+---
+
+<section id="story" class="v3-section v3-story" aria-labelledby="story-heading">
+
+  <!-- Top rule -->
+  <hr class="v3-rule" aria-hidden="true" />
+
+  <!-- Section number decorative -->
+  <div class="v3-story__number-wrap" aria-hidden="true">
+    <span class="v3-section-number">—01—</span>
+  </div>
+
+  <!-- Pullquote — centred, large italic -->
+  <blockquote class="v3-story__pullquote v3-reveal">
+    <p>
+      «&thinsp;The most profound hospitality is not about service.<br />
+      It is about place.&thinsp;»
+    </p>
+  </blockquote>
+
+  <hr class="v3-rule v3-story__mid-rule" aria-hidden="true" />
+
+  <!-- Section heading (visually hidden — pullquote carries the heading) -->
+  <h2 id="story-heading" class="v3-story__heading v3-reveal">
+    Our Story
+  </h2>
+
+  <!-- Two-column body text -->
+  <div class="v3-story__body v3-reveal">
+    <p>
+      Green Horizon began with a walk. An unplanned detour off the main road south of Balchik,
+      through a belt of old oak and hornbeam, that ended abruptly at a cliff edge.
+      Below: the Black Sea. Above: open sky. Between: nothing but wind and a long way down.
+    </p>
+
+    <p>
+      The family that owns this land has farmed it, planted it, and argued over it for four generations.
+      The decision to build a hotel here was not taken lightly. It took eighteen months of family
+      meetings, three architects, and one very stubborn structural engineer who kept insisting
+      the cliff was not going anywhere.
+    </p>
+
+    <p>
+      He was right. The cliff has been here since the Eocene epoch. It will outlast all of us.
+      The hotel we are building acknowledges that. It does not compete with the landscape —
+      it observes it. Every room faces the sea. Every terrace is positioned for the morning light.
+    </p>
+
+    <p>
+      We are not in the hospitality industry. We are a family who found a place so improbable,
+      so far from what the travel brochures call the Bulgarian coast, that we felt obliged
+      to share it — carefully, and only with people who will understand what it is.
+    </p>
+  </div>
+
+  <!-- CTA -->
+  <div class="v3-story__cta v3-reveal">
+    <a href="#build" class="v3-text-link" aria-label="Follow the progress of the build">
+      Follow the build →
+    </a>
+  </div>
+
+  <!-- Bottom rule -->
+  <hr class="v3-rule v3-story__bottom-rule" aria-hidden="true" />
+
+</section>
+
+<style>
+  .v3-story {
+    background-color: var(--v3-bg);
+    padding-top: 0;
+  }
+
+  /* Section number — flush right, huge, muted */
+  .v3-story__number-wrap {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2.5rem 0 0;
+    overflow: hidden;
+  }
+
+  /* Pullquote — centred, very large */
+  .v3-story__pullquote {
+    margin: 3.5rem auto 3rem;
+    max-width: 860px;
+    text-align: center;
+    padding: 0 2rem;
+  }
+
+  .v3-story__pullquote p {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: clamp(1.75rem, 3.5vw, 3rem);
+    line-height: 1.35;
+    color: var(--v3-ink);
+    letter-spacing: -0.01em;
+  }
+
+  .v3-story__mid-rule {
+    margin: 0 0 3rem;
+  }
+
+  /* Section heading — large but below the pullquote, feels like a kicker */
+  .v3-story__heading {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--v3-muted);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  /* Two-column body text */
+  .v3-story__body {
+    column-count: 2;
+    column-gap: 4rem;
+    column-rule: 1px solid var(--v3-rule);
+    max-width: 1040px;
+    margin-bottom: 3rem;
+  }
+
+  .v3-story__body p {
+    font-size: 18px;
+    line-height: 1.9;
+    margin-bottom: 1.4em;
+    break-inside: avoid;
+  }
+
+  .v3-story__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .v3-story__cta {
+    margin-bottom: 5rem;
+  }
+
+  .v3-story__bottom-rule {
+    margin: 0;
+  }
+
+  /* ── Mobile ─────────────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .v3-story__body {
+      column-count: 1;
+    }
+
+    .v3-story__pullquote {
+      margin: 2.5rem auto 2rem;
+    }
+
+    .v3-story__cta {
+      margin-bottom: 3rem;
+    }
+  }
+</style>

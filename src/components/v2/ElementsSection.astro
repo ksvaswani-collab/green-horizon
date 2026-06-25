@@ -1,0 +1,227 @@
+---
+// V2 ElementsSection — four 100svh stacked panels, full-bleed images
+const elements = [
+  {
+    id: 'earth',
+    number: '01',
+    name: 'Earth',
+    description: 'Strandzha oak, ancient limestone, the smell of forest floor after rain.',
+    image: '/images/earth.jpg',
+    bg: '#0D1108',
+    alt: 'Dense ancient forest floor of the Strandzha mountain region at dusk',
+  },
+  {
+    id: 'water',
+    number: '02',
+    name: 'Water',
+    description: 'The Black Sea does not perform. It waits.',
+    image: '/images/water.jpg',
+    bg: '#060D14',
+    alt: 'The Black Sea shoreline at calm morning, waves approaching the shore',
+  },
+  {
+    id: 'fire',
+    number: '03',
+    name: 'Fire',
+    description: 'Copper light. The hour before it all goes dark.',
+    image: '/images/fire.jpg',
+    bg: '#130A05',
+    alt: 'Dramatic sunset over the Bulgarian Black Sea coast, copper and red sky',
+  },
+  {
+    id: 'air',
+    number: '04',
+    name: 'Air',
+    description: 'On the cliff edge, wind decides the day.',
+    image: '/images/air.jpg',
+    bg: '#080C10',
+    alt: 'Open sky above sea cliffs, cirrus clouds and wide horizon',
+  },
+]
+---
+<section id="elements" aria-labelledby="elements-heading">
+  <h2 id="elements-heading" class="sr-only">The four elements</h2>
+
+  {elements.map((el) => (
+    <article
+      class="element-panel"
+      id={`element-${el.id}`}
+      style={`background: ${el.bg};`}
+      aria-label={`Element: ${el.name} — ${el.description}`}
+    >
+      <img
+        src={el.image}
+        alt={el.alt}
+        class="element-img"
+        loading="lazy"
+      />
+      <div class="element-overlay" aria-hidden="true"></div>
+
+      <div class="element-content">
+        <div class="element-copper-rule" aria-hidden="true"></div>
+        <div class="element-meta">
+          <span class="element-number" aria-hidden="true">{el.number}</span>
+          <span class="element-label-text" aria-hidden="true">{el.name}</span>
+        </div>
+        <p class="element-desc">{el.description}</p>
+        <div class="element-name-large" aria-hidden="true">{el.name.toUpperCase()}</div>
+      </div>
+    </article>
+  ))}
+</section>
+
+<style>
+  #elements {
+    /* stacked panels — no special flex needed */
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .element-panel {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .element-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /* Full color — no desaturation */
+  }
+
+  .element-overlay {
+    position: absolute;
+    inset: 0;
+    /* Gradient so bottom content is readable */
+    background: linear-gradient(
+      to top,
+      rgba(6, 10, 8, 0.92) 0%,
+      rgba(6, 10, 8, 0.5) 40%,
+      rgba(6, 10, 8, 0.15) 70%,
+      transparent 100%
+    );
+  }
+
+  .element-content {
+    position: relative;
+    z-index: 1;
+    padding: clamp(2rem, 4vw, 4rem) clamp(2rem, 6vw, 6rem);
+    width: 100%;
+  }
+
+  .element-copper-rule {
+    width: 48px;
+    height: 2px;
+    background: #C4876A;
+    margin-bottom: 1.25rem;
+  }
+
+  .element-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .element-number {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: #C4876A;
+    letter-spacing: 0.02em;
+  }
+
+  .element-label-text {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A8C84;
+  }
+
+  .element-desc {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #7A8C84;
+    max-width: 40ch;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .element-name-large {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(4rem, 10vw, 9rem);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: #EAE6DE;
+    will-change: transform, opacity;
+    transform: translateY(80px);
+    opacity: 0;
+  }
+
+  :focus-visible {
+    outline: 2px solid #A8D5C2;
+    outline-offset: 4px;
+  }
+</style>
+
+<script>
+  (function () {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const initAnim = () => {
+      const g = (window as any).gsap
+      const ST = (window as any).ScrollTrigger
+      if (!g || !ST) return
+
+      document.querySelectorAll('.element-name-large').forEach((el) => {
+        const panel = el.closest('.element-panel')
+        if (!panel) return
+
+        if (prefersReduced) {
+          ;(el as HTMLElement).style.transform = 'none'
+          ;(el as HTMLElement).style.opacity = '1'
+          return
+        }
+
+        g.to(el, {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: panel,
+            start: 'top 70%',
+            once: true,
+          },
+        })
+      })
+    }
+
+    if ((window as any).gsap && (window as any).ScrollTrigger) {
+      initAnim()
+    } else {
+      window.addEventListener('load', initAnim)
+    }
+  })()
+</script>
