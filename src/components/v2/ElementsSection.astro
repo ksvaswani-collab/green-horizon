@@ -215,12 +215,12 @@ const elements = [
     position: relative;
     flex-shrink: 0;
     /* Card width: ~52vw on desktop, 85vw on mobile */
-    width: clamp(280px, 52vw, 700px);
+    width: clamp(240px, 38vw, 520px);
     border-radius: 16px;
     overflow: hidden;
     /* Non-active state */
     opacity: .45;
-    transform: scale(.88);
+    transform: scale(.9);
     /* Smooth transitions handled by GSAP but CSS fallback */
     transition: box-shadow .4s ease;
     cursor: pointer;
@@ -240,7 +240,7 @@ const elements = [
   .el-img-wrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 3/2;
     overflow: hidden;
   }
   .el-img {
@@ -262,7 +262,7 @@ const elements = [
 
   /* Card body */
   .el-card-inner {
-    padding: 1.5rem 1.75rem 1.75rem;
+    padding: 1.1rem 1.4rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: .5rem;
@@ -287,7 +287,7 @@ const elements = [
   .el-name {
     font-family: 'Manrope', system-ui, sans-serif;
     font-weight: 900;
-    font-size: clamp(2rem,4vw,3.5rem);
+    font-size: clamp(1.75rem,3vw,2.75rem);
     line-height: .95;
     letter-spacing: -.04em;
     color: #EAE6DE;
@@ -295,7 +295,7 @@ const elements = [
   }
   .el-body {
     font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.65;
     color: rgba(234,230,222,.55);
     margin: .25rem 0 0;
@@ -303,7 +303,7 @@ const elements = [
   }
   .el-sub {
     font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.6;
     color: rgba(234,230,222,.35);
     margin: 0;
@@ -325,14 +325,36 @@ const elements = [
   .el-cta:hover { opacity: .8; background: rgba(255,255,255,.05); }
   :focus-visible { outline: 3px solid #A8D5C2; outline-offset: 3px; border-radius: 4px; }
 
-  /* Mobile: narrower cards */
-  @media (max-width: 640px) {
+  /* Tablet */
+  @media (max-width: 1024px) and (min-width: 641px) {
     .el-card {
-      width: min(85vw, 340px);
-      transform: scale(.92);
+      width: clamp(240px, 48vw, 440px);
+    }
+    .el-name { font-size: clamp(1.6rem,4vw,2.5rem); }
+    .el-card-inner { padding: 1.1rem 1.25rem 1.4rem; }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .el-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .el-nav-arrows { align-self: flex-end; }
+    .el-card {
+      width: clamp(220px, 78vw, 300px);
+      transform: scale(.93);
     }
     .el-card--active { transform: scale(1); }
-    .el-name { font-size: clamp(1.75rem,8vw,2.5rem); }
+    .el-card-inner { padding: 1rem 1.1rem 1.25rem; gap: .35rem; }
+    .el-name { font-size: clamp(1.5rem,9vw,2.2rem); }
+    .el-body { font-size: 13px; }
+    .el-sub  { display: none; } /* hide on small screens */
+    .el-cta  { font-size: 12px; padding: .5rem 1rem; }
+    .el-img-wrap { aspect-ratio: 16/9; }
+  }
+
+  /* Very small screens */
+  @media (max-width: 380px) {
+    .el-card { width: 82vw; }
+    .el-arrow { width: 36px; height: 36px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -398,7 +420,7 @@ const elements = [
       cards.forEach((card, i) => {
         const isAct = i === active
         g.to(card, {
-          scale: isAct ? 1 : 0.88,
+          scale: isAct ? 1 : 0.9,
           opacity: isAct ? 1 : 0.45,
           duration: dur, ease,
         })
@@ -408,7 +430,7 @@ const elements = [
       track.style.transform = `translateX(${offset}px)`
       cards.forEach((card, i) => {
         card.style.opacity    = i === active ? '1'    : '0.45'
-        card.style.transform  = i === active ? 'scale(1)' : 'scale(0.88)'
+        card.style.transform  = i === active ? 'scale(1)' : 'scale(0.9)'
       })
       isAnimating = false
     }
