@@ -19,17 +19,11 @@ const rimgs = ['/images/room-earth.jpg', '/images/room-water.jpg', '/images/room
           <span style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);letter-spacing:0.15em;margin-bottom:0.5rem;display:block;">{r.element}</span>
           <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.2;color:var(--color-midnight);margin-bottom:0.75rem;">{r.name}</h3>
           <p style="font-family:var(--font-body);font-size:14px;line-height:1.7;color:var(--color-forest);flex:1;">{r.body}</p>
-          <a href={`/${lang}/#contact`} class="btn btn-ghost" style="margin-top:1.25rem;align-self:flex-start;padding:0.6rem 1.25rem;font-size:13px;">
+          <a href={`/${lang}/#contact`} class="btn btn-primary" style="margin-top:1.25rem;align-self:flex-start;font-size:13px;">
             Enquire <span class="arr">→</span>
           </a>
         </article>
       ))}
-    </div>
-    <p style="font-family:var(--font-body);font-size:14px;line-height:1.7;color:var(--color-muted);margin-top:3rem;padding-top:2rem;border-top:1px solid var(--color-border);max-width:40rem;">{t.rooms.villas_note}</p>
-    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2rem;">
-      <a href={`/${lang}/#contact`} class="btn btn-primary">
-        {t.rooms.cta} <span class="arr">→</span>
-      </a>
     </div>
   </div>
 </section>
