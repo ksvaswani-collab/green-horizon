@@ -10,6 +10,8 @@ export default defineConfig({
     locales: ['en', 'nl', 'bg'],
     routing: {
       prefixDefaultLocale: true,
+      // Allow /v2/ and /v3/ to bypass i18n routing
+      redirectToDefaultLocale: false,
     },
   },
 })
