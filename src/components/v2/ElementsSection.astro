@@ -1,134 +1,105 @@
 ---
-// V2 ElementsSection — focus carousel (osmo.supply reference).
-// Center card: full-size, 100% opacity. Adjacent cards: scaled down and peeking.
-// Navigate with arrows or drag. GSAP animates all transitions.
+// V2 ElementsSection — CSS scroll-snap carousel.
+// No JS width measurement at init. scroll-snap centers each card perfectly.
+// GSAP handles scale + opacity for active/inactive state only.
 const elements = [
-  {
-    id: 'earth', number: '01', name: 'Earth',
-    body: 'Strandzha oak, ancient limestone, the smell of forest floor after rain.',
-    sub: 'The ancient volcanic cliff — forest floor to the edge.',
-    image: '/images/earth.jpg',
-    alt: 'Dense Strandzha ancient forest, dark and layered',
-    bg: '#141f14',
-    accent: '#B8956A',
-    cta: 'Explore Earth',
-  },
-  {
-    id: 'water', number: '02', name: 'Water',
-    body: 'The Black Sea does not perform. It waits.',
-    sub: 'Twelve nations meet at its floor.',
-    image: '/images/water.jpg',
-    alt: 'Black Sea surface at calm morning, dark and still',
-    bg: '#0e1a1f',
-    accent: '#6AB8C8',
-    cta: 'Explore Water',
-  },
-  {
-    id: 'fire', number: '03', name: 'Fire',
-    body: 'Copper light. The hour before it all goes dark.',
-    sub: 'Dinner as the longest part of the day.',
-    image: '/images/fire.jpg',
-    alt: 'Golden sunset over Bulgarian Black Sea coast',
-    bg: '#1f1209',
-    accent: '#C8846A',
-    cta: 'Explore Fire',
-  },
-  {
-    id: 'air', number: '04', name: 'Air',
-    body: 'On the cliff edge, wind decides the day.',
-    sub: 'Open sky. Space that opens your chest.',
-    image: '/images/air.jpg',
-    alt: 'Open sky above sea cliffs, wide horizon',
-    bg: '#0e1318',
-    accent: '#6AC8A8',
-    cta: 'Explore Air',
-  },
+  { id:'earth', number:'01', name:'Earth',
+    body:'Strandzha oak, ancient limestone, the smell of forest floor after rain.',
+    sub:'The ancient volcanic cliff — forest floor to the edge.',
+    image:'/images/earth.jpg', alt:'Dense Strandzha ancient forest, dark and layered',
+    bg:'#141f14', accent:'#B8956A', cta:'Explore Earth' },
+  { id:'water', number:'02', name:'Water',
+    body:'The Black Sea does not perform. It waits.',
+    sub:'Twelve nations meet at its floor.',
+    image:'/images/water.jpg', alt:'Black Sea surface at calm morning, dark and still',
+    bg:'#0e1a1f', accent:'#6AB8C8', cta:'Explore Water' },
+  { id:'fire', number:'03', name:'Fire',
+    body:'Copper light. The hour before it all goes dark.',
+    sub:'Dinner as the longest part of the day.',
+    image:'/images/fire.jpg', alt:'Golden sunset over Bulgarian Black Sea coast',
+    bg:'#1f1209', accent:'#C8846A', cta:'Explore Fire' },
+  { id:'air', number:'04', name:'Air',
+    body:'On the cliff edge, wind decides the day.',
+    sub:'Open sky. Space that opens your chest.',
+    image:'/images/air.jpg', alt:'Open sky above sea cliffs, wide horizon',
+    bg:'#0e1318', accent:'#6AC8A8', cta:'Explore Air' },
 ]
 ---
 
 <section id="elements" aria-labelledby="elements-hdg">
 
-  <!-- Section label -->
-  <div class="el-head">
-    <p class="el-overline">The Four Elements</p>
+  <!-- Header -->
+  <header class="el-head">
     <h2 id="elements-hdg" class="el-title">Four ways to feel alive.</h2>
-    <!-- Navigation arrows -->
     <div class="el-nav-arrows" role="group" aria-label="Element navigation">
       <button id="el-prev" class="el-arrow" aria-label="Previous element">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M11 13.5L6.5 9L11 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <!-- Dots -->
-      <div class="el-dots" role="tablist" aria-label="Select element">
-        {elements.map((el,i)=>(
-          <button
-            class={`el-dot${i===0?' el-dot--active':''}`}
-            role="tab"
-            aria-selected={i===0}
-            aria-label={el.name}
-            data-index={i}
-            style={`--accent:${el.accent}`}
-          ></button>
+      <div class="el-dots" role="tablist" aria-label="Go to element" id="el-dots">
+        {elements.map((_,i)=>(
+          <button class={`el-dot${i===0?' el-dot--active':''}`} role="tab"
+            aria-selected={i===0} aria-label={elements[i].name} data-index={i}></button>
         ))}
       </div>
       <button id="el-next" class="el-arrow" aria-label="Next element">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M7 4.5L11.5 9L7 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     </div>
-  </div>
+  </header>
 
-  <!-- Carousel viewport: clips the track -->
-  <div class="el-viewport" aria-live="polite" aria-atomic="true">
-    <div class="el-track" id="el-track">
-      {elements.map((el,i)=>(
-        <article
-          class={`el-card${i===0?' el-card--active':''}`}
-          id={`el-card-${i}`}
-          data-index={i}
-          style={`background:${el.bg};--accent:${el.accent};`}
-          aria-label={`${el.number} of 04 — ${el.name}: ${el.body}`}
-          aria-hidden={i !== 0}
-          role="tabpanel"
-        >
-          <!-- Image fills top portion of card -->
-          <div class="el-img-wrap">
-            <img
-              src={el.image}
-              alt={el.alt}
-              class="el-img"
-              loading={i===0?'eager':'lazy'}
-            />
-            <div class="el-img-scrim" aria-hidden="true"></div>
+  <!--
+    Scroll-snap viewport.
+    padding-inline pads both sides so first/last cards can scroll to the horizontal center.
+    No JS measurement needed — the browser handles centering natively.
+  -->
+  <div class="el-viewport" id="el-viewport" aria-live="polite">
+    {elements.map((el,i)=>(
+      <article
+        class={`el-card${i===0?' el-card--active':''}`}
+        id={`el-card-${i}`}
+        data-index={i}
+        style={`background:${el.bg};--accent:${el.accent};`}
+        aria-label={`${el.number} of 04 — ${el.name}: ${el.body}`}
+        aria-hidden={i!==0}
+      >
+        <div class="el-img-wrap">
+          <img src={el.image} alt={el.alt} class="el-img" loading={i===0?'eager':'lazy'} />
+          <div class="el-img-scrim" aria-hidden="true"></div>
+        </div>
+        <div class="el-card-inner">
+          <div class="el-card-meta">
+            <span class="el-num" style={`color:${el.accent}`}>{el.number}</span>
+            <span class="el-total">/ 04</span>
           </div>
-
-          <!-- Card body — bottom section -->
-          <div class="el-card-inner">
-            <div class="el-card-meta">
-              <span class="el-num" style={`color:${el.accent}`}>{el.number}</span>
-              <span class="el-total">/ 04</span>
-            </div>
-            <h3 class="el-name">{el.name}</h3>
-            <p  class="el-body">{el.body}</p>
-            <p  class="el-sub">{el.sub}</p>
-            <a href="#register" class="el-cta" style={`border-color:${el.accent};color:${el.accent};`}>
-              {el.cta} →
-            </a>
-          </div>
-        </article>
-      ))}
-    </div>
+          <h3 class="el-name">{el.name}</h3>
+          <p  class="el-body">{el.body}</p>
+          <p  class="el-sub">{el.sub}</p>
+          <a href="#register" class="el-cta" style={`border-color:${el.accent};color:${el.accent};`}>
+            {el.cta} →
+          </a>
+        </div>
+      </article>
+    ))}
   </div>
 
 </section>
 
 <style>
+  /* ── Card width as a CSS custom property — single source of truth ── */
+  :root {
+    --el-card-w: clamp(240px, 38vw, 520px);
+    --el-card-gap: 1.25rem;
+  }
+  @media (max-width: 1024px) { :root { --el-card-w: clamp(240px, 48vw, 440px); } }
+  @media (max-width: 640px)  { :root { --el-card-w: clamp(220px, 78vw, 300px); } }
+
   #elements {
     background: #111816;
     padding: 4rem 0 6rem;
-    overflow: hidden;
   }
 
   /* ── Header ── */
@@ -140,23 +111,16 @@ const elements = [
     flex-wrap: wrap;
     padding: 0 clamp(1.5rem,4vw,4rem) 2.5rem;
   }
-  .el-overline { display: none; } /* heading is enough */
   .el-title {
     font-family: 'Manrope', system-ui, sans-serif;
     font-weight: 900;
     font-size: clamp(1.5rem,3vw,2.5rem);
     letter-spacing: -.03em;
     color: #EAE6DE;
-    margin: 0;
-    flex: 1;
+    margin: 0; flex: 1;
   }
-
-  /* Arrow buttons */
   .el-nav-arrows {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-shrink: 0;
+    display: flex; align-items: center; gap: 1rem; flex-shrink: 0;
   }
   .el-arrow {
     width: 44px; height: 44px;
@@ -166,381 +130,205 @@ const elements = [
     border-radius: 50%;
     color: rgba(234,230,222,.7);
     cursor: pointer;
-    transition: background .2s ease, border-color .2s ease, color .2s ease;
+    transition: background .2s, border-color .2s, color .2s;
   }
-  .el-arrow:hover { background: rgba(234,230,222,.12); color: #EAE6DE; border-color: rgba(234,230,222,.25); }
+  .el-arrow:hover   { background: rgba(234,230,222,.12); color: #EAE6DE; border-color: rgba(234,230,222,.25); }
+  .el-arrow:disabled{ opacity: .3; cursor: not-allowed; }
   .el-arrow:focus-visible { outline: 3px solid #A8D5C2; outline-offset: 3px; }
-  .el-arrow:disabled { opacity: .3; cursor: not-allowed; }
-
-  /* Dots */
-  .el-dots {
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-  }
+  .el-dots { display: flex; gap: .5rem; align-items: center; }
   .el-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
     background: rgba(234,230,222,.2);
-    border: none;
-    cursor: pointer;
-    transition: background .3s ease, transform .3s ease, width .3s ease;
-    padding: 0;
+    border: none; cursor: pointer; padding: 0;
+    transition: background .3s, transform .3s;
   }
-  .el-dot--active {
-    background: var(--accent, #A8D5C2);
-    transform: scale(1.3);
-  }
+  .el-dot--active { background: var(--accent, #A8D5C2); transform: scale(1.3); }
   .el-dot:focus-visible { outline: 2px solid #A8D5C2; outline-offset: 3px; border-radius: 50%; }
 
-  /* ── Viewport & track ── */
+  /* ── Scroll-snap viewport ──
+     padding-inline = (100vw - card-width) / 2  →  first/last card centers exactly.
+     No JS width measurement needed. ── */
   .el-viewport {
-    /* GSAP controls horizontal position via track x — no flex centering here */
-    width: 100%;
-    overflow: visible;
-    display: block;
-  }
-
-  .el-track {
     display: flex;
-    gap: 1.25rem;
-    align-items: center;
-    /* Start hidden; GSAP sets x after layout, then reveals */
-    will-change: transform;
-    visibility: hidden;
+    gap: var(--el-card-gap);
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE/Edge */
+    /* The side padding centers each card when scrolled to */
+    padding-inline: calc((100% - var(--el-card-w)) / 2);
+    /* Align items at the start so cards don't get clipped */
+    align-items: flex-start;
+    cursor: grab;
   }
+  .el-viewport::-webkit-scrollbar { display: none; }
+  .el-viewport:active { cursor: grabbing; }
 
   /* ── Cards ── */
   .el-card {
-    position: relative;
     flex-shrink: 0;
-    /* Card width: ~52vw on desktop, 85vw on mobile */
-    width: clamp(240px, 38vw, 520px);
+    width: var(--el-card-w);
+    scroll-snap-align: center;
     border-radius: 16px;
     overflow: hidden;
-    /* Non-active state */
-    opacity: .45;
-    transform: scale(.9);
-    /* Smooth transitions handled by GSAP but CSS fallback */
-    transition: box-shadow .4s ease;
-    cursor: pointer;
     border: 1px solid rgba(234,230,222,.06);
+    /* Non-active: scaled down and faded — GSAP will override */
+    opacity: .4;
+    transform: scale(.88);
+    transition: box-shadow .4s ease;
   }
-
   .el-card--active {
     opacity: 1;
     transform: scale(1);
+    box-shadow: 0 32px 64px rgba(0,0,0,.55);
     border-color: rgba(234,230,222,.12);
-    box-shadow: 0 40px 80px rgba(0,0,0,.5);
-    cursor: default;
     z-index: 2;
   }
 
-  /* Image area: top ~60% of card */
+  /* Image area */
   .el-img-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3/2;
-    overflow: hidden;
+    position: relative; width: 100%; aspect-ratio: 3/2; overflow: hidden;
   }
   .el-img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
-    filter: saturate(.75) contrast(1.06) brightness(.85);
-    transition: filter .5s ease, transform .6s ease;
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(.72) contrast(1.06) brightness(.85);
+    transition: filter .5s, transform .6s;
   }
-  .el-card--active .el-img {
-    filter: saturate(.9) contrast(1.04) brightness(.95);
-  }
+  .el-card--active .el-img  { filter: saturate(.9) contrast(1.04) brightness(.95); }
   .el-card--active:hover .el-img { transform: scale(1.03); }
-
-  /* Bottom scrim over image */
   .el-img-scrim {
     position: absolute; inset: 0;
-    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.6) 100%);
+    background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,.55) 100%);
   }
 
   /* Card body */
-  .el-card-inner {
-    padding: 1.1rem 1.4rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-  }
-  .el-card-meta {
-    display: flex;
-    align-items: baseline;
-    gap: .5rem;
-    margin-bottom: .25rem;
-  }
-  .el-num {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
-    font-size: 1rem;
-  }
-  .el-total {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 11px;
-    letter-spacing: .1em;
-    color: rgba(234,230,222,.25);
-  }
+  .el-card-inner { padding: 1.1rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: .4rem; }
+  .el-card-meta  { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .2rem; }
+  .el-num  { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-size: .9rem; }
+  .el-total{ font-family: 'Manrope', system-ui, sans-serif; font-size: 10px; letter-spacing: .1em; color: rgba(234,230,222,.25); }
   .el-name {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 900;
-    font-size: clamp(1.75rem,3vw,2.75rem);
-    line-height: .95;
-    letter-spacing: -.04em;
-    color: #EAE6DE;
-    margin: 0;
+    font-family: 'Manrope', system-ui, sans-serif; font-weight: 900;
+    font-size: clamp(1.75rem,3vw,2.75rem); line-height: .95; letter-spacing: -.04em;
+    color: #EAE6DE; margin: 0;
   }
-  .el-body {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 13px;
-    line-height: 1.65;
-    color: rgba(234,230,222,.55);
-    margin: .25rem 0 0;
-    font-weight: 500;
-  }
-  .el-sub {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 12px;
-    line-height: 1.6;
-    color: rgba(234,230,222,.35);
-    margin: 0;
-  }
-  .el-cta {
-    display: inline-flex;
-    align-items: center;
-    margin-top: .75rem;
-    padding: .65rem 1.25rem;
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    border: 1px solid;
-    border-radius: 100px;
-    transition: opacity .2s ease, background .2s ease;
-    align-self: flex-start;
+  .el-body { font-family: 'Manrope', system-ui, sans-serif; font-size: 13px; line-height: 1.65; color: rgba(234,230,222,.55); font-weight: 500; }
+  .el-sub  { font-family: 'Manrope', system-ui, sans-serif; font-size: 12px; line-height: 1.6; color: rgba(234,230,222,.32); }
+  .el-cta  {
+    display: inline-flex; align-items: center; margin-top: .6rem;
+    padding: .55rem 1.1rem; font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 12px; font-weight: 500; text-decoration: none;
+    border: 1px solid; border-radius: 100px; align-self: flex-start;
+    transition: opacity .2s, background .2s;
   }
   .el-cta:hover { opacity: .8; background: rgba(255,255,255,.05); }
-  :focus-visible { outline: 3px solid #A8D5C2; outline-offset: 3px; border-radius: 4px; }
 
-  /* Tablet */
-  @media (max-width: 1024px) and (min-width: 641px) {
-    .el-card {
-      width: clamp(240px, 48vw, 440px);
-    }
-    .el-name { font-size: clamp(1.6rem,4vw,2.5rem); }
-    .el-card-inner { padding: 1.1rem 1.25rem 1.4rem; }
-  }
-
-  /* Mobile */
+  /* Mobile: hide subtitle */
   @media (max-width: 640px) {
     .el-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .el-nav-arrows { align-self: flex-end; }
-    .el-card {
-      width: clamp(220px, 78vw, 300px);
-      transform: scale(.93);
-    }
+    .el-sub { display: none; }
+    .el-card { transform: scale(.93); }
     .el-card--active { transform: scale(1); }
-    .el-card-inner { padding: 1rem 1.1rem 1.25rem; gap: .35rem; }
-    .el-name { font-size: clamp(1.5rem,9vw,2.2rem); }
-    .el-body { font-size: 13px; }
-    .el-sub  { display: none; } /* hide on small screens */
-    .el-cta  { font-size: 12px; padding: .5rem 1rem; }
-    .el-img-wrap { aspect-ratio: 16/9; }
   }
 
-  /* Very small screens */
-  @media (max-width: 380px) {
-    .el-card { width: 82vw; }
-    .el-arrow { width: 36px; height: 36px; }
-  }
+  :focus-visible { outline: 3px solid #A8D5C2; outline-offset: 3px; border-radius: 4px; }
 
   @media (prefers-reduced-motion: reduce) {
-    .el-card { transition: none !important; }
-    .el-img  { transition: none !important; }
+    .el-card, .el-img { transition: none !important; transform: none !important; }
+    .el-card { opacity: 1 !important; }
   }
 </style>
 
 <script>
 (function(){
-  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
+  const rm       = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const viewport = document.getElementById('el-viewport') as HTMLElement
   const cards    = Array.from(document.querySelectorAll<HTMLElement>('.el-card'))
   const dots     = Array.from(document.querySelectorAll<HTMLButtonElement>('.el-dot'))
   const prevBtn  = document.getElementById('el-prev') as HTMLButtonElement
   const nextBtn  = document.getElementById('el-next') as HTMLButtonElement
-  const track    = document.getElementById('el-track') as HTMLElement
   const N        = cards.length
   let active     = 0
-  let isAnimating = false
 
-  // Gap between cards in px (matches CSS 1.25rem ≈ 20px)
-  const GAP = 20
+  if (!viewport) return
 
-  function getCardWidth(): number {
-    return cards[0]?.offsetWidth ?? 0
-  }
+  // ── Set active card with GSAP scale + opacity ──
+  function setActive(index: number) {
+    const newActive = ((index % N) + N) % N
+    if (newActive === active && !rm) return
+    active = newActive
 
-  function getTrackOffset(index: number): number {
-    // Center the active card: offset = -(index * (cardW + gap)) + (viewport - cardW) / 2
-    const cardW  = getCardWidth()
-    const viewW  = window.innerWidth
-    return -(index * (cardW + GAP)) + (viewW - cardW) / 2
-  }
-
-  function updateCards(newIndex: number, instant = false) {
-    if(isAnimating && !instant) return
-    isAnimating = true
+    // ARIA updates
+    cards.forEach((c, i) => c.setAttribute('aria-hidden', String(i !== active)))
+    dots.forEach((d, i) => {
+      d.classList.toggle('el-dot--active', i === active)
+      d.setAttribute('aria-selected', String(i === active))
+    })
 
     const g = (window as any).gsap
-    const prevActive = active
-    active = ((newIndex % N) + N) % N
-
-    // Update ARIA
-    cards.forEach((card, i) => {
-      card.setAttribute('aria-hidden', String(i !== active))
-    })
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('el-dot--active', i === active)
-      dot.setAttribute('aria-selected', String(i === active))
-    })
-
-    const offset = getTrackOffset(active)
-    const dur    = rm ? 0 : 0.55
-    const ease   = 'power3.inOut'
-
-    if(g && !rm) {
-      // Animate track position
-      g.to(track, { x: offset, duration: dur, ease,
-        onComplete: () => { isAnimating = false }
-      })
-      // Scale + opacity per card
+    if (g && !rm) {
       cards.forEach((card, i) => {
         const isAct = i === active
-        g.to(card, {
-          scale: isAct ? 1 : 0.9,
-          opacity: isAct ? 1 : 0.45,
-          duration: dur, ease,
-        })
+        g.to(card, { scale: isAct ? 1 : 0.88, opacity: isAct ? 1 : 0.4, duration: 0.45, ease: 'power2.out' })
       })
     } else {
-      // CSS fallback
-      track.style.transform = `translateX(${offset}px)`
       cards.forEach((card, i) => {
-        card.style.opacity    = i === active ? '1'    : '0.45'
-        card.style.transform  = i === active ? 'scale(1)' : 'scale(0.9)'
+        card.style.transform = i === active ? 'scale(1)' : 'scale(0.88)'
+        card.style.opacity   = i === active ? '1'        : '0.4'
       })
-      isAnimating = false
     }
-
-    // Toggle active class
-    cards.forEach((card, i) => {
-      card.classList.toggle('el-card--active', i === active)
-    })
+    cards.forEach((c, i) => c.classList.toggle('el-card--active', i === active))
   }
 
-  // Defer initial positioning to after layout so offsetWidth is accurate
-  const g = (window as any).gsap
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const initOffset = getTrackOffset(0)
+  // ── Scroll to a card by index ──
+  function scrollToCard(index: number) {
+    const idx = ((index % N) + N) % N
+    const card = cards[idx]
+    if (!card) return
+    // scrollIntoView centers the card natively — no measurement needed
+    card.scrollIntoView({ behavior: rm ? 'instant' : 'smooth', inline: 'center', block: 'nearest' })
+    setActive(idx)
+  }
 
-      if(g) {
-        g.set(track, { x: initOffset })
-      } else {
-        track.style.transform = `translateX(${initOffset}px)`
-      }
-
-      // Set non-active cards
-      cards.slice(1).forEach(c => {
-        if(g) g.set(c, { scale: .9, opacity: .45 })
-        else { c.style.transform = 'scale(.9)'; c.style.opacity = '.45' }
+  // ── IntersectionObserver: detect which card is centered ──
+  // Fires when a card's center enters the scroll-snap viewport
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+          const idx = parseInt((e.target as HTMLElement).dataset.index ?? '0', 10)
+          if (idx !== active) setActive(idx)
+        }
       })
+    },
+    { root: viewport, threshold: 0.5 }
+  )
+  cards.forEach(c => observer.observe(c))
 
-      // Reveal track now that it's positioned correctly
-      track.style.visibility = 'visible'
-    })
+  // ── Arrow navigation ──
+  prevBtn.addEventListener('click', () => scrollToCard(active - 1))
+  nextBtn.addEventListener('click', () => scrollToCard(active + 1))
+
+  // ── Dot navigation ──
+  dots.forEach((dot, i) => dot.addEventListener('click', () => scrollToCard(i)))
+
+  // ── Keyboard navigation ──
+  viewport.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollToCard(active - 1) }
+    if (e.key === 'ArrowRight') { e.preventDefault(); scrollToCard(active + 1) }
   })
 
-  // Navigation
-  prevBtn.addEventListener('click', () => updateCards(active - 1))
-  nextBtn.addEventListener('click', () => updateCards(active + 1))
-
-  // Dot navigation
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => { if(i !== active) updateCards(i) })
-  })
-
-  // Click on non-active card to navigate to it
-  cards.forEach((card, i) => {
-    card.addEventListener('click', () => {
-      if(i !== active) updateCards(i)
-    })
-  })
-
-  // Keyboard: left/right arrow keys within carousel
-  document.addEventListener('keydown', (e) => {
-    if(document.activeElement?.closest('#elements')){
-      if(e.key === 'ArrowLeft')  { e.preventDefault(); updateCards(active - 1) }
-      if(e.key === 'ArrowRight') { e.preventDefault(); updateCards(active + 1) }
-    }
-  })
-
-  // Drag/swipe support (GSAP Draggable if available, else touch events)
-  const initDrag = () => {
+  // Initial state without GSAP (pure CSS handles it via .el-card--active)
+  // GSAP syncs once it's loaded
+  const syncGsap = () => {
     const g = (window as any).gsap
-    if(!g) return
-
-    let startX = 0
-    let dragging = false
-
-    const viewport = document.querySelector('.el-viewport') as HTMLElement
-    if(!viewport) return
-
-    viewport.addEventListener('pointerdown', (e) => {
-      startX = e.clientX
-      dragging = true
-    })
-    viewport.addEventListener('pointermove', (e) => {
-      if(!dragging) return
-      const dx = e.clientX - startX
-      // Live drag feedback
-      g.set(track, { x: getTrackOffset(active) + dx })
-    }, { passive: true })
-    viewport.addEventListener('pointerup', (e) => {
-      if(!dragging) return
-      dragging = false
-      const dx = e.clientX - startX
-      if(Math.abs(dx) > 60) {
-        updateCards(dx < 0 ? active + 1 : active - 1)
-      } else {
-        // Snap back
-        g.to(track, { x: getTrackOffset(active), duration: .35, ease: 'power2.out' })
-      }
-    })
-    viewport.addEventListener('pointercancel', () => {
-      dragging = false
-      g.to(track, { x: getTrackOffset(active), duration: .35, ease: 'power2.out' })
+    if (!g) return
+    cards.forEach((card, i) => {
+      g.set(card, { scale: i === active ? 1 : 0.88, opacity: i === active ? 1 : 0.4, clearProps: '' })
     })
   }
-
-  // Re-center on resize (re-measure after layout settles)
-  let resizeTimer: ReturnType<typeof setTimeout>
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer)
-    resizeTimer = setTimeout(() => {
-      requestAnimationFrame(() => {
-        const g = (window as any).gsap
-        const off = getTrackOffset(active)
-        if(g) g.set(track, { x: off })
-        else track.style.transform = `translateX(${off}px)`
-      })
-    }, 120)
-  })
-
-  if((window as any).gsap) initDrag()
-  else window.addEventListener('load', initDrag)
+  if ((window as any).gsap) syncGsap()
+  else window.addEventListener('load', syncGsap)
 })()
 </script>
