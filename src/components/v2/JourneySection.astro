@@ -1,266 +1,199 @@
 ---
-// V2 JourneySection — editorial magazine layout.
-// Large graphic date stamps, alternating image/text columns, stats inline with header.
+// V2 JourneySection — "Dispatches from the cliff."
+// Full-width cinematic images dominate each entry. Dates as giant ambient typography.
+// No alternating columns. No generic grid.
 const entries = [
-  { date:'Nov 2024', dateShort:'11.24', heading:'Ground broken',
-    body:'The first foundations poured. The soil is chalk and clay — the same that defines the Strandzha forest floor. Nothing is moved that does not have to be.',
+  {
+    dateDisplay:'NOV — 2024',
+    dateShort:'11',
+    heading:'Ground broken',
+    dispatch:'The first foundations poured. Chalk and clay soil. Nothing moved that does not have to be.',
     image:'/images/build-nov-2024.jpg',
-    alt:'Early foundation work on the cliff site, November 2024' },
-  { date:'Mar 2025', dateShort:'03.25', heading:'Walls find form',
-    body:'Raw concrete frames emerge. The structure follows the cliff\'s natural contour, stepping down rather than imposing. Reclaimed oak and hand-cut stone begin to arrive.',
+    alt:'Early foundation work on the cliff site, November 2024',
+  },
+  {
+    dateDisplay:'MAR — 2025',
+    dateShort:'03',
+    heading:'Walls find form',
+    dispatch:'Raw frames emerge. The structure follows the cliff contour, stepping down rather than imposing.',
     image:'/images/build-march-2025.jpg',
-    alt:'Concrete walls of Green Horizon rising from the hillside, March 2025' },
-  { date:'Jun 2025', dateShort:'06.25', heading:'The roof closes',
-    body:'Watertight. The first time you can see the building as a whole — its relationship to the sea, to the treeline. The view from the main terrace is everything we hoped.',
+    alt:'Concrete walls of Green Horizon rising, March 2025',
+  },
+  {
+    dateDisplay:'JUN — 2025',
+    dateShort:'06',
+    heading:'The roof closes',
+    dispatch:'Watertight. The first time the building reads as a whole. The view from the terrace: exactly what was hoped.',
     image:'/images/build-june-2025.jpg',
-    alt:'Completed roof structure in June 2025, sea view in background' },
+    alt:'Completed roof structure with sea view, June 2025',
+  },
 ]
 ---
 
-<section id="journey" aria-labelledby="journey-heading" class="journey-section">
+<section id="journey" aria-labelledby="journey-hdg">
 
-  <!-- Header: label + title + stats on one row -->
-  <header class="journey-header">
-    <div class="journey-header-left">
-      <span class="journey-overline">The Build</span>
-      <h2 id="journey-heading" class="journey-title">
-        A record<br>of progress.
-      </h2>
+  <!-- Masthead -->
+  <div class="jn-head">
+    <div class="jn-head-left">
+      <p class="jn-overline">The Build</p>
+      <h2 id="journey-hdg" class="jn-title">Dispatches<br>from the cliff.</h2>
     </div>
-    <!-- Inline stats — no animated counters, clean and readable -->
-    <div class="journey-stats" role="list" aria-label="Project figures">
-      <div role="listitem" class="stat">
-        <span class="stat-num" aria-label="4 rooms">4</span>
-        <span class="stat-lbl">Rooms</span>
-      </div>
-      <div role="listitem" class="stat">
-        <span class="stat-num" aria-label="6 villas">6</span>
-        <span class="stat-lbl">Villas</span>
-      </div>
-      <div role="listitem" class="stat">
-        <span class="stat-num" aria-label="Opening 2026">2026</span>
-        <span class="stat-lbl">Opening</span>
-      </div>
+    <div class="jn-head-right">
+      <div class="jn-stat"><span class="jn-stat-n">4</span><span class="jn-stat-l">Rooms</span></div>
+      <div class="jn-stat"><span class="jn-stat-n">6</span><span class="jn-stat-l">Villas</span></div>
+      <div class="jn-stat"><span class="jn-stat-n">2026</span><span class="jn-stat-l">Opening</span></div>
     </div>
-  </header>
+  </div>
 
-  <!-- Entries -->
-  <div class="journey-entries">
-    {entries.map((entry, i) => (
-      <article
-        class={`journey-entry journey-entry--${i % 2 === 0 ? 'normal' : 'reversed'}`}
-        aria-label={`Build update ${entry.date}: ${entry.heading}`}
-      >
-        <!-- Large graphic date stamp -->
-        <div class="entry-datestamp" aria-hidden="true">{entry.dateShort}</div>
+  <!-- Entries: full-width cinematic dispatches -->
+  <div class="jn-entries">
+    {entries.map((e,i)=>(
+      <article class="jn-entry jn-reveal" aria-label={`${e.dateDisplay}: ${e.heading}`}>
 
-        <!-- Text column -->
-        <div class="entry-text">
-          <p class="entry-date-label">{entry.date}</p>
-          <h3 class="entry-heading">{entry.heading}</h3>
-          <p class="entry-body">{entry.body}</p>
+        <!-- Cinematic wide image — full width, short height -->
+        <div class="jn-img-wrap">
+          <img src={e.image} alt={e.alt} loading="lazy" class="jn-img" />
+          <!-- Large ambient date inside the image -->
+          <span class="jn-date-ambient" aria-hidden="true">{e.dateShort}</span>
         </div>
 
-        <!-- Image column -->
-        <div class="entry-image-col">
-          <img
-            src={entry.image}
-            alt={entry.alt}
-            loading="lazy"
-            class="entry-img"
-          />
+        <!-- Dispatch text row below the image -->
+        <div class="jn-text-row">
+          <p class="jn-date-label">{e.dateDisplay}</p>
+          <div class="jn-text-main">
+            <h3 class="jn-heading">{e.heading}</h3>
+            <p class="jn-body">{e.dispatch}</p>
+          </div>
+          <span class={`jn-index`}>{String(i+1).padStart(2,'0')}</span>
         </div>
 
       </article>
     ))}
   </div>
 
-  <div class="journey-footer">
-    <a href="#register" class="journey-cta" aria-label="Register interest to follow the build">
-      Follow the build → Register interest
-    </a>
+  <div class="jn-footer">
+    <a href="#register" class="jn-cta">Follow the build — register interest →</a>
   </div>
 
 </section>
 
 <style>
-  .journey-section{
-    background:#182118;
-    padding:6rem clamp(1.5rem,4vw,4rem);
-  }
+  #journey{background:#111816;padding:5rem 0 6rem;}
 
-  /* Header */
-  .journey-header{
-    display:flex;align-items:flex-end;justify-content:space-between;
-    gap:2rem;flex-wrap:wrap;
-    padding-bottom:3rem;
-    border-bottom:1px solid rgba(234,230,222,.09);
+  /* Masthead */
+  .jn-head{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;
+    padding:0 clamp(1.5rem,4vw,4rem) 3rem;
+    border-bottom:1px solid rgba(234,230,222,.07);
     margin-bottom:0;
   }
-  .journey-overline{
-    display:block;
-    font-family:'Manrope',system-ui,sans-serif;
-    font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
-    color:#A8D5C2;margin-bottom:.75rem;
-  }
-  .journey-title{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-weight:900;
-    font-size:clamp(2rem,4vw,3.5rem);
-    line-height:1.05;letter-spacing:-.03em;
-    color:#EAE6DE;margin:0;
-  }
-
-  /* Inline stats */
-  .journey-stats{
-    display:flex;gap:3rem;align-items:flex-end;flex-shrink:0;
-  }
-  .stat{display:flex;flex-direction:column;align-items:flex-end;}
-  .stat-num{
-    font-family:'DM Serif Display',Georgia,serif;
-    font-style:italic;
-    font-size:clamp(2.5rem,4vw,3.5rem);
-    line-height:1;color:#A8D5C2;
-  }
-  .stat-lbl{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-    color:rgba(234,230,222,.35);margin-top:.2rem;
-  }
+  .jn-overline{font-family:'Manrope',system-ui,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#A8D5C2;margin-bottom:.75rem;}
+  .jn-title{font-family:'Manrope',system-ui,sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;letter-spacing:-.03em;color:#EAE6DE;margin:0;}
+  .jn-head-right{display:flex;gap:2.5rem;align-items:flex-end;flex-shrink:0;}
+  .jn-stat{display:flex;flex-direction:column;align-items:flex-end;}
+  .jn-stat-n{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:clamp(2.5rem,4vw,3.5rem);line-height:1;color:#A8D5C2;}
+  .jn-stat-l{font-family:'Manrope',system-ui,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(234,230,222,.3);}
 
   /* Entries */
-  .journey-entries{display:flex;flex-direction:column;}
+  .jn-entries{display:flex;flex-direction:column;}
 
-  .journey-entry{
+  .jn-entry{
+    border-bottom:1px solid rgba(234,230,222,.06);
+    opacity:0;transform:translateY(28px);
+    transition:opacity .7s ease,transform .7s ease;
+  }
+  .jn-entry.jn-visible{opacity:1;transform:none;}
+
+  /* Cinematic image — full width, aspect-ratio 21:6 (very wide, short) */
+  .jn-img-wrap{
     position:relative;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    grid-template-areas:'text image';
-    gap:0;
-    padding:4rem 0;
-    border-bottom:1px solid rgba(234,230,222,.07);
+    width:100%;
+    aspect-ratio:21/6;
     overflow:hidden;
-    opacity:0;transform:translateY(24px);
   }
-  .journey-entry--reversed{
-    grid-template-areas:'image text';
+  .jn-img{
+    width:100%;height:100%;
+    object-fit:cover;object-position:center 40%;
+    filter:saturate(.7) contrast(1.1) brightness(.85);
+    transition:transform .8s ease,filter .6s ease;
   }
+  .jn-entry:hover .jn-img{transform:scale(1.02);filter:saturate(.85) contrast(1.05);}
 
-  /* Large graphic datestamp — background decoration */
-  .entry-datestamp{
+  /* Ambient date — huge, faint, inside image */
+  .jn-date-ambient{
     position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
+    right:clamp(1rem,3vw,3rem);bottom:-.1em;
     font-family:'Manrope',system-ui,sans-serif;
     font-weight:900;
-    font-size:clamp(6rem,12vw,14rem);
-    letter-spacing:-.05em;line-height:1;
-    color:rgba(234,230,222,.03);
+    font-size:clamp(6rem,14vw,16rem);
+    line-height:1;
+    color:rgba(234,230,222,.07);
+    letter-spacing:-.05em;
     pointer-events:none;user-select:none;
-    white-space:nowrap;
-    z-index:0;
   }
 
-  /* Text column */
-  .entry-text{
-    grid-area:text;
-    position:relative;z-index:1;
-    display:flex;flex-direction:column;justify-content:center;
-    padding:2rem 3rem 2rem clamp(0rem,2vw,0rem);
+  /* Text row */
+  .jn-text-row{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:2rem;align-items:start;
+    padding:1.75rem clamp(1.5rem,4vw,4rem);
   }
-  .journey-entry--reversed .entry-text{
-    padding:2rem 0 2rem 3rem;
-  }
-  .entry-date-label{
+  .jn-date-label{
     font-family:'Manrope',system-ui,sans-serif;
-    font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
-    color:#A8D5C2;margin-bottom:.75rem;
+    font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+    color:#A8D5C2;padding-top:.2rem;white-space:nowrap;
   }
-  .entry-heading{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-weight:800;
-    font-size:clamp(1.5rem,2.5vw,2.25rem);
-    line-height:1.1;letter-spacing:-.02em;
-    color:#EAE6DE;margin:0 0 1rem;
+  .jn-text-main{display:flex;flex-direction:column;gap:.5rem;}
+  .jn-heading{
+    font-family:'Manrope',system-ui,sans-serif;font-weight:800;
+    font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.2;letter-spacing:-.02em;
+    color:#EAE6DE;margin:0;
   }
-  .entry-body{
+  .jn-body{
     font-family:'Manrope',system-ui,sans-serif;
-    font-size:15px;line-height:1.75;
-    color:rgba(234,230,222,.55);
-    max-width:40ch;
+    font-size:14px;line-height:1.7;
+    color:rgba(234,230,222,.5);max-width:52ch;
+  }
+  .jn-index{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
+    font-size:1.5rem;color:rgba(234,230,222,.15);
+    align-self:start;margin-top:.1rem;
   }
 
-  /* Image column */
-  .entry-image-col{
-    grid-area:image;
-    position:relative;z-index:1;
-    overflow:hidden;
-    aspect-ratio:16/10;
-    border-radius:8px;
-  }
-  .journey-entry--reversed .entry-image-col{
-    border-radius:8px;
-  }
-  .entry-img{
-    width:100%;height:100%;
-    object-fit:cover;
-    filter:saturate(.75) contrast(1.08) brightness(.88);
-    transition:filter .6s ease,transform .6s ease;
-  }
-  .journey-entry:hover .entry-img{
-    filter:saturate(.9) contrast(1.05) brightness(.95);
-    transform:scale(1.02);
-  }
-
-  /* Footer CTA */
-  .journey-footer{
-    padding-top:3rem;
-    text-align:center;
-  }
-  .journey-cta{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-size:13px;font-weight:500;
+  /* Footer */
+  .jn-footer{padding:3rem clamp(1.5rem,4vw,4rem) 0;text-align:right;}
+  .jn-cta{
+    font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
     color:#A8D5C2;text-decoration:none;
-    border-bottom:1px solid rgba(168,213,194,.3);
-    padding-bottom:2px;
-    transition:border-color .2s ease,opacity .2s ease;
+    border-bottom:1px solid rgba(168,213,194,.3);padding-bottom:2px;
+    transition:border-color .2s ease;
   }
-  .journey-cta:hover{border-color:#A8D5C2;}
+  .jn-cta:hover{border-color:#A8D5C2;}
   :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
 
-  /* Mobile: single column */
-  @media(max-width:768px){
-    .journey-entry,.journey-entry--reversed{
-      grid-template-columns:1fr;
-      grid-template-areas:'text' 'image';
-    }
-    .entry-text,.journey-entry--reversed .entry-text{padding:2rem 0 1.5rem;}
-    .journey-stats{gap:1.5rem;}
-    .entry-datestamp{font-size:clamp(4rem,20vw,8rem);}
+  /* Mobile */
+  @media(max-width:640px){
+    .jn-text-row{grid-template-columns:1fr;gap:1rem;}
+    .jn-index{display:none;}
+    .jn-img-wrap{aspect-ratio:16/7;}
+    .jn-head-right{gap:1.5rem;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .jn-entry{opacity:1!important;transform:none!important;}
   }
 </style>
 
 <script>
-  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const init = () => {
-    const g  = (window as any).gsap
-    const ST = (window as any).ScrollTrigger
-    if(!g || !ST){setTimeout(init,60);return}
-
-    if(rm){
-      document.querySelectorAll<HTMLElement>('.journey-entry').forEach(el=>{
-        el.style.opacity='1';el.style.transform='none'
-      })
-      return
-    }
-
-    document.querySelectorAll('.journey-entry').forEach((entry,i) => {
-      g.to(entry,{
-        opacity:1,y:0,duration:.75,ease:'power3.out',
-        delay: i * 0.1,
-        scrollTrigger:{trigger:entry,start:'top 82%'}
-      })
-    })
+    const entries = document.querySelectorAll('.jn-reveal')
+    if(!entries.length) return
+    const obs = new IntersectionObserver(
+      es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('jn-visible');obs.unobserve(e.target)}}),
+      {threshold:.12}
+    )
+    entries.forEach(el=>obs.observe(el))
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init)
   else init()

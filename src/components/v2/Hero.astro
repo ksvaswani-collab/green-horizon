@@ -1,202 +1,268 @@
 ---
-// V2 Hero — image-through-text mask effect.
-// The landscape photo is visible *through* the letterforms of "HORIZON" (background-clip: text).
-// Completely unlike V1 (full-bleed overlay) or prior V2 (split-screen).
+// V2 Hero — scroll-driven reveal:
+// Phase 1 (load):  "HORIZON" text-mask — hero image visible through letterforms
+// Phase 2 (scroll): letters scatter outward + small element images fly out
+// Phase 3 (end):   full-bleed hero image, content fades in at bottom
+// NO marquee section — removed per request
 ---
 
-<a href="#v2-main" class="v2-skip-link">Skip to main content</a>
+<a href="#main" class="v2-skip-link">Skip to main content</a>
 
-<section id="v2-hero" aria-label="Hero — Green Horizon boutique hotel, Black Sea coast">
+<!-- Pin wrapper: 200vh gives scroll space for the reveal animation -->
+<div id="hero-pin-wrap" style="height:200vh;">
+  <section
+    id="v2-hero"
+    aria-label="Hero — Green Horizon hotel, Black Sea coast, Bulgaria"
+  >
+    <!-- Accessible H1 for screen readers -->
+    <h1 class="sr-only">Green Horizon — a boutique hotel on Bulgaria's Black Sea coast, opening 2026</h1>
 
-  <!-- The hero image is visible ONLY through the letterforms -->
-  <div class="hero-mask-wrap" aria-hidden="true">
-    <div class="hero-mask-text" id="hero-mask">HORIZON</div>
-  </div>
-
-  <!-- Accessible heading for screen readers -->
-  <h1 class="sr-only">Green Horizon — a boutique hotel on Bulgaria's Black Sea coast, opening 2026</h1>
-
-  <!-- Meta + CTA strip anchored at the bottom -->
-  <div class="hero-meta" id="hero-meta">
-    <div class="hero-meta-left">
-      <p class="hero-coords">42°N · 27°E · Bulgaria</p>
-      <p class="hero-sub">A cliff above the Black Sea.<br>Between ancient forest and open water.</p>
+    <!-- Full-bleed image: hidden initially, revealed on scroll -->
+    <div class="hero-fullbleed" id="hero-fullbleed" aria-hidden="true">
+      <img src="/images/hero.jpg" alt="" class="hero-fullbleed-img" fetchpriority="high" />
     </div>
-    <div class="hero-meta-right">
-      <a href="#story"    class="v2-btn-hero v2-btn-primary" data-magnetic>Discover the story</a>
-      <a href="#register" class="v2-btn-hero v2-btn-outline"  data-magnetic>Register interest</a>
+
+    <!-- Text-mask "HORIZON" — letters scatter outward on scroll -->
+    <div class="hero-mask-wrap" aria-hidden="true">
+      <!-- Each letter is a separate span for GSAP scatter -->
+      <div class="hero-mask-word" id="hero-mask-word">
+        <span class="hc" data-x="-120" data-y="-80"  data-r="-25">H</span>
+        <span class="hc" data-x="-60"  data-y="100"  data-r="15" >O</span>
+        <span class="hc" data-x="-20"  data-y="-110" data-r="-10">R</span>
+        <span class="hc" data-x="10"   data-y="90"   data-r="20" >I</span>
+        <span class="hc" data-x="40"   data-y="-100" data-r="-18">Z</span>
+        <span class="hc" data-x="80"   data-y="110"  data-r="12" >O</span>
+        <span class="hc" data-x="130"  data-y="-70"  data-r="22" >N</span>
+      </div>
     </div>
-  </div>
 
-</section>
+    <!-- Scattered element images — fly out as chars scatter -->
+    <div class="hero-scatter-imgs" aria-hidden="true">
+      <img src="/images/earth.jpg" alt="" class="scatter-img" id="si-0" />
+      <img src="/images/water.jpg" alt="" class="scatter-img" id="si-1" />
+      <img src="/images/fire.jpg"  alt="" class="scatter-img" id="si-2" />
+      <img src="/images/air.jpg"   alt="" class="scatter-img" id="si-3" />
+    </div>
 
-<!-- Marquee: circular images + labels — not just a text ticker -->
-<div class="v2-marquee-strip" aria-hidden="true" role="presentation">
-  <div class="v2-marquee-track" id="v2-marquee-track">
-    <span class="marquee-set">
-      <img src="/images/earth.jpg" alt="" class="marquee-img" /><span class="marquee-label">Earth</span><span class="marquee-dot">·</span>
-      <img src="/images/water.jpg" alt="" class="marquee-img" /><span class="marquee-label">Water</span><span class="marquee-dot">·</span>
-      <img src="/images/fire.jpg"  alt="" class="marquee-img" /><span class="marquee-label">Fire</span><span class="marquee-dot">·</span>
-      <img src="/images/air.jpg"   alt="" class="marquee-img" /><span class="marquee-label">Air</span><span class="marquee-dot">·</span>
-      <span class="marquee-label marquee-label--accent">Black Sea · Bulgaria · 2026</span><span class="marquee-dot">·</span>
-    </span>
-    <span class="marquee-set" aria-hidden="true">
-      <img src="/images/earth.jpg" alt="" class="marquee-img" /><span class="marquee-label">Earth</span><span class="marquee-dot">·</span>
-      <img src="/images/water.jpg" alt="" class="marquee-img" /><span class="marquee-label">Water</span><span class="marquee-dot">·</span>
-      <img src="/images/fire.jpg"  alt="" class="marquee-img" /><span class="marquee-label">Fire</span><span class="marquee-dot">·</span>
-      <img src="/images/air.jpg"   alt="" class="marquee-img" /><span class="marquee-label">Air</span><span class="marquee-dot">·</span>
-      <span class="marquee-label marquee-label--accent">Black Sea · Bulgaria · 2026</span><span class="marquee-dot">·</span>
-    </span>
-  </div>
+    <!-- Meta content: appears when full-bleed is revealed -->
+    <div class="hero-meta" id="hero-meta">
+      <div class="hero-meta-left">
+        <p class="hero-coords">42°N · 27°E · Bulgaria</p>
+        <p class="hero-sub">A cliff above the Black Sea.<br>Between ancient forest and open water.</p>
+      </div>
+      <div class="hero-meta-right">
+        <a href="#story"    class="v2-btn-hero v2-btn-primary" data-magnetic>Discover the story</a>
+        <a href="#register" class="v2-btn-hero v2-btn-outline"  data-magnetic>Register interest</a>
+      </div>
+    </div>
+
+  </section>
 </div>
 
 <style>
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-
-  /* Skip link — WCAG 2.4.1 */
   .v2-skip-link{position:absolute;top:-9999px;left:1rem;padding:.5rem 1rem;background:#A8D5C2;color:#111816;font-family:'Manrope',system-ui,sans-serif;font-size:14px;font-weight:600;text-decoration:none;border-radius:4px;z-index:9999;}
   .v2-skip-link:focus{top:1rem;}
 
-  /* Section */
+  /* Sticky hero fills viewport */
   #v2-hero{
-    position:relative;min-height:100svh;
+    position:sticky;top:0;
+    width:100%;height:100svh;
     background:#111816;
-    display:flex;flex-direction:column;justify-content:flex-end;
     overflow:hidden;
+    display:flex;flex-direction:column;justify-content:flex-end;
   }
 
-  /* Text-mask wrap — fills the full section */
+  /* Full-bleed image layer — initially opacity:0 */
+  .hero-fullbleed{
+    position:absolute;inset:0;
+    opacity:0;
+  }
+  .hero-fullbleed-img{
+    width:100%;height:100%;
+    object-fit:cover;object-position:center 35%;
+  }
+
+  /* Text-mask wrapper */
   .hero-mask-wrap{
     position:absolute;inset:0;
     display:flex;align-items:center;justify-content:center;
     pointer-events:none;user-select:none;
   }
-
-  /* The actual mask text — image shows THROUGH the letterforms */
-  .hero-mask-text{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-weight:900;
-    font-size:clamp(16vw,20vw,24vw);
-    line-height:1;
-    letter-spacing:-0.05em;
-    white-space:nowrap;
-    /* Background-clip trick: image visible only inside letter shapes */
+  .hero-mask-word{
+    display:flex;align-items:center;
+    /* Image shows through the letterforms */
     background-image:url('/images/hero.jpg');
     background-size:cover;
     background-position:center 35%;
     background-clip:text;
     -webkit-background-clip:text;
     color:transparent;
-    opacity:0;
-    filter:brightness(1.15) saturate(1.1);
-  }
-
-  /* Meta strip at bottom */
-  .hero-meta{
-    position:relative;z-index:2;
-    display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;
-    padding:2.5rem clamp(1.5rem,4vw,4rem);
-    border-top:1px solid rgba(234,230,222,.08);
-    opacity:0;transform:translateY(16px);
-  }
-  .hero-meta-left{display:flex;flex-direction:column;gap:.5rem;}
-  .hero-coords{font-family:'Manrope',system-ui,sans-serif;font-size:11px;letter-spacing:.16em;color:rgba(168,213,194,.6);text-transform:uppercase;}
-  .hero-sub{font-family:'Manrope',system-ui,sans-serif;font-size:15px;line-height:1.65;color:rgba(234,230,222,.5);max-width:36ch;}
-  .hero-meta-right{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
-
-  /* Buttons — min 44px touch target (WCAG 2.5.8) */
-  .v2-btn-hero{
-    display:inline-flex;align-items:center;padding:.875rem 1.75rem;
-    font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
-    text-decoration:none;border-radius:16px;border:1px solid transparent;
-    min-height:44px;cursor:none;
-    transition:background .25s ease,border-color .25s ease,opacity .2s ease;
+    font-family:'Manrope',system-ui,sans-serif;
+    font-weight:900;
+    font-size:clamp(14vw,18vw,22vw);
+    line-height:1;
+    letter-spacing:-.04em;
     will-change:transform;
   }
+  /* Each letter is individually positioned for scatter */
+  .hc{display:inline-block;will-change:transform,opacity;}
+
+  /* Scatter images — circular, start at centre, fly outward */
+  .hero-scatter-imgs{
+    position:absolute;inset:0;
+    pointer-events:none;
+  }
+  .scatter-img{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    width:clamp(60px,8vw,120px);
+    height:clamp(60px,8vw,120px);
+    border-radius:50%;
+    object-fit:cover;
+    opacity:0;
+    will-change:transform,opacity;
+  }
+
+  /* Meta strip */
+  .hero-meta{
+    position:relative;z-index:5;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;
+    padding:2.5rem clamp(1.5rem,4vw,4rem);
+    border-top:1px solid rgba(234,230,222,.1);
+    opacity:0;transform:translateY(20px);
+    background:linear-gradient(to top,rgba(17,24,22,.8) 0%,transparent 100%);
+  }
+  .hero-meta-left{display:flex;flex-direction:column;gap:.5rem;}
+  .hero-coords{font-family:'Manrope',system-ui,sans-serif;font-size:11px;letter-spacing:.16em;color:rgba(168,213,194,.7);text-transform:uppercase;}
+  .hero-sub{font-family:'Manrope',system-ui,sans-serif;font-size:15px;line-height:1.65;color:rgba(234,230,222,.6);max-width:36ch;}
+  .hero-meta-right{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
+
+  /* Buttons */
+  .v2-btn-hero{display:inline-flex;align-items:center;padding:.875rem 1.75rem;font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;text-decoration:none;border-radius:16px;border:1px solid transparent;min-height:44px;cursor:none;transition:opacity .25s ease,background .25s ease,border-color .25s ease;will-change:transform;}
   .v2-btn-primary{background:#2B4A3C;color:#EAE6DE;border-color:#2B4A3C;}
   .v2-btn-primary:hover{opacity:.82;}
-  .v2-btn-outline{background:transparent;color:#A8D5C2;border-color:rgba(168,213,194,.45);}
-  .v2-btn-outline:hover{background:rgba(168,213,194,.07);border-color:#A8D5C2;}
+  .v2-btn-outline{background:transparent;color:#A8D5C2;border-color:rgba(168,213,194,.5);}
+  .v2-btn-outline:hover{background:rgba(168,213,194,.08);border-color:#A8D5C2;}
   :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
-
-  /* Marquee */
-  .v2-marquee-strip{background:#182118;border-top:1px solid rgba(234,230,222,.07);overflow:hidden;height:52px;display:flex;align-items:center;}
-  .v2-marquee-track{display:flex;align-items:center;white-space:nowrap;will-change:transform;}
-  .marquee-set{display:inline-flex;align-items:center;gap:1.25rem;padding-right:1.25rem;}
-  .marquee-img{width:34px;height:34px;object-fit:cover;border-radius:50%;filter:grayscale(.3) brightness(.8);flex-shrink:0;}
-  .marquee-label{font-family:'Manrope',system-ui,sans-serif;font-weight:500;font-size:12px;letter-spacing:.07em;color:rgba(234,230,222,.5);}
-  .marquee-label--accent{color:rgba(168,213,194,.6);font-style:italic;}
-  .marquee-dot{color:rgba(234,230,222,.18);font-size:12px;}
 
   @media(max-width:640px){
     .hero-meta{flex-direction:column;align-items:flex-start;gap:1.25rem;}
     .hero-meta-right{width:100%;}
     .v2-btn-hero{flex:1;justify-content:center;cursor:pointer;}
-    .hero-mask-text{font-size:clamp(20vw,24vw,28vw);}
   }
 </style>
 
 <script>
-  (function(){
-    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const maskEl = document.getElementById('hero-mask')
-    const metaEl = document.getElementById('hero-meta')
+(function(){
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    const init = () => {
-      const g = (window as any).gsap
-      const ST = (window as any).ScrollTrigger
-      if(!g){setTimeout(init,60);return}
+  // Scatter positions for the 4 element images (% from centre of viewport)
+  const scatterPositions = [
+    { x:'-35vw', y:'-30vh' }, // earth — top-left
+    { x:'35vw',  y:'-25vh' }, // water — top-right
+    { x:'-30vw', y:'32vh'  }, // fire  — bottom-left
+    { x:'32vw',  y:'28vh'  }, // air   — bottom-right
+  ]
 
-      if(rm){
-        if(maskEl) maskEl.style.opacity='1'
-        if(metaEl){metaEl.style.opacity='1';metaEl.style.transform='none'}
-        return
+  const init = () => {
+    const g  = (window as any).gsap
+    const ST = (window as any).ScrollTrigger
+    if(!g || !ST){setTimeout(init,60);return}
+
+    const word     = document.getElementById('hero-mask-word')
+    const chars    = document.querySelectorAll<HTMLElement>('.hc')
+    const fullbleed= document.getElementById('hero-fullbleed')
+    const metaEl   = document.getElementById('hero-meta')
+    const scImgs   = document.querySelectorAll<HTMLElement>('.scatter-img')
+
+    if(rm){
+      // Reduced motion: skip to end state immediately
+      if(word) word.style.opacity='0'
+      if(fullbleed) fullbleed.style.opacity='1'
+      if(metaEl){metaEl.style.opacity='1';metaEl.style.transform='none'}
+      return
+    }
+
+    // Phase 1 — initial reveal of the text-mask (on load)
+    const loadTl = g.timeline({delay:.2})
+    loadTl.fromTo(word,
+      {opacity:0,filter:'brightness(.3) blur(8px)',scale:1.08},
+      {opacity:1,filter:'brightness(1.15) blur(0px)',scale:1,duration:1.6,ease:'power3.out'}
+    )
+
+    // Phase 2 — scroll-driven: scatter + reveal
+    const scrollTl = g.timeline({
+      scrollTrigger:{
+        trigger:'#hero-pin-wrap',
+        start:'top top',
+        end:'bottom bottom',
+        scrub:1,
       }
+    })
 
-      const tl = g.timeline({delay:.2})
-      // Image reveals through the word — blur+brightness animate in
-      tl.fromTo(maskEl,
-        {opacity:0,filter:'brightness(.3) saturate(.4) blur(6px)',scale:1.06},
-        {opacity:1,filter:'brightness(1.15) saturate(1.1) blur(0px)',scale:1,duration:1.8,ease:'power3.out'}
+    // 0→0.5: each letter flies to its own direction & fades out
+    chars.forEach((ch,i)=>{
+      const xDir = parseFloat(ch.dataset.x||'0')
+      const yDir = parseFloat(ch.dataset.y||'0')
+      const rot  = parseFloat(ch.dataset.r||'0')
+      scrollTl.to(ch,{
+        x:`${xDir * 8}px`,
+        y:`${yDir * 8}px`,
+        rotation:rot * 3,
+        scale:3,
+        opacity:0,
+        duration:.5,
+        ease:'power2.in',
+      }, 0 + i * 0.015)
+    })
+
+    // 0.1→0.4: element images fly out from centre
+    scImgs.forEach((img,i)=>{
+      const pos = scatterPositions[i]
+      scrollTl.fromTo(img,
+        {scale:0,opacity:0,x:0,y:0},
+        {scale:1,opacity:1,x:pos.x,y:pos.y,duration:.35,ease:'power3.out'},
+        0.08 + i*0.05
       )
-      // Meta strip rises
-      tl.to(metaEl,{opacity:1,y:0,duration:.8,ease:'power3.out'},'-=.8')
+      // Then fade them out as image comes in
+      scrollTl.to(img,
+        {opacity:0,scale:1.2,duration:.2,ease:'power2.in'},
+        0.45
+      )
+    })
 
-      // Parallax: image position shifts as user scrolls — adds depth to mask
-      if(ST && maskEl){
-        g.to(maskEl,{
-          backgroundPositionY:'65%',ease:'none',
-          scrollTrigger:{trigger:'#v2-hero',start:'top top',end:'bottom top',scrub:1.8}
-        })
-      }
-    }
-    if((window as any).gsap) init(); else window.addEventListener('load',init)
+    // 0.35→0.75: full-bleed image scales in
+    scrollTl.fromTo(fullbleed,
+      {opacity:0,scale:1.06},
+      {opacity:1,scale:1,duration:.5,ease:'power2.out'},
+      0.35
+    )
 
-    // Magnetic (fine pointer only — WCAG 2.5.1)
-    if(window.matchMedia('(pointer: fine)').matches){
-      document.querySelectorAll('[data-magnetic]').forEach(btn=>{
-        const el=btn as HTMLElement
-        el.addEventListener('mousemove',(e:Event)=>{
-          const g=(window as any).gsap;if(!g)return
-          const me=e as MouseEvent;const r=el.getBoundingClientRect()
-          g.to(el,{x:(me.clientX-r.left-r.width/2)*.28,y:(me.clientY-r.top-r.height/2)*.28,duration:.4,ease:'power3.out'})
-        })
-        el.addEventListener('mouseleave',()=>{
-          const g=(window as any).gsap;if(g)g.to(el,{x:0,y:0,duration:.5,ease:'elastic.out(1,.5)'})
-        })
-      })
-    }
+    // 0.65→1.0: meta content rises in
+    scrollTl.to(metaEl,
+      {opacity:1,y:0,duration:.35,ease:'power3.out'},
+      0.65
+    )
+  }
 
-    // Marquee
-    const track = document.getElementById('v2-marquee-track')
-    if(track && !rm){
-      const start=()=>{
+  if((window as any).gsap && (window as any).ScrollTrigger) init()
+  else window.addEventListener('load',init)
+
+  // Magnetic buttons
+  if(window.matchMedia('(pointer: fine)').matches){
+    document.querySelectorAll('[data-magnetic]').forEach(btn=>{
+      const el=btn as HTMLElement
+      el.addEventListener('mousemove',(e:Event)=>{
         const g=(window as any).gsap;if(!g)return
-        const w=track.scrollWidth/2
-        g.set(track,{x:0})
-        g.to(track,{x:-w,duration:32,ease:'none',repeat:-1})
-      }
-      if((window as any).gsap) start(); else window.addEventListener('load',start)
-    }
-  })()
+        const me=e as MouseEvent;const r=el.getBoundingClientRect()
+        g.to(el,{x:(me.clientX-r.left-r.width/2)*.28,y:(me.clientY-r.top-r.height/2)*.28,duration:.4,ease:'power3.out'})
+      })
+      el.addEventListener('mouseleave',()=>{
+        const g=(window as any).gsap;if(g)g.to(el,{x:0,y:0,duration:.5,ease:'elastic.out(1,.5)'})
+      })
+    })
+  }
+})()
 </script>

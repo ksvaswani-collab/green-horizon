@@ -1,150 +1,63 @@
 ---
-// V2 Nav — minimal transparent fixed bar
-// Left: HORIZON wordmark  |  Right: Register interest CTA
-// On scroll >60px: frosted dark bg
+// V2 Nav — three-group: wordmark | nav links | CTA
 ---
 <header id="v2-nav" role="banner">
   <a href="#main" class="v2-skip-link">Skip to main content</a>
+  <nav aria-label="Primary navigation" class="v2-nav-inner">
 
-  <nav aria-label="Primary navigation">
-    <a href="/v2/" class="v2-nav-wordmark" aria-label="Green Horizon — home">
-      HORIZON
-    </a>
+    <a href="/v2/" class="v2-nav-wordmark" aria-label="Green Horizon — home">HORIZON</a>
 
-    <a
-      href="#register"
-      class="v2-btn v2-btn-nav"
-      aria-label="Register your interest in Green Horizon"
-      data-magnetic
-    >
-      Register interest
-    </a>
+    <ul class="v2-nav-links" role="list">
+      <li><a href="#story"      class="v2-nav-link">The story</a></li>
+      <li><a href="#elements"   class="v2-nav-link">Elements</a></li>
+      <li><a href="#rooms"      class="v2-nav-link">Rooms</a></li>
+      <li><a href="#experiences"class="v2-nav-link">Experiences</a></li>
+    </ul>
+
+    <a href="#register" class="v2-btn v2-btn-nav" data-magnetic>Register interest</a>
   </nav>
 </header>
 
 <style>
-  #v2-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 900;
-    padding: 1.5rem clamp(1.5rem, 4vw, 4rem);
-    transition: background 0.4s ease, backdrop-filter 0.4s ease;
-  }
+  #v2-nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:1.25rem clamp(1.5rem,4vw,4rem);transition:background .4s ease,backdrop-filter .4s ease;}
+  #v2-nav.is-scrolled{background:rgba(17,24,22,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(234,230,222,.07);}
 
-  #v2-nav.is-scrolled {
-    background: rgba(6, 10, 8, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(234, 230, 222, 0.08);
-  }
+  .v2-nav-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;}
 
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .v2-nav-wordmark{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:clamp(1.1rem,2vw,1.4rem);color:#EAE6DE;text-decoration:none;transition:color .2s ease;flex-shrink:0;}
+  .v2-nav-wordmark:hover{color:#A8D5C2;}
 
-  .v2-nav-wordmark {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    color: #EAE6DE;
-    letter-spacing: 0.01em;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
+  .v2-nav-links{list-style:none;display:flex;gap:2rem;margin:0;padding:0;}
+  .v2-nav-link{font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;color:rgba(234,230,222,.5);text-decoration:none;transition:color .2s ease;}
+  .v2-nav-link:hover{color:#EAE6DE;}
 
-  .v2-nav-wordmark:hover {
-    color: #A8D5C2;
-  }
+  .v2-btn{display:inline-flex;align-items:center;font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;text-decoration:none;border:1px solid transparent;border-radius:16px;padding:.6rem 1.25rem;min-height:44px;cursor:none;transition:background .25s ease,border-color .25s ease;flex-shrink:0;}
+  .v2-btn-nav{background:transparent;color:#A8D5C2;border-color:rgba(168,213,194,.45);}
+  .v2-btn-nav:hover{background:rgba(168,213,194,.08);border-color:#A8D5C2;}
 
-  .v2-skip-link {
-    position: absolute;
-    top: -100%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10000;
-    background: #A8D5C2;
-    color: #060A08;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0 0 12px 12px;
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    text-decoration: none;
-    transition: top 0.2s;
-  }
+  .v2-skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);z-index:10000;background:#A8D5C2;color:#111816;padding:.75rem 1.5rem;border-radius:0 0 12px 12px;font-family:'Manrope',system-ui,sans-serif;font-weight:700;font-size:14px;text-decoration:none;transition:top .2s;}
+  .v2-skip-link:focus{top:0;}
+  :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
 
-  .v2-skip-link:focus {
-    top: 0;
-  }
-
-  .v2-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0;
-    text-transform: none;
-    text-decoration: none;
-    cursor: none;
-    border: 1px solid transparent;
-    border-radius: 16px;
-    white-space: nowrap;
-    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-    padding: 0.6rem 1.25rem;
-  }
-
-  .v2-btn-nav {
-    background: transparent;
-    color: #A8D5C2;
-    border-color: #A8D5C2;
-  }
-
-  .v2-btn-nav:hover {
-    background: rgba(168, 213, 194, 0.08);
-  }
-
-  :focus-visible {
-    outline: 2px solid #A8D5C2;
-    outline-offset: 4px;
-  }
+  @media(max-width:768px){.v2-nav-links{display:none;}.v2-btn-nav{cursor:pointer;}}
 </style>
 
 <script>
   const nav = document.getElementById('v2-nav')
-  if (nav) {
-    const onScroll = () => {
-      if (window.scrollY > 60) {
-        nav.classList.add('is-scrolled')
-      } else {
-        nav.classList.remove('is-scrolled')
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
+  if(nav){
+    window.addEventListener('scroll',()=>{
+      nav.classList.toggle('is-scrolled', window.scrollY > 60)
+    },{passive:true})
   }
-
-  // Magnetic button effect on CTA
-  const magBtn = document.querySelector('[data-magnetic]') as HTMLElement | null
-  if (magBtn && window.matchMedia('(pointer: fine)').matches) {
-    const onMove = (e: MouseEvent) => {
-      const rect = magBtn.getBoundingClientRect()
-      const cx = rect.left + rect.width / 2
-      const cy = rect.top + rect.height / 2
-      const dx = (e.clientX - cx) * 0.25
-      const dy = (e.clientY - cy) * 0.25
-      const g = (window as any).gsap
-      if (g) g.to(magBtn, { x: dx, y: dy, duration: 0.4, ease: 'power3.out' })
-    }
-    const onLeave = () => {
-      const g = (window as any).gsap
-      if (g) g.to(magBtn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' })
-    }
-    magBtn.addEventListener('mousemove', onMove)
-    magBtn.addEventListener('mouseleave', onLeave)
+  const btn = document.querySelector('[data-magnetic]') as HTMLElement|null
+  if(btn && window.matchMedia('(pointer: fine)').matches){
+    btn.addEventListener('mousemove',(e:MouseEvent)=>{
+      const g=(window as any).gsap;if(!g)return
+      const r=btn.getBoundingClientRect()
+      g.to(btn,{x:(e.clientX-r.left-r.width/2)*.25,y:(e.clientY-r.top-r.height/2)*.25,duration:.4,ease:'power3.out'})
+    })
+    btn.addEventListener('mouseleave',()=>{
+      const g=(window as any).gsap;if(g)g.to(btn,{x:0,y:0,duration:.5,ease:'elastic.out(1,.5)'})
+    })
   }
 </script>
