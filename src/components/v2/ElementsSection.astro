@@ -1,227 +1,275 @@
 ---
-// V2 ElementsSection — four 100svh stacked panels, full-bleed images
+// V2 ElementsSection — GSAP card deck.
+// All 4 cards occupy the same 100svh slot; cards slide out upward as you scroll,
+// revealing the next card beneath. Total scroll height: 4 * 100vh = 400vh pin.
+// Replaces the "4 full-height stacked sections" (too much vertical space).
 const elements = [
-  {
-    id: 'earth',
-    number: '01',
-    name: 'Earth',
-    description: 'Strandzha oak, ancient limestone, the smell of forest floor after rain.',
-    image: '/images/earth.jpg',
-    bg: '#0D1108',
-    alt: 'Dense ancient forest floor of the Strandzha mountain region at dusk',
-  },
-  {
-    id: 'water',
-    number: '02',
-    name: 'Water',
-    description: 'The Black Sea does not perform. It waits.',
-    image: '/images/water.jpg',
-    bg: '#060D14',
-    alt: 'The Black Sea shoreline at calm morning, waves approaching the shore',
-  },
-  {
-    id: 'fire',
-    number: '03',
-    name: 'Fire',
-    description: 'Copper light. The hour before it all goes dark.',
-    image: '/images/fire.jpg',
-    bg: '#130A05',
-    alt: 'Dramatic sunset over the Bulgarian Black Sea coast, copper and red sky',
-  },
-  {
-    id: 'air',
-    number: '04',
-    name: 'Air',
-    description: 'On the cliff edge, wind decides the day.',
-    image: '/images/air.jpg',
-    bg: '#080C10',
-    alt: 'Open sky above sea cliffs, cirrus clouds and wide horizon',
-  },
+  { id:'earth', number:'01', name:'Earth',
+    body:'Strandzha oak, ancient limestone, the smell of forest floor after rain.',
+    image:'/images/earth.jpg', alt:'Dense Strandzha forest floor at dusk', accent:'#8B6F4A' },
+  { id:'water', number:'02', name:'Water',
+    body:'The Black Sea does not perform. It waits. Twelve nations meet at its floor.',
+    image:'/images/water.jpg', alt:'Black Sea shoreline at calm morning', accent:'#4A7B8B' },
+  { id:'fire',  number:'03', name:'Fire',
+    body:'Copper light. The hour before it all goes dark. Dinner as the longest part of the day.',
+    image:'/images/fire.jpg',  alt:'Sunset over the Bulgarian Black Sea coast', accent:'#8B5A3A' },
+  { id:'air',   number:'04', name:'Air',
+    body:'On the cliff edge, wind decides the day. Open sky. Space that opens your chest.',
+    image:'/images/air.jpg',   alt:'Open sky above sea cliffs, wide horizon', accent:'#4A8B7A' },
 ]
 ---
+
 <section id="elements" aria-labelledby="elements-heading">
-  <h2 id="elements-heading" class="sr-only">The four elements</h2>
+  <h2 id="elements-heading" class="sr-only">The four elements of Green Horizon</h2>
 
-  {elements.map((el) => (
-    <article
-      class="element-panel"
-      id={`element-${el.id}`}
-      style={`background: ${el.bg};`}
-      aria-label={`Element: ${el.name} — ${el.description}`}
-    >
-      <img
-        src={el.image}
-        alt={el.alt}
-        class="element-img"
-        loading="lazy"
-      />
-      <div class="element-overlay" aria-hidden="true"></div>
+  <!-- Section label above the deck -->
+  <div class="elements-label-row" aria-hidden="true">
+    <span class="elements-label">The Four Elements</span>
+    <span class="elements-label">Scroll to explore →</span>
+  </div>
 
-      <div class="element-content">
-        <div class="element-copper-rule" aria-hidden="true"></div>
-        <div class="element-meta">
-          <span class="element-number" aria-hidden="true">{el.number}</span>
-          <span class="element-label-text" aria-hidden="true">{el.name}</span>
-        </div>
-        <p class="element-desc">{el.description}</p>
-        <div class="element-name-large" aria-hidden="true">{el.name.toUpperCase()}</div>
+  <!-- Pin wrapper: controls total scroll distance (400vh) -->
+  <div id="elements-pin-wrapper">
+    <!-- Sticky container: stays at top while scrolling -->
+    <div id="elements-sticky">
+
+      <!-- Progress bar -->
+      <div class="elements-progress" aria-hidden="true">
+        <div class="elements-progress-bar" id="elements-progress-bar"></div>
+      </div>
+
+      <!-- Card deck: all 4 cards absolutely positioned on top of each other -->
+      <div class="elements-deck" id="elements-deck">
+        {elements.map((el, i) => (
+          <article
+            class="element-card"
+            id={`el-card-${el.id}`}
+            data-index={i}
+            aria-label={`${el.number} — ${el.name}: ${el.body}`}
+            style={`z-index: ${elements.length - i};`}
+          >
+            <!-- Full-bleed image -->
+            <img src={el.image} alt={el.alt} class="el-card-img" loading={i === 0 ? 'eager' : 'lazy'} />
+
+            <!-- Dark overlay gradient -->
+            <div class="el-card-overlay" aria-hidden="true"></div>
+
+            <!-- Content -->
+            <div class="el-card-content">
+              <!-- Number + name -->
+              <div class="el-card-header">
+                <span class="el-number" style={`color: ${el.accent};`}>{el.number}</span>
+                <h3 class="el-name">{el.name}</h3>
+              </div>
+              <p class="el-body">{el.body}</p>
+            </div>
+
+            <!-- Card index indicator (bottom-right corner) -->
+            <div class="el-card-index" aria-hidden="true">
+              {el.number} / 04
+            </div>
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Mobile: simple vertical list (no pinning) -->
+<section id="elements-mobile" aria-labelledby="elements-mobile-heading" class="elements-mobile-section">
+  <h2 id="elements-mobile-heading" class="sr-only">The four elements</h2>
+  {elements.map(el => (
+    <article class="el-mobile-item" aria-label={`${el.name}: ${el.body}`}>
+      <img src={el.image} alt={el.alt} class="el-mobile-img" loading="lazy" />
+      <div class="el-mobile-content">
+        <span class="el-number" style={`color: ${el.accent};`}>{el.number}</span>
+        <h3 class="el-name">{el.name}</h3>
+        <p class="el-body">{el.body}</p>
       </div>
     </article>
   ))}
 </section>
 
 <style>
-  #elements {
-    /* stacked panels — no special flex needed */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  /* Section label row */
+  .elements-label-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:.75rem clamp(1.5rem,4vw,4rem);
+    background:#182118;
+    border-bottom:1px solid rgba(234,230,222,.07);
+  }
+  .elements-label{
+    font-family:'Manrope',system-ui,sans-serif;font-size:11px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;color:rgba(234,230,222,.38);
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border-width: 0;
+  /* Pin wrapper: 400vh = 4 cards × 100vh */
+  #elements-pin-wrapper{height:400vh;}
+  #elements-sticky{
+    position:sticky;top:0;width:100%;height:100svh;
+    overflow:hidden;background:#111816;
   }
 
-  .element-panel {
-    position: relative;
-    width: 100%;
-    height: 100svh;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
+  /* Progress bar */
+  .elements-progress{
+    position:absolute;top:0;left:0;right:0;height:2px;
+    background:rgba(234,230,222,.07);z-index:10;
+  }
+  .elements-progress-bar{
+    height:100%;width:0%;
+    background:#A8D5C2;
+    transition:none;
   }
 
-  .element-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    /* Full color — no desaturation */
-  }
+  /* Card deck */
+  .elements-deck{position:relative;width:100%;height:100%;}
 
-  .element-overlay {
-    position: absolute;
-    inset: 0;
-    /* Gradient so bottom content is readable */
-    background: linear-gradient(
+  /* Individual cards — all stacked at position:absolute, same inset */
+  .element-card{
+    position:absolute;inset:0;
+    overflow:hidden;
+  }
+  .el-card-img{
+    width:100%;height:100%;
+    object-fit:cover;object-position:center;
+    filter:saturate(.85) contrast(1.06) brightness(.9);
+  }
+  .el-card-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(
       to top,
-      rgba(6, 10, 8, 0.92) 0%,
-      rgba(6, 10, 8, 0.5) 40%,
-      rgba(6, 10, 8, 0.15) 70%,
-      transparent 100%
+      rgba(17,24,22,.85) 0%,
+      rgba(17,24,22,.3)  40%,
+      rgba(17,24,22,.15) 70%,
+      transparent        100%
     );
   }
 
-  .element-content {
-    position: relative;
-    z-index: 1;
-    padding: clamp(2rem, 4vw, 4rem) clamp(2rem, 6vw, 6rem);
-    width: 100%;
+  /* Card content */
+  .el-card-content{
+    position:absolute;bottom:0;left:0;right:0;
+    padding:clamp(2rem,4vh,4rem) clamp(1.5rem,4vw,4rem);
+  }
+  .el-card-header{
+    display:flex;align-items:baseline;gap:1rem;margin-bottom:.75rem;
+  }
+  .el-number{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;font-size:1.1rem;
+  }
+  .el-name{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-weight:900;
+    font-size:clamp(3rem,8vw,7rem);
+    line-height:.9;
+    letter-spacing:-.04em;
+    color:#EAE6DE;
+    margin:0;
+  }
+  .el-body{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:15px;line-height:1.7;
+    color:rgba(234,230,222,.65);
+    max-width:40ch;
+    margin-top:.75rem;
+  }
+  .el-card-index{
+    position:absolute;top:1.5rem;right:clamp(1.5rem,4vw,4rem);
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:11px;letter-spacing:.14em;
+    color:rgba(234,230,222,.3);
   }
 
-  .element-copper-rule {
-    width: 48px;
-    height: 2px;
-    background: #C4876A;
-    margin-bottom: 1.25rem;
+  /* Desktop: show pin, hide mobile */
+  @media(min-width:769px){
+    #elements-mobile{display:none;}
   }
 
-  .element-meta {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+  /* Mobile: hide pin, show simple list */
+  @media(max-width:768px){
+    #elements-pin-wrapper,.elements-label-row{display:none;}
+    .elements-mobile-section{display:block;}
   }
 
-  .element-number {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: #C4876A;
-    letter-spacing: 0.02em;
+  /* Mobile styles */
+  .el-mobile-item{
+    position:relative;min-height:70svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    overflow:hidden;background:#111816;
   }
-
-  .element-label-text {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 500;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #7A8C84;
+  .el-mobile-img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;filter:saturate(.8) brightness(.85);
   }
-
-  .element-desc {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-    color: #7A8C84;
-    max-width: 40ch;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-
-  .element-name-large {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 900;
-    font-size: clamp(4rem, 10vw, 9rem);
-    letter-spacing: -0.04em;
-    line-height: 0.9;
-    color: #EAE6DE;
-    will-change: transform, opacity;
-    transform: translateY(80px);
-    opacity: 0;
-  }
-
-  :focus-visible {
-    outline: 2px solid #A8D5C2;
-    outline-offset: 4px;
+  .el-mobile-content{
+    position:relative;z-index:1;
+    padding:3rem 1.5rem;
+    background:linear-gradient(to top,rgba(17,24,22,.9) 0%,transparent 100%);
   }
 </style>
 
 <script>
-  (function () {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const rm  = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const mob = window.matchMedia('(max-width: 768px)').matches
 
-    const initAnim = () => {
-      const g = (window as any).gsap
+  if(!mob && !rm){
+    const init = () => {
+      const g  = (window as any).gsap
       const ST = (window as any).ScrollTrigger
-      if (!g || !ST) return
+      if(!g || !ST){setTimeout(init,60);return}
 
-      document.querySelectorAll('.element-name-large').forEach((el) => {
-        const panel = el.closest('.element-panel')
-        if (!panel) return
+      const cards   = Array.from(document.querySelectorAll<HTMLElement>('.element-card'))
+      const progBar = document.getElementById('elements-progress-bar')
+      const total   = cards.length
 
-        if (prefersReduced) {
-          ;(el as HTMLElement).style.transform = 'none'
-          ;(el as HTMLElement).style.opacity = '1'
-          return
+      // Stack cards: card 0 (bottom) starts visible; cards 1-3 start peeking slightly from below
+      cards.forEach((card, i) => {
+        if(i === 0) return // First card stays put until scrolled
+        g.set(card, { yPercent: 100 }) // Start off-screen below
+      })
+
+      // Master scroll driver
+      const masterTl = g.timeline({
+        scrollTrigger: {
+          trigger: '#elements-pin-wrapper',
+          pin: '#elements-sticky',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.8,
+          onUpdate: (self: any) => {
+            if(progBar) progBar.style.width = (self.progress * 100) + '%'
+          }
+        }
+      })
+
+      // Each card slides up and exits, revealing the one beneath
+      // Transition spans 1/(total-1) of total scroll each
+      cards.forEach((card, i) => {
+        if(i === total - 1) return // Last card never exits
+        const start = i / (total - 1)
+        const end   = (i + 1) / (total - 1)
+
+        // Slide next card up from below
+        if(cards[i + 1]) {
+          masterTl.fromTo(cards[i + 1],
+            { yPercent: 100 },
+            { yPercent: 0, ease: 'power2.inOut', duration: end - start },
+            start
+          )
         }
 
-        g.to(el, {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: panel,
-            start: 'top 70%',
-            once: true,
-          },
-        })
+        // Slightly compress and dim the exiting card
+        masterTl.fromTo(card,
+          { scale: 1, filter: 'brightness(1)' },
+          { scale: .97, filter: 'brightness(.7)', ease: 'power2.in', duration: (end - start) * 0.4 },
+          start + (end - start) * 0.6
+        )
       })
     }
-
-    if ((window as any).gsap && (window as any).ScrollTrigger) {
-      initAnim()
-    } else {
-      window.addEventListener('load', initAnim)
-    }
-  })()
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init)
+    else init()
+  }
 </script>

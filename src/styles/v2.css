@@ -12,8 +12,8 @@
 
 /* ── Design tokens ─────────────────────────────────────────── */
 :root {
-  --v2-bg:      #060A08;
-  --v2-surface: #0D1410;
+  --v2-bg:      #111816;
+  --v2-surface: #182118;
   --v2-text:    #EAE6DE;
   --v2-muted:   #7A8C84;
   --v2-green:   #2B4A3C;
