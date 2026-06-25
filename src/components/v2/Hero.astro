@@ -185,11 +185,21 @@
       return
     }
 
-    // Phase 1 — initial reveal of the text-mask (on load)
+    // Phase 1 — NORMAL.supply style reveal:
+    // Each letter clips open left→right (like a shutter), then the image brightens into view.
     const loadTl = g.timeline({delay:.2})
+
+    // Step 1a: word starts clipped from the right (invisible), wipes open left→right
+    g.set(word, { opacity: 1, filter: 'brightness(.6) saturate(.5)', scale: 1 })
     loadTl.fromTo(word,
-      {opacity:0,filter:'brightness(.3) blur(8px)',scale:1.08},
-      {opacity:1,filter:'brightness(1.15) blur(0px)',scale:1,duration:1.6,ease:'power3.out'}
+      { clipPath: 'inset(0 100% 0 0 round 0px)' },
+      { clipPath: 'inset(0 0% 0 0 round 0px)', duration: 1.0, ease: 'power3.inOut' }
+    )
+
+    // Step 1b: as clip completes, image brightens and saturates through the letterforms
+    loadTl.to(word,
+      { filter: 'brightness(1.15) saturate(1.1)', duration: 0.8, ease: 'power2.out' },
+      '-=0.4'
     )
 
     // Phase 2 — scroll-driven: scatter + reveal

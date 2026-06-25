@@ -1,200 +1,300 @@
 ---
-// V2 JourneySection — "Dispatches from the cliff."
-// Full-width cinematic images dominate each entry. Dates as giant ambient typography.
-// No alternating columns. No generic grid.
+// V2 JourneySection — editorial 50/50 split inspired by NORMAL.supply.
+// Each entry: large contained image panel + oversized text panel, alternating.
+// Entry number as huge ambient background numeral. Clip-path reveal on scroll.
 const entries = [
   {
-    dateDisplay:'NOV — 2024',
-    dateShort:'11',
-    heading:'Ground broken',
-    dispatch:'The first foundations poured. Chalk and clay soil. Nothing moved that does not have to be.',
-    image:'/images/build-nov-2024.jpg',
-    alt:'Early foundation work on the cliff site, November 2024',
+    n: '01', dateDisplay: 'Nov — 2024',
+    heading: 'Ground broken.',
+    dispatch: 'The first foundations poured. Chalk and clay soil. Nothing moved that does not have to be.',
+    image: '/images/build-nov-2024.jpg',
+    alt: 'Early foundation work on the cliff site, November 2024',
+    imgLeft: true,
   },
   {
-    dateDisplay:'MAR — 2025',
-    dateShort:'03',
-    heading:'Walls find form',
-    dispatch:'Raw frames emerge. The structure follows the cliff contour, stepping down rather than imposing.',
-    image:'/images/build-march-2025.jpg',
-    alt:'Concrete walls of Green Horizon rising, March 2025',
+    n: '02', dateDisplay: 'Mar — 2025',
+    heading: 'Walls find form.',
+    dispatch: 'Raw frames emerge. The structure follows the cliff contour — stepping down rather than imposing.',
+    image: '/images/build-march-2025.jpg',
+    alt: 'Concrete walls of Green Horizon rising, March 2025',
+    imgLeft: false,
   },
   {
-    dateDisplay:'JUN — 2025',
-    dateShort:'06',
-    heading:'The roof closes',
-    dispatch:'Watertight. The first time the building reads as a whole. The view from the terrace: exactly what was hoped.',
-    image:'/images/build-june-2025.jpg',
-    alt:'Completed roof structure with sea view, June 2025',
+    n: '03', dateDisplay: 'Jun — 2025',
+    heading: 'The roof closes.',
+    dispatch: 'Watertight. The first time the building reads as a whole. The view from the terrace: exactly what was hoped.',
+    image: '/images/build-june-2025.jpg',
+    alt: 'Completed roof structure with sea view, June 2025',
+    imgLeft: true,
   },
 ]
 ---
 
-<section id="journey" aria-labelledby="journey-hdg">
+<section id="journey" aria-labelledby="journey-hdg" class="jn-section">
 
-  <!-- Masthead -->
-  <div class="jn-head">
-    <div class="jn-head-left">
-      <p class="jn-overline">The Build</p>
-      <h2 id="journey-hdg" class="jn-title">Dispatches<br>from the cliff.</h2>
+  <!-- Section label -->
+  <header class="jn-head">
+    <p class="jn-overline">The Build</p>
+    <h2 id="journey-hdg" class="jn-title">A record of progress.</h2>
+    <div class="jn-stats" role="list" aria-label="Project facts">
+      <span role="listitem" class="jn-stat"><b>4</b> rooms</span>
+      <span class="jn-sep" aria-hidden="true">—</span>
+      <span role="listitem" class="jn-stat"><b>6</b> villas</span>
+      <span class="jn-sep" aria-hidden="true">—</span>
+      <span role="listitem" class="jn-stat">Opening <b>2026</b></span>
     </div>
-    <div class="jn-head-right">
-      <div class="jn-stat"><span class="jn-stat-n">4</span><span class="jn-stat-l">Rooms</span></div>
-      <div class="jn-stat"><span class="jn-stat-n">6</span><span class="jn-stat-l">Villas</span></div>
-      <div class="jn-stat"><span class="jn-stat-n">2026</span><span class="jn-stat-l">Opening</span></div>
-    </div>
-  </div>
+  </header>
 
-  <!-- Entries: full-width cinematic dispatches -->
-  <div class="jn-entries">
-    {entries.map((e,i)=>(
-      <article class="jn-entry jn-reveal" aria-label={`${e.dateDisplay}: ${e.heading}`}>
+  <!-- Entries -->
+  {entries.map((e) => (
+    <article
+      class={`jn-entry jn-entry--${e.imgLeft ? 'img-left' : 'img-right'} jn-reveal`}
+      aria-label={`${e.dateDisplay}: ${e.heading}`}
+    >
+      <!-- Ambient number — huge background decoration -->
+      <span class="jn-ambient-n" aria-hidden="true">{e.n}</span>
 
-        <!-- Cinematic wide image — full width, short height -->
-        <div class="jn-img-wrap">
+      <!-- Image panel -->
+      <div class="jn-img-panel">
+        <div class="jn-img-clip">
           <img src={e.image} alt={e.alt} loading="lazy" class="jn-img" />
-          <!-- Large ambient date inside the image -->
-          <span class="jn-date-ambient" aria-hidden="true">{e.dateShort}</span>
         </div>
+      </div>
 
-        <!-- Dispatch text row below the image -->
-        <div class="jn-text-row">
-          <p class="jn-date-label">{e.dateDisplay}</p>
-          <div class="jn-text-main">
-            <h3 class="jn-heading">{e.heading}</h3>
-            <p class="jn-body">{e.dispatch}</p>
-          </div>
-          <span class={`jn-index`}>{String(i+1).padStart(2,'0')}</span>
-        </div>
+      <!-- Text panel -->
+      <div class="jn-text-panel">
+        <p class="jn-date">{e.dateDisplay}</p>
+        <h3 class="jn-heading">{e.heading}</h3>
+        <p class="jn-dispatch">{e.dispatch}</p>
+        <a href="#register" class="jn-cta">Follow the build →</a>
+      </div>
 
-      </article>
-    ))}
-  </div>
-
-  <div class="jn-footer">
-    <a href="#register" class="jn-cta">Follow the build — register interest →</a>
-  </div>
+    </article>
+  ))}
 
 </section>
 
 <style>
-  #journey{background:#111816;padding:5rem 0 6rem;}
-
-  /* Masthead */
-  .jn-head{
-    display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;
-    padding:0 clamp(1.5rem,4vw,4rem) 3rem;
-    border-bottom:1px solid rgba(234,230,222,.07);
-    margin-bottom:0;
-  }
-  .jn-overline{font-family:'Manrope',system-ui,sans-serif;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#A8D5C2;margin-bottom:.75rem;}
-  .jn-title{font-family:'Manrope',system-ui,sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;letter-spacing:-.03em;color:#EAE6DE;margin:0;}
-  .jn-head-right{display:flex;gap:2.5rem;align-items:flex-end;flex-shrink:0;}
-  .jn-stat{display:flex;flex-direction:column;align-items:flex-end;}
-  .jn-stat-n{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:clamp(2.5rem,4vw,3.5rem);line-height:1;color:#A8D5C2;}
-  .jn-stat-l{font-family:'Manrope',system-ui,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(234,230,222,.3);}
-
-  /* Entries */
-  .jn-entries{display:flex;flex-direction:column;}
-
-  .jn-entry{
-    border-bottom:1px solid rgba(234,230,222,.06);
-    opacity:0;transform:translateY(28px);
-    transition:opacity .7s ease,transform .7s ease;
-  }
-  .jn-entry.jn-visible{opacity:1;transform:none;}
-
-  /* Cinematic image — full width, aspect-ratio 21:6 (very wide, short) */
-  .jn-img-wrap{
-    position:relative;
-    width:100%;
-    aspect-ratio:21/6;
-    overflow:hidden;
-  }
-  .jn-img{
-    width:100%;height:100%;
-    object-fit:cover;object-position:center 40%;
-    filter:saturate(.7) contrast(1.1) brightness(.85);
-    transition:transform .8s ease,filter .6s ease;
-  }
-  .jn-entry:hover .jn-img{transform:scale(1.02);filter:saturate(.85) contrast(1.05);}
-
-  /* Ambient date — huge, faint, inside image */
-  .jn-date-ambient{
-    position:absolute;
-    right:clamp(1rem,3vw,3rem);bottom:-.1em;
-    font-family:'Manrope',system-ui,sans-serif;
-    font-weight:900;
-    font-size:clamp(6rem,14vw,16rem);
-    line-height:1;
-    color:rgba(234,230,222,.07);
-    letter-spacing:-.05em;
-    pointer-events:none;user-select:none;
+  .jn-section {
+    background: #111816;
+    padding: 6rem 0 0;
   }
 
-  /* Text row */
-  .jn-text-row{
-    display:grid;
-    grid-template-columns:auto 1fr auto;
-    gap:2rem;align-items:start;
-    padding:1.75rem clamp(1.5rem,4vw,4rem);
+  /* ── Header ── */
+  .jn-head {
+    padding: 0 clamp(1.5rem,5vw,5rem) 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 1.5rem 3rem;
+    border-bottom: 1px solid rgba(234,230,222,.07);
   }
-  .jn-date-label{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
-    color:#A8D5C2;padding-top:.2rem;white-space:nowrap;
+  .jn-overline {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    color: #A8D5C2; flex-basis: 100%;
   }
-  .jn-text-main{display:flex;flex-direction:column;gap:.5rem;}
-  .jn-heading{
-    font-family:'Manrope',system-ui,sans-serif;font-weight:800;
-    font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.2;letter-spacing:-.02em;
-    color:#EAE6DE;margin:0;
+  .jn-title {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem,4vw,3.5rem);
+    line-height: 1.05; letter-spacing: -.03em;
+    color: #EAE6DE; margin: 0; flex: 1;
   }
-  .jn-body{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-size:14px;line-height:1.7;
-    color:rgba(234,230,222,.5);max-width:52ch;
+  .jn-stats {
+    display: flex; align-items: center; gap: .75rem; flex-shrink: 0;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 13px; color: rgba(234,230,222,.4);
   }
-  .jn-index{
-    font-family:'DM Serif Display',Georgia,serif;font-style:italic;
-    font-size:1.5rem;color:rgba(234,230,222,.15);
-    align-self:start;margin-top:.1rem;
+  .jn-stats b { color: rgba(234,230,222,.75); font-weight: 700; }
+  .jn-sep { color: rgba(234,230,222,.2); }
+
+  /* ── Each entry ── */
+  .jn-entry {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 70vh;
+    border-bottom: 1px solid rgba(234,230,222,.06);
+    overflow: hidden;
+    opacity: 0;
+    /* Image always first in DOM; CSS grid-areas handle visual order */
   }
 
-  /* Footer */
-  .jn-footer{padding:3rem clamp(1.5rem,4vw,4rem) 0;text-align:right;}
-  .jn-cta{
-    font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
-    color:#A8D5C2;text-decoration:none;
-    border-bottom:1px solid rgba(168,213,194,.3);padding-bottom:2px;
-    transition:border-color .2s ease;
+  /* Image left: image col 1, text col 2 */
+  .jn-entry--img-left {
+    grid-template-areas: 'image text';
   }
-  .jn-cta:hover{border-color:#A8D5C2;}
-  :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
-
-  /* Mobile */
-  @media(max-width:640px){
-    .jn-text-row{grid-template-columns:1fr;gap:1rem;}
-    .jn-index{display:none;}
-    .jn-img-wrap{aspect-ratio:16/7;}
-    .jn-head-right{gap:1.5rem;}
+  /* Image right: text col 1, image col 2 */
+  .jn-entry--img-right {
+    grid-template-areas: 'text image';
   }
 
-  @media(prefers-reduced-motion:reduce){
-    .jn-entry{opacity:1!important;transform:none!important;}
+  /* Ambient entry number */
+  .jn-ambient-n {
+    position: absolute;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(10rem,20vw,22rem);
+    line-height: 1;
+    letter-spacing: -.06em;
+    color: rgba(234,230,222,.03);
+    pointer-events: none; user-select: none;
+    /* Bleed from center */
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  /* Image panel */
+  .jn-img-panel {
+    grid-area: image;
+    position: relative;
+    overflow: hidden;
+    min-height: 70vh;
+  }
+  .jn-img-clip {
+    /* Clip-path animated by GSAP on reveal */
+    width: 100%; height: 100%;
+    clip-path: inset(100% 0 0 0);
+  }
+  .jn-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    filter: saturate(.72) contrast(1.06) brightness(.85);
+    transition: filter .5s ease;
+    transform: scale(1.06); /* starts slightly zoomed; GSAP de-zooms on reveal */
+  }
+  .jn-entry:hover .jn-img {
+    filter: saturate(.88) contrast(1.04) brightness(.92);
+  }
+
+  /* Text panel */
+  .jn-text-panel {
+    grid-area: text;
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 4rem clamp(2rem,5vw,5rem);
+    gap: 1.25rem;
+  }
+  .jn-date {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    color: #A8D5C2; margin: 0;
+  }
+  .jn-heading {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem,4.5vw,4.5rem);
+    line-height: .95; letter-spacing: -.04em;
+    color: #EAE6DE; margin: 0;
+    /* Text also starts clipped — wipes in */
+    clip-path: inset(0 100% 0 0);
+  }
+  .jn-dispatch {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 15px; line-height: 1.75;
+    color: rgba(234,230,222,.5);
+    max-width: 38ch; margin: 0;
+    opacity: 0; transform: translateY(12px);
+  }
+  .jn-cta {
+    display: inline-flex; align-items: center;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: #A8D5C2; text-decoration: none;
+    border-bottom: 1px solid rgba(168,213,194,.3); padding-bottom: 2px;
+    align-self: flex-start;
+    transition: border-color .2s;
+    opacity: 0;
+  }
+  .jn-cta:hover { border-color: #A8D5C2; }
+  :focus-visible { outline: 3px solid #A8D5C2; outline-offset: 3px; border-radius: 4px; }
+
+  /* Mobile: single column */
+  @media (max-width: 768px) {
+    .jn-entry {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'image' 'text' !important;
+      min-height: auto;
+    }
+    .jn-img-panel { min-height: 55vw; }
+    .jn-text-panel { padding: 2.5rem 1.5rem; }
+    .jn-head { gap: 1rem 2rem; }
+    .jn-stats { flex-wrap: wrap; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .jn-entry { opacity: 1 !important; }
+    .jn-img-clip { clip-path: none !important; }
+    .jn-heading { clip-path: none !important; }
+    .jn-dispatch, .jn-cta { opacity: 1 !important; transform: none !important; }
+    .jn-img { transform: none !important; }
   }
 </style>
 
 <script>
   const init = () => {
-    const entries = document.querySelectorAll('.jn-reveal')
-    if(!entries.length) return
-    const obs = new IntersectionObserver(
-      es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('jn-visible');obs.unobserve(e.target)}}),
-      {threshold:.12}
-    )
-    entries.forEach(el=>obs.observe(el))
+    const g  = (window as any).gsap
+    const ST = (window as any).ScrollTrigger
+    if (!g || !ST) { setTimeout(init, 60); return }
+
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    document.querySelectorAll<HTMLElement>('.jn-reveal').forEach((entry) => {
+      const imgClip  = entry.querySelector<HTMLElement>('.jn-img-clip')
+      const img      = entry.querySelector<HTMLElement>('.jn-img')
+      const heading  = entry.querySelector<HTMLElement>('.jn-heading')
+      const dispatch = entry.querySelector<HTMLElement>('.jn-dispatch')
+      const cta      = entry.querySelector<HTMLElement>('.jn-cta')
+      const isRight  = entry.classList.contains('jn-entry--img-right')
+
+      if (rm) {
+        entry.style.opacity = '1'
+        if (imgClip) imgClip.style.clipPath = 'none'
+        if (heading) heading.style.clipPath = 'none'
+        if (dispatch) { dispatch.style.opacity = '1'; dispatch.style.transform = 'none' }
+        if (cta)     cta.style.opacity = '1'
+        if (img)     img.style.transform = 'scale(1)'
+        return
+      }
+
+      const tl = g.timeline({
+        scrollTrigger: { trigger: entry, start: 'top 75%' }
+      })
+
+      // Entry fades in first
+      tl.to(entry, { opacity: 1, duration: .1, ease: 'none' })
+
+      // Image clips open (top→down, like a curtain dropping)
+      if (imgClip) {
+        tl.fromTo(imgClip,
+          { clipPath: 'inset(100% 0 0 0)' },
+          { clipPath: 'inset(0% 0 0 0)', duration: .9, ease: 'power3.inOut' },
+          0
+        )
+      }
+      if (img) {
+        tl.to(img, { scale: 1, duration: .9, ease: 'power3.out' }, 0)
+      }
+
+      // Heading clips open left→right (NORMAL.supply style) — stagger after image
+      if (heading) {
+        tl.fromTo(heading,
+          { clipPath: isRight ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)' },
+          { clipPath: isRight ? 'inset(0 0 0 0%)'   : 'inset(0 0% 0 0)',
+            duration: .8, ease: 'power3.inOut' },
+          0.25
+        )
+      }
+
+      // Dispatch + CTA fade up
+      if (dispatch) tl.to(dispatch, { opacity: 1, y: 0, duration: .6, ease: 'power2.out' }, 0.55)
+      if (cta)     tl.to(cta,     { opacity: 1,          duration: .5, ease: 'power2.out' }, 0.7)
+    })
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init)
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init)
   else init()
 </script>
