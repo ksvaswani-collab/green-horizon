@@ -1,220 +1,386 @@
 ---
-// V2 ElementsSection — GSAP card deck: one card visible at a time.
-// Cards slide up to reveal the next as you scroll through a 400vh pin.
+// V2 ElementsSection — osmo.supply reference.
+// All 4 elements as an asymmetric card grid, always visible.
+// Row 1: Earth (wider) + Water (narrower). Row 2: Fire (narrower) + Air (wider).
+// Each card: image preview top, name + description bottom. Hover: border glows.
 const elements = [
-  { id:'earth', number:'01', name:'Earth',
-    body:'Strandzha oak, ancient limestone, the smell of forest floor after rain.',
-    image:'/images/earth.jpg',
-    alt:'Dense Strandzha ancient forest floor at dusk', accent:'#B8956A' },
-  { id:'water', number:'02', name:'Water',
-    body:'The Black Sea does not perform. It waits. Twelve nations meet at its floor.',
-    image:'/images/water.jpg',
-    alt:'Black Sea shoreline at calm morning', accent:'#6AB8C8' },
-  { id:'fire', number:'03', name:'Fire',
-    body:'Copper light. The hour before it all goes dark. Dinner as the longest part of the day.',
-    image:'/images/fire.jpg',
-    alt:'Golden sunset over the Bulgarian Black Sea coast', accent:'#C8846A' },
-  { id:'air', number:'04', name:'Air',
-    body:'On the cliff edge, wind decides the day. Open sky. Space that opens your chest.',
-    image:'/images/air.jpg',
-    alt:'Open sky above sea cliffs, wide horizon', accent:'#6AC8A8' },
+  {
+    id: 'earth', number: '01', name: 'Earth',
+    body: 'Strandzha oak, ancient limestone, the smell of forest floor after rain.',
+    image: '/images/earth.jpg',
+    alt: 'Dense Strandzha ancient forest, dark and layered',
+    accent: '#B8956A',
+    span: 'wide',  // 60% on desktop
+  },
+  {
+    id: 'water', number: '02', name: 'Water',
+    body: 'The Black Sea does not perform. It waits. Twelve nations meet at its floor.',
+    image: '/images/water.jpg',
+    alt: 'Black Sea surface at calm morning',
+    accent: '#6AB8C8',
+    span: 'narrow', // 40% on desktop
+  },
+  {
+    id: 'fire', number: '03', name: 'Fire',
+    body: 'Copper light. The hour before it all goes dark.',
+    image: '/images/fire.jpg',
+    alt: 'Golden sunset over Bulgarian Black Sea coast',
+    accent: '#C8846A',
+    span: 'narrow',
+  },
+  {
+    id: 'air', number: '04', name: 'Air',
+    body: 'On the cliff edge, wind decides the day. Open sky. Space that opens your chest.',
+    image: '/images/air.jpg',
+    alt: 'Open sky above sea cliffs, wide horizon',
+    accent: '#6AC8A8',
+    span: 'wide',
+  },
 ]
 ---
 
 <section id="elements" aria-labelledby="elements-hdg">
-  <h2 id="elements-hdg" class="sr-only">The four elements of Green Horizon</h2>
 
-  <!-- Label bar -->
-  <div class="el-label-bar" aria-hidden="true">
-    <span>The Four Elements</span>
-    <span class="el-label-hint">Scroll to reveal →</span>
-  </div>
-
-  <!-- Desktop: pinned deck -->
-  <div id="el-pin-wrap">
-    <div id="el-sticky">
-
-      <!-- Progress: 4 dots -->
-      <div class="el-dots" aria-hidden="true" id="el-dots">
-        {elements.map((_,i)=>(
-          <span class={`el-dot${i===0?' el-dot--active':''}`} data-dot={i}></span>
-        ))}
-      </div>
-
-      <!-- Stack of cards -->
-      <div id="el-deck">
-        {elements.map((el,i)=>(
-          <article
-            class="el-card"
-            id={`el-card-${i}`}
-            aria-label={`${el.number} — ${el.name}: ${el.body}`}
-          >
-            <img src={el.image} alt={el.alt} class="el-card-img" loading={i===0?'eager':'lazy'} />
-            <div class="el-card-scrim" aria-hidden="true"></div>
-            <div class="el-card-body">
-              <div class="el-card-top">
-                <span class="el-num" style={`color:${el.accent}`}>{el.number}</span>
-                <span class="el-of">/ 04</span>
-              </div>
-              <h3 class="el-name">{el.name}</h3>
-              <p  class="el-desc">{el.body}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-
+  <!-- Section header — osmo-style: left title, right count -->
+  <header class="el-header">
+    <div class="el-header-left">
+      <p class="el-overline">The Four Elements</p>
+      <h2 id="elements-hdg" class="el-title">
+        Four forces that<br>shaped this coast.
+      </h2>
     </div>
-  </div>
+    <div class="el-header-right" aria-hidden="true">
+      <span class="el-count">04 —</span>
+      <p class="el-subtitle">
+        Earth, Water, Fire, Air.<br>Each suite is named for one.
+      </p>
+    </div>
+  </header>
 
-  <!-- Mobile: simple vertical stacked panels -->
-  <div id="el-mobile" aria-label="The four elements">
-    {elements.map(el=>(
-      <article class="el-mob-panel" aria-label={`${el.name}: ${el.body}`}>
-        <img src={el.image} alt={el.alt} class="el-mob-img" loading="lazy" />
-        <div class="el-mob-scrim" aria-hidden="true"></div>
-        <div class="el-card-body">
-          <span class="el-num" style={`color:${el.accent}`}>{el.number}</span>
-          <h3 class="el-name">{el.name}</h3>
-          <p  class="el-desc">{el.body}</p>
+  <!-- Card grid: asymmetric 2-row layout -->
+  <div class="el-grid" role="list">
+
+    <!-- Row 1: Earth (wide) + Water (narrow) -->
+    <article
+      class="el-card el-card--wide el-reveal"
+      style={`--accent: ${elements[0].accent};`}
+      aria-label={`${elements[0].name}: ${elements[0].body}`}
+      role="listitem"
+    >
+      <div class="el-img-wrap">
+        <img src={elements[0].image} alt={elements[0].alt} loading="eager" class="el-img" />
+        <div class="el-img-overlay" aria-hidden="true"></div>
+      </div>
+      <div class="el-card-body">
+        <div class="el-card-top">
+          <span class="el-num">{elements[0].number}</span>
+          <span class="el-tag">Earth</span>
         </div>
-      </article>
-    ))}
+        <h3 class="el-name">{elements[0].name}</h3>
+        <p  class="el-desc">{elements[0].body}</p>
+      </div>
+      <div class="el-card-arrow" aria-hidden="true">→</div>
+    </article>
+
+    <article
+      class="el-card el-card--narrow el-reveal"
+      style={`--accent: ${elements[1].accent};`}
+      aria-label={`${elements[1].name}: ${elements[1].body}`}
+      role="listitem"
+    >
+      <div class="el-img-wrap">
+        <img src={elements[1].image} alt={elements[1].alt} loading="lazy" class="el-img" />
+        <div class="el-img-overlay" aria-hidden="true"></div>
+      </div>
+      <div class="el-card-body">
+        <div class="el-card-top">
+          <span class="el-num">{elements[1].number}</span>
+          <span class="el-tag">Water</span>
+        </div>
+        <h3 class="el-name">{elements[1].name}</h3>
+        <p  class="el-desc">{elements[1].body}</p>
+      </div>
+      <div class="el-card-arrow" aria-hidden="true">→</div>
+    </article>
+
+    <!-- Row 2: Fire (narrow) + Air (wide) -->
+    <article
+      class="el-card el-card--narrow el-reveal"
+      style={`--accent: ${elements[2].accent};`}
+      aria-label={`${elements[2].name}: ${elements[2].body}`}
+      role="listitem"
+    >
+      <div class="el-img-wrap">
+        <img src={elements[2].image} alt={elements[2].alt} loading="lazy" class="el-img" />
+        <div class="el-img-overlay" aria-hidden="true"></div>
+      </div>
+      <div class="el-card-body">
+        <div class="el-card-top">
+          <span class="el-num">{elements[2].number}</span>
+          <span class="el-tag">Fire</span>
+        </div>
+        <h3 class="el-name">{elements[2].name}</h3>
+        <p  class="el-desc">{elements[2].body}</p>
+      </div>
+      <div class="el-card-arrow" aria-hidden="true">→</div>
+    </article>
+
+    <article
+      class="el-card el-card--wide el-reveal"
+      style={`--accent: ${elements[3].accent};`}
+      aria-label={`${elements[3].name}: ${elements[3].body}`}
+      role="listitem"
+    >
+      <div class="el-img-wrap">
+        <img src={elements[3].image} alt={elements[3].alt} loading="lazy" class="el-img" />
+        <div class="el-img-overlay" aria-hidden="true"></div>
+      </div>
+      <div class="el-card-body">
+        <div class="el-card-top">
+          <span class="el-num">{elements[3].number}</span>
+          <span class="el-tag">Air</span>
+        </div>
+        <h3 class="el-name">{elements[3].name}</h3>
+        <p  class="el-desc">{elements[3].body}</p>
+      </div>
+      <div class="el-card-arrow" aria-hidden="true">→</div>
+    </article>
+
   </div>
 </section>
 
 <style>
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-
-  /* Label bar */
-  .el-label-bar{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:.7rem clamp(1.5rem,4vw,4rem);
-    background:#182118;
-    border-bottom:1px solid rgba(234,230,222,.07);
-    font-family:'Manrope',system-ui,sans-serif;
-    font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-    color:rgba(234,230,222,.35);
+  #elements {
+    background: #111816;
+    padding: 5rem 0 0;
   }
 
-  /* Pin wrapper */
-  #el-pin-wrap{height:400vh;}
-  #el-sticky{
-    position:sticky;top:0;
-    width:100%;height:100svh;
-    overflow:hidden;background:#111816;
+  /* ── Section header ── */
+  .el-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 0 clamp(1.5rem,4vw,4rem) 3rem;
+    border-bottom: 1px solid rgba(234,230,222,.08);
+  }
+  .el-overline {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: #A8D5C2; margin-bottom: .75rem;
+  }
+  .el-title {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem,3.5vw,3rem);
+    line-height: 1.1; letter-spacing: -.03em;
+    color: #EAE6DE; margin: 0;
+  }
+  .el-header-right { text-align: right; flex-shrink: 0; }
+  .el-count {
+    display: block;
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(2rem,4vw,3.5rem);
+    color: rgba(234,230,222,.18);
+    line-height: 1;
+    margin-bottom: .5rem;
+  }
+  .el-subtitle {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 13px; line-height: 1.65;
+    color: rgba(234,230,222,.38);
   }
 
-  /* Dot navigation */
-  .el-dots{
-    position:absolute;bottom:2.5rem;right:clamp(1.5rem,4vw,4rem);
-    display:flex;flex-direction:column;gap:.6rem;
-    z-index:10;
-  }
-  .el-dot{
-    width:5px;height:5px;
-    border-radius:50%;
-    background:rgba(234,230,222,.25);
-    transition:background .3s ease,transform .3s ease;
-  }
-  .el-dot--active{background:#A8D5C2;transform:scale(1.4);}
-
-  /* Card deck */
-  #el-deck{position:relative;width:100%;height:100%;}
-
-  /* Cards all stack at same position */
-  .el-card{
-    position:absolute;inset:0;
-    overflow:hidden;
-    /* Cards 1-3 start translated down (set by JS) */
-  }
-  .el-card-img{
-    width:100%;height:100%;
-    object-fit:cover;object-position:center;
-    filter:saturate(.82) contrast(1.08);
-  }
-  .el-card-scrim{
-    position:absolute;inset:0;
-    background:linear-gradient(to top,rgba(17,24,22,.88) 0%,rgba(17,24,22,.2) 50%,rgba(17,24,22,.05) 100%);
-  }
-  .el-card-body{
-    position:absolute;bottom:0;left:0;right:0;
-    padding:clamp(2rem,4vh,4rem) clamp(1.5rem,4vw,4rem);
-  }
-  .el-card-top{display:flex;align-items:baseline;gap:.75rem;margin-bottom:.5rem;}
-  .el-num{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:1.1rem;}
-  .el-of{font-family:'Manrope',system-ui,sans-serif;font-size:11px;letter-spacing:.1em;color:rgba(234,230,222,.3);}
-  .el-name{
-    font-family:'Manrope',system-ui,sans-serif;font-weight:900;
-    font-size:clamp(3.5rem,9vw,8rem);line-height:.9;letter-spacing:-.04em;
-    color:#EAE6DE;margin:0 0 1rem;
-  }
-  .el-desc{
-    font-family:'Manrope',system-ui,sans-serif;font-size:15px;line-height:1.7;
-    color:rgba(234,230,222,.6);max-width:38ch;
+  /* ── Grid ── */
+  .el-grid {
+    display: grid;
+    /* Row 1: wide(~59%) + narrow(~41%). Row 2: narrow + wide. */
+    grid-template-columns: 59fr 41fr;
+    grid-template-rows: auto auto;
+    border-top: 1px solid rgba(234,230,222,.08);
   }
 
-  /* Mobile */
-  @media(min-width:769px){#el-mobile{display:none;}}
-  @media(max-width:768px){
-    #el-pin-wrap,.el-label-bar{display:none;}
-    #el-mobile{display:block;}
+  /* ── Card base ── */
+  .el-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(234,230,222,.08);
+    border-bottom: 1px solid rgba(234,230,222,.08);
+    overflow: hidden;
+    cursor: default;
+    transition: border-color .35s ease;
+    /* Reveal: starts hidden */
+    opacity: 0;
+    transform: translateY(20px);
   }
-  .el-mob-panel{position:relative;min-height:75svh;overflow:hidden;background:#111816;}
-  .el-mob-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.8);}
-  .el-mob-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,24,22,.9) 0%,transparent 60%);}
-  .el-mob-panel .el-card-body{position:relative;}
+  .el-card:last-child, .el-card:nth-child(even) { border-right: none; }
+  .el-card:nth-child(3), .el-card:nth-child(4)   { border-bottom: none; }
+
+  /* Hover: border glows with element accent */
+  .el-card:hover {
+    border-color: var(--accent, rgba(168,213,194,.4));
+    z-index: 1;
+  }
+
+  /* ── Image area ── */
+  .el-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .el-card--wide .el-img-wrap  { aspect-ratio: 16/10; }
+  .el-card--narrow .el-img-wrap { aspect-ratio: 4/3; }
+
+  .el-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    filter: saturate(.72) contrast(1.06) brightness(.85);
+    transition: filter .5s ease, transform .6s ease;
+  }
+  .el-card:hover .el-img {
+    filter: saturate(.95) contrast(1.05) brightness(.95);
+    transform: scale(1.04);
+  }
+
+  /* Gradient over image bottom — ties into card body */
+  .el-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom,
+      transparent 55%,
+      rgba(17,24,22,.85) 100%
+    );
+  }
+
+  /* ── Card body ── */
+  .el-card-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    flex: 1;
+    background: #111816;
+    border-top: 1px solid rgba(234,230,222,.06);
+    transition: background .3s ease;
+  }
+  .el-card:hover .el-card-body {
+    background: rgba(255,255,255,.02);
+  }
+
+  .el-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .25rem;
+  }
+  .el-num {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: .875rem;
+    color: var(--accent, #A8D5C2);
+    transition: opacity .2s ease;
+  }
+  .el-tag {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(234,230,222,.25);
+    border: 1px solid rgba(234,230,222,.1);
+    border-radius: 100px;
+    padding: .2rem .6rem;
+    transition: border-color .3s ease, color .3s ease;
+  }
+  .el-card:hover .el-tag {
+    border-color: var(--accent, rgba(168,213,194,.4));
+    color: var(--accent, #A8D5C2);
+  }
+  .el-name {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.5rem,2.5vw,2.25rem);
+    line-height: 1; letter-spacing: -.03em;
+    color: #EAE6DE; margin: 0;
+    transition: color .2s ease;
+  }
+  .el-card:hover .el-name { color: #fff; }
+  .el-desc {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 13px; line-height: 1.65;
+    color: rgba(234,230,222,.45);
+    margin: 0;
+  }
+
+  /* Arrow — appears on hover */
+  .el-card-arrow {
+    position: absolute;
+    bottom: 1.25rem; right: 1.25rem;
+    font-size: 1.1rem;
+    color: var(--accent, #A8D5C2);
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .el-card:hover .el-card-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* ── Reveal animation classes ── */
+  .el-card.el-visible {
+    opacity: 1;
+    transform: none;
+    transition: opacity .65s ease, transform .65s ease;
+  }
+
+  /* Focus */
+  .el-card:focus-visible {
+    outline: 3px solid #A8D5C2;
+    outline-offset: -3px;
+  }
+
+  /* ── Mobile: single column ── */
+  @media (max-width: 768px) {
+    .el-grid {
+      grid-template-columns: 1fr;
+    }
+    .el-card {
+      border-right: none;
+    }
+    .el-card--wide .el-img-wrap,
+    .el-card--narrow .el-img-wrap {
+      aspect-ratio: 16/9;
+    }
+    .el-card:nth-child(4) { border-bottom: none; }
+    .el-card:nth-child(3) { border-bottom: 1px solid rgba(234,230,222,.08); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .el-card { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .el-img  { transition: none !important; }
+  }
 </style>
 
 <script>
-  const rm  = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const mob = window.matchMedia('(max-width: 768px)').matches
-
-  if(!mob){
-    const init = () => {
-      const g  = (window as any).gsap
-      const ST = (window as any).ScrollTrigger
-      if(!g || !ST){setTimeout(init,80);return}
-
-      const cards = Array.from(document.querySelectorAll<HTMLElement>('.el-card'))
-      const dots  = document.querySelectorAll<HTMLElement>('.el-dot')
-      const N = cards.length
-
-      // All cards except first start below the viewport
-      cards.slice(1).forEach(c => g.set(c,{yPercent:100}))
-
-      // Build a timeline: N-1 transitions, each takes 1 "unit"
-      const tl = g.timeline()
-
-      for(let i=0;i<N-1;i++){
-        // Outgoing card: compress upward & dim
-        tl.to(cards[i],{yPercent:-8,scale:.97,filter:'brightness(.65)',duration:.5,ease:'power2.in'},i)
-        // Incoming card: slide up from below
-        tl.to(cards[i+1],{yPercent:0,duration:.6,ease:'power2.inOut'},i+.4)
-      }
-
-      // Pin and scrub
-      ST.create({
-        trigger:'#el-pin-wrap',
-        start:'top top',
-        end:'bottom bottom',
-        pin:'#el-sticky',
-        scrub:1,
-        animation:tl,
-        onUpdate:(self:any)=>{
-          // Update active dot
-          const active = Math.min(N-1, Math.floor(self.progress * N))
-          dots.forEach((d,i)=>{
-            d.classList.toggle('el-dot--active', i===active)
-          })
+  // Reveal cards as they enter viewport
+  const cards = document.querySelectorAll('.el-reveal')
+  if(cards.length){
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if(e.isIntersecting){
+          // Stagger: delay based on card index within the grid
+          const i = Array.from(cards).indexOf(e.target as Element)
+          ;(e.target as HTMLElement).style.transitionDelay = `${i * 0.08}s`
+          e.target.classList.add('el-visible')
+          obs.unobserve(e.target)
         }
-      })
-
-      // Reduced motion: just show all panels stacked without animation
-      if(rm){
-        cards.forEach(c=>{g.set(c,{yPercent:0,scale:1,filter:'none'})})
-      }
-    }
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init)
-    else init()
+      }),
+      { threshold: 0.12 }
+    )
+    cards.forEach(c => obs.observe(c))
   }
 </script>
