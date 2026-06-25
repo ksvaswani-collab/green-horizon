@@ -3,46 +3,58 @@ interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
 const lp = `/${lang}`
 
-const navLinks = [
+const groupA = [
   { label: t.footer.nav[0], href: `${lp}/#story` },
   { label: t.footer.nav[1], href: `${lp}/#elements` },
-  { label: t.footer.nav[2], href: `${lp}/#rooms` },
   { label: t.footer.nav[3], href: `${lp}/#experiences` },
+]
+const groupB = [
+  { label: t.footer.nav[2], href: `${lp}/#rooms` },
   { label: t.footer.nav[4], href: `${lp}/journal` },
 ]
 ---
 
 <footer style="background:var(--color-forest);color:var(--color-limestone);overflow:hidden;">
 
-  <!-- ── UPPER STATEMENT ─────────────────────────────── -->
+  <!-- ── UPPER: 3-column row ───────────────────────── -->
   <div style="
     padding:7rem clamp(1.5rem,5vw,5rem) 5rem;
     border-bottom:1px solid rgba(232,228,220,0.1);
-    display:flex;flex-direction:column;gap:3rem;
+    display:flex;flex-direction:column;gap:4rem;
   ">
 
-    <!-- Display heading + nav links side by side -->
+    <!-- Three columns: display heading · nav group A · nav group B -->
     <div class="foot-top-row">
 
-      <!-- Left: editorial tagline -->
-      <div style="flex:1;min-width:0;">
+      <!-- Col 1: editorial display text -->
+      <div style="flex:1.6;min-width:0;">
         <p class="foot-line" style="color:var(--color-limestone);">The Black Sea.</p>
         <p class="foot-line" style="color:rgba(232,228,220,0.4);">The Forest.</p>
         <p class="foot-line" style="color:rgba(232,228,220,0.2);">The Horizon.</p>
       </div>
 
-      <!-- Right: nav links stacked, aligned top -->
-      <nav
-        aria-label="Footer navigation"
-        style="display:flex;flex-direction:column;gap:0.6rem;padding-top:0.5rem;flex-shrink:0;"
-      >
-        {navLinks.map(link => (
-          <a href={link.href} class="foot-nav-link">{link.label}</a>
-        ))}
-      </nav>
+      <!-- Col 2: Discover links -->
+      <div style="flex:1;min-width:0;" class="foot-nav-col">
+        <p class="foot-col-header">Discover</p>
+        <nav aria-label="Discover navigation" style="display:flex;flex-direction:column;gap:0.55rem;">
+          {groupA.map(link => (
+            <a href={link.href} class="foot-nav-link">{link.label}</a>
+          ))}
+        </nav>
+      </div>
+
+      <!-- Col 3: Stay links -->
+      <div style="flex:1;min-width:0;" class="foot-nav-col">
+        <p class="foot-col-header">Stay</p>
+        <nav aria-label="Stay navigation" style="display:flex;flex-direction:column;gap:0.55rem;">
+          {groupB.map(link => (
+            <a href={link.href} class="foot-nav-link">{link.label}</a>
+          ))}
+        </nav>
+      </div>
     </div>
 
-    <!-- Sub-row: coords + CTA -->
+    <!-- Sub-row: coords + tagline + CTA -->
     <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:2rem;">
       <div>
         <p style="font-family:var(--font-mono);font-size:11px;color:rgba(232,228,220,0.45);letter-spacing:0.15em;margin-bottom:0.75rem;">
@@ -53,27 +65,20 @@ const navLinks = [
         </p>
       </div>
 
-      <!-- CTA + socials -->
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:1.25rem;">
-        <a href={`${lp}/#contact`} class="btn" style="
-          background:transparent;color:var(--color-limestone);
-          border:1px solid rgba(232,228,220,0.3);border-radius:16px;
-          padding:0.8rem 1.75rem;
-          font-family:var(--font-body);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;text-decoration:none;
-          display:inline-flex;align-items:center;gap:0.5rem;
-          transition:border-color 0.2s ease,background 0.2s ease;
-        "
-          onmouseover="this.style.borderColor='rgba(232,228,220,0.7)';this.style.background='rgba(232,228,220,0.06)'"
-          onmouseout="this.style.borderColor='rgba(232,228,220,0.3)';this.style.background='transparent'"
-        >
-          Register Interest <span class="foot-arr">→</span>
-        </a>
-        <div style="display:flex;gap:1.25rem;align-items:center;">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="soc-link">Instagram</a>
-          <span style="color:rgba(232,228,220,0.2);font-size:10px;">·</span>
-          <a href="https://facebook.com"  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  class="soc-link">Facebook</a>
-        </div>
-      </div>
+      <a href={`${lp}/#contact`} class="btn" style="
+        background:transparent;color:var(--color-limestone);
+        border:1px solid rgba(232,228,220,0.3);border-radius:16px;
+        padding:0.8rem 1.75rem;
+        font-family:var(--font-body);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;text-decoration:none;
+        display:inline-flex;align-items:center;gap:0.5rem;
+        transition:border-color 0.2s ease,background 0.2s ease;
+        align-self:flex-end;
+      "
+        onmouseover="this.style.borderColor='rgba(232,228,220,0.7)';this.style.background='rgba(232,228,220,0.06)'"
+        onmouseout="this.style.borderColor='rgba(232,228,220,0.3)';this.style.background='transparent'"
+      >
+        Register Interest <span class="foot-arr">→</span>
+      </a>
     </div>
   </div>
 
@@ -84,19 +89,27 @@ const navLinks = [
     align-items:center;justify-content:space-between;
     gap:1.5rem;
   ">
-    <a href={`${lp}/`} class="foot-wordmark">HORIZON</a>
 
-    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;">
-      <a href="mailto:hello@greenhorizon.bg" class="foot-nav-link">hello@greenhorizon.bg</a>
-      <div style="display:flex;gap:0.6rem;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;">
-        {[{c:'en',l:'EN'},{c:'nl',l:'NL'},{c:'bg',l:'БГ'}].map(x => (
-          <a href={`/${x.c}/`} class={`foot-lang${x.c===lang?' foot-lang-active':''}`}
-            aria-current={x.c===lang ? 'page' : undefined}>{x.l}</a>
-        ))}
-      </div>
+    <!-- Left: wordmark + email with icon -->
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2rem;">
+      <a href={`${lp}/`} class="foot-wordmark">HORIZON</a>
+      <a href="mailto:hello@greenhorizon.bg" class="foot-email-link" aria-label="Email us">
+        <!-- Mail icon -->
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true" style="flex-shrink:0;opacity:0.6;">
+          <rect x="0.5" y="0.5" width="13" height="10" rx="1.5" stroke="currentColor"/>
+          <path d="M1 1.5l6 4.5 6-4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        hello@greenhorizon.bg
+      </a>
+    </div>
+
+    <!-- Right: legal + cookie + copyright -->
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;">
+      <a href={`${lp}/privacy`} class="foot-legal-link">{t.footer.legal}</a>
       <span style="color:rgba(232,228,220,0.2);font-size:10px;" aria-hidden="true">·</span>
-      <a href={`${lp}/privacy`} class="foot-nav-link">{t.footer.legal}</a>
-      <span style="font-family:var(--font-mono);font-size:10px;color:rgba(232,228,220,0.3);letter-spacing:0.1em;">{t.footer.copyright}</span>
+      <a href={`${lp}/cookies`} class="foot-legal-link">Cookie policy</a>
+      <span style="color:rgba(232,228,220,0.2);font-size:10px;" aria-hidden="true">·</span>
+      <span class="foot-copyright">© 2026 Green Horizon</span>
     </div>
   </div>
 
@@ -112,16 +125,42 @@ const navLinks = [
     letter-spacing: -0.02em;
   }
 
-  /* Top row: heading left, nav right */
+  /* Three-column top row */
   .foot-top-row {
     display: flex;
     align-items: flex-start;
-    gap: 4rem;
+    gap: 5rem;
   }
-  @media (max-width: 640px) {
+  @media (max-width: 860px) {
     .foot-top-row { flex-direction: column; gap: 2.5rem; }
+    .foot-nav-col { display: flex; flex-direction: row; gap: 3rem; align-items: flex-start; flex-wrap: wrap; }
+  }
+  @media (max-width: 480px) {
+    .foot-nav-col { flex-direction: column; gap: 1.5rem; }
   }
 
+  /* Nav column header */
+  .foot-col-header {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(232,228,220,0.3);
+    margin-bottom: 1rem;
+  }
+
+  /* Nav links */
+  .foot-nav-link {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(232,228,220,0.6);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .foot-nav-link:hover { color: rgba(232,228,220,1); }
+
+  /* Wordmark */
   .foot-wordmark {
     font-family: var(--font-display); font-weight: 300; font-size: 1rem;
     color: var(--color-limestone); text-decoration: none; letter-spacing: -0.01em;
@@ -129,25 +168,35 @@ const navLinks = [
   }
   .foot-wordmark:hover { opacity: 0.6; }
 
-  .foot-nav-link {
-    font-family: var(--font-body); font-size: 14px; font-weight: 400;
-    color: rgba(232,228,220,0.55); text-decoration: none;
+  /* Email link with icon */
+  .foot-email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: rgba(232,228,220,0.55);
+    text-decoration: none;
     transition: color 0.2s ease;
   }
-  .foot-nav-link:hover { color: rgba(232,228,220,0.95); }
+  .foot-email-link:hover { color: rgba(232,228,220,0.9); }
 
-  .soc-link {
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(232,228,220,0.45); text-decoration: none; transition: color 0.2s ease;
+  /* Legal links */
+  .foot-legal-link {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: rgba(232,228,220,0.4);
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
-  .soc-link:hover { color: rgba(232,228,220,0.9); }
+  .foot-legal-link:hover { color: rgba(232,228,220,0.75); }
 
-  .foot-lang {
-    color: rgba(232,228,220,0.4); text-decoration: none; transition: color 0.2s ease;
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+  /* Copyright — more visible */
+  .foot-copyright {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: rgba(232,228,220,0.55);
   }
-  .foot-lang:hover, .foot-lang-active { color: rgba(232,228,220,0.9); }
-  .foot-lang-active { text-decoration: underline; text-underline-offset: 3px; }
 
   .foot-arr { display: inline-block; transition: transform 0.3s ease; }
   footer a:hover .foot-arr { transform: translateX(4px); }
