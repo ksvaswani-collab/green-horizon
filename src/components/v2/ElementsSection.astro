@@ -195,19 +195,19 @@ const elements = [
 
   /* ── Viewport & track ── */
   .el-viewport {
-    /* Shows center card + peeking sides */
+    /* GSAP controls horizontal position via track x — no flex centering here */
     width: 100%;
     overflow: visible;
-    display: flex;
-    justify-content: center;
+    display: block;
   }
 
   .el-track {
     display: flex;
     gap: 1.25rem;
     align-items: center;
-    /* Track shifted by GSAP */
+    /* Start hidden; GSAP sets x after layout, then reveals */
     will-change: transform;
+    visibility: hidden;
   }
 
   /* ── Cards ── */
@@ -441,16 +441,27 @@ const elements = [
     })
   }
 
-  // Initial position (no animation)
-  const initOffset = getTrackOffset(0)
+  // Defer initial positioning to after layout so offsetWidth is accurate
   const g = (window as any).gsap
-  if(g) g.set(track, { x: initOffset })
-  else track.style.transform = `translateX(${initOffset}px)`
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const initOffset = getTrackOffset(0)
 
-  // Set non-active cards initial state
-  cards.slice(1).forEach(c => {
-    if(g) g.set(c, { scale: .88, opacity: .45 })
-    else { c.style.transform = 'scale(.88)'; c.style.opacity = '.45' }
+      if(g) {
+        g.set(track, { x: initOffset })
+      } else {
+        track.style.transform = `translateX(${initOffset}px)`
+      }
+
+      // Set non-active cards
+      cards.slice(1).forEach(c => {
+        if(g) g.set(c, { scale: .9, opacity: .45 })
+        else { c.style.transform = 'scale(.9)'; c.style.opacity = '.45' }
+      })
+
+      // Reveal track now that it's positioned correctly
+      track.style.visibility = 'visible'
+    })
   })
 
   // Navigation
@@ -515,16 +526,18 @@ const elements = [
     })
   }
 
-  // Re-center on resize
+  // Re-center on resize (re-measure after layout settles)
   let resizeTimer: ReturnType<typeof setTimeout>
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer)
     resizeTimer = setTimeout(() => {
-      const g = (window as any).gsap
-      const off = getTrackOffset(active)
-      if(g) g.set(track, { x: off })
-      else track.style.transform = `translateX(${off}px)`
-    }, 100)
+      requestAnimationFrame(() => {
+        const g = (window as any).gsap
+        const off = getTrackOffset(active)
+        if(g) g.set(track, { x: off })
+        else track.style.transform = `translateX(${off}px)`
+      })
+    }, 120)
   })
 
   if((window as any).gsap) initDrag()
