@@ -54,25 +54,28 @@ const slides = [
     </div>
   </div>
 
-  <!-- ── Bottom-left: overline + heading + CTAs ── -->
+  <!-- ── Bottom: overline + heading + CTAs + arrows — all inside 1280px container ── -->
   <div class="hero-content" id="hero-content">
-    <p class="hero-overline">Discover Green Horizon · Black Sea, Bulgaria</p>
-    <h2 class="hero-heading">
-      One conviction.<br>
-      One cliff.<br>
-      One sea.
-    </h2>
-    <div class="hero-ctas">
-      <a href="#story"    class="v2-btn v2-btn-primary" data-magnetic>Discover the story</a>
-      <a href="#register" class="v2-btn v2-btn-ghost"   data-magnetic>Register interest</a>
+    <div class="hero-content-inner">
+      <p class="hero-overline">Discover Green Horizon · Black Sea, Bulgaria</p>
+      <h2 class="hero-heading">
+        One conviction.<br>
+        One cliff.<br>
+        One sea.
+      </h2>
+      <div class="hero-bottom-row">
+        <div class="hero-ctas">
+          <a href="#story"    class="v2-btn v2-btn-primary" data-magnetic>Discover the story</a>
+          <a href="#register" class="v2-btn v2-btn-ghost"   data-magnetic>Register interest</a>
+        </div>
+        <!-- Carousel arrows moved inside the container row, right-aligned -->
+        <div class="hero-arrows" id="hero-arrows" aria-label="Carousel navigation" role="group">
+          <button id="hero-prev" class="hero-arrow" aria-label="Previous image">‹</button>
+          <span class="hero-counter" id="hero-counter" aria-live="polite" aria-atomic="true">1 / {slides.length}</span>
+          <button id="hero-next" class="hero-arrow" aria-label="Next image">›</button>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- ── Carousel arrows (bottom-right) ── -->
-  <div class="hero-arrows" id="hero-arrows" aria-label="Carousel navigation" role="group">
-    <button id="hero-prev" class="hero-arrow" aria-label="Previous image">‹</button>
-    <span class="hero-counter" id="hero-counter" aria-live="polite" aria-atomic="true">1 / {slides.length}</span>
-    <button id="hero-next" class="hero-arrow" aria-label="Next image">›</button>
   </div>
 
 </section>
@@ -149,9 +152,15 @@ const slides = [
   /* ── Bottom-left content ── */
   .hero-content{
     position:absolute;bottom:0;left:0;right:0;z-index:5;
-    padding:0 clamp(1.5rem,4vw,4rem) clamp(2.5rem,5vh,4rem);
+    padding:0 0 clamp(2.5rem,5vh,4rem);
     opacity:0;transform:translateY(20px);
     will-change:transform,opacity;
+  }
+  /* 1280px container — content sits within max-width, images stay full-bleed */
+  .hero-content-inner{
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 clamp(1.5rem,3vw,2.5rem);
   }
   .hero-overline{
     font-family:'Manrope',system-ui,sans-serif;
@@ -182,13 +191,15 @@ const slides = [
   .v2-btn-ghost:hover{background:rgba(234,230,222,.14);border-color:rgba(234,230,222,.6);}
   :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
 
+  /* Bottom row: CTAs left, arrows right */
+  .hero-bottom-row{
+    display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+  }
   /* ── Carousel arrows ── */
   .hero-arrows{
-    position:absolute;bottom:clamp(2rem,4vh,3.5rem);right:clamp(1.5rem,4vw,4rem);
-    z-index:6;display:flex;align-items:center;gap:.75rem;
-    opacity:0;transition:opacity .4s ease;
+    display:flex;align-items:center;gap:.75rem;
+    opacity:0;transition:opacity .4s ease;flex-shrink:0;
   }
-  .hero-slides.is-expanded ~ .hero-arrows,
   .hero-arrows.is-visible{opacity:1;}
   .hero-arrow{
     width:44px;height:44px;
@@ -205,9 +216,9 @@ const slides = [
   }
 
   @media(max-width:640px){
-    .hero-ctas{flex-direction:column;}
+    .hero-ctas{flex-direction:column;width:100%;}
     .v2-btn{cursor:pointer;}
-    .hero-arrows{bottom:5.5rem;}
+    .hero-bottom-row{flex-direction:column;align-items:flex-start;gap:1.25rem;}
   }
   @media(prefers-reduced-motion:reduce){
     .hero-slides{clip-path:none!important;}
