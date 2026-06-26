@@ -1,6 +1,6 @@
 ---
 // BaseV3.astro — Green Horizon V3 "Paper & Grain"
-// Left sidebar layout, no GSAP, DM Serif Display throughout
+// Horizontal fixed top nav, no sidebar, no GSAP, DM Serif Display throughout
 
 export interface Props {
   title?: string;
@@ -23,13 +23,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://greenhor
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content={Astro.generator} />
-
-  <!-- Primary meta -->
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL.toString()} />
-
-  <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content={canonicalURL.toString()} />
   <meta property="og:title"       content={title} />
@@ -37,84 +33,96 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://greenhor
   <meta property="og:image"       content={ogImage} />
   <meta property="og:locale"      content="en_GB" />
   <meta property="og:site_name"   content="Green Horizon" />
-
-  <!-- Twitter / X card -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image"       content={ogImage} />
-
-  <!-- Favicon placeholder -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-  <!-- Stylesheet — v3 only, no Tailwind, no external UI libraries -->
   <link rel="stylesheet" href="/src/styles/v3.css" />
-
-  <!-- Preconnect for Google Fonts fallback (fontsource handles primary) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
 
 <body>
-  <!-- Skip to main content -->
+  <!-- Skip to main content (WCAG 2.4.1) -->
   <a href="#main-content" class="v3-skip-link">Skip to main content</a>
 
-  <div class="v3-body-wrapper">
+  <!-- ── Top Navigation ──────────────────────────────────────── -->
+  <header class="v3-header" role="banner" id="v3-header">
+    <div class="v3-header-inner">
 
-    <!-- ── Left Sidebar Navigation ─────────────────────────────── -->
-    <aside class="v3-sidebar" role="complementary" aria-label="Site navigation">
+      <!-- Wordmark -->
+      <a href="/v3/" class="v3-header-wordmark" aria-label="Green Horizon — home">
+        Green Horizon
+      </a>
 
-      <nav class="v3-sidebar__nav" role="navigation" aria-label="Main" id="main-nav">
-        <a href="#story"       aria-label="Go to Our Story section">Our Story</a>
-        <a href="#elements"    aria-label="Go to Elements section">Elements</a>
-        <a href="#experiences" aria-label="Go to Experiences section">Experiences</a>
-        <a href="#build"       aria-label="Go to The Build section">The Build</a>
-        <a href="#suites"      aria-label="Go to Suites section">Suites</a>
-        <a href="#register"    aria-label="Go to Register Interest section">Register</a>
+      <!-- Centre nav links (desktop) -->
+      <nav class="v3-header-nav" role="navigation" aria-label="Main" id="main-nav">
+        <a href="#story"       class="v3-nav-link">Our Story</a>
+        <a href="#elements"    class="v3-nav-link">Elements</a>
+        <a href="#experiences" class="v3-nav-link">Experiences</a>
+        <a href="#build"       class="v3-nav-link">The Build</a>
+        <a href="#suites"      class="v3-nav-link">Suites</a>
       </nav>
 
-      <!-- Wordmark — rotated vertical at bottom of sidebar -->
-      <span class="v3-sidebar__wordmark" aria-hidden="true">Green Horizon</span>
+      <!-- Right: CTA + hamburger -->
+      <div class="v3-header-right">
+        <a href="#register" class="v3-header-cta">Register interest</a>
 
-    </aside>
+        <!-- Mobile hamburger -->
+        <button
+          class="v3-hamburger"
+          aria-controls="main-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          type="button"
+        >
+          <span class="v3-hamburger-line"></span>
+          <span class="v3-hamburger-line"></span>
+          <span class="v3-hamburger-line v3-hamburger-line--short"></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <!-- Mobile nav toggle -->
-    <button
-      class="v3-mobile-nav-toggle"
-      aria-controls="main-nav"
-      aria-expanded="false"
-      aria-label="Toggle navigation menu"
-      type="button"
-    >
-      Menu
-    </button>
+  <!-- ── Main Content ──────────────────────────────────────────── -->
+  <main class="v3-main" id="main-content" tabindex="-1">
+    <slot />
+  </main>
 
-    <!-- ── Main Content ──────────────────────────────────────────── -->
-    <main class="v3-main" id="main-content" tabindex="-1">
-      <slot />
-    </main>
-
-  </div>
-
-  <!-- ── Mobile nav script (no GSAP — plain JS) ───────────────── -->
+  <!-- ── Mobile nav / hamburger script ───────────────────────── -->
   <script>
-    const toggle = document.querySelector('.v3-mobile-nav-toggle') as HTMLButtonElement | null;
-    const nav    = document.querySelector('.v3-sidebar__nav') as HTMLElement | null;
+    const toggle = document.querySelector('.v3-hamburger') as HTMLButtonElement | null;
+    const nav    = document.getElementById('main-nav') as HTMLElement | null;
 
     if (toggle && nav) {
       toggle.addEventListener('click', () => {
         const isOpen = nav.classList.toggle('is-open');
         toggle.setAttribute('aria-expanded', String(isOpen));
-        toggle.textContent = isOpen ? 'Close' : 'Menu';
+        document.body.style.overflow = isOpen ? 'hidden' : '';
       });
-
-      // Close nav when a link is clicked (mobile UX)
-      nav.querySelectorAll('a').forEach(link => {
+      nav.querySelectorAll('.v3-nav-link').forEach(link => {
         link.addEventListener('click', () => {
           nav.classList.remove('is-open');
           toggle.setAttribute('aria-expanded', 'false');
-          toggle.textContent = 'Menu';
+          document.body.style.overflow = '';
         });
       });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+          nav.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+          toggle.focus();
+        }
+      });
+    }
+
+    // Scrolled state for header shadow
+    const header = document.getElementById('v3-header');
+    if (header) {
+      window.addEventListener('scroll', () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 48);
+      }, { passive: true });
     }
   </script>
 
@@ -135,8 +143,3 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://greenhor
 
 </body>
 </html>
-
-<style is:global>
-  /* Any page-level overrides that must be global go here */
-  /* All component styles live in v3.css or component <style> blocks */
-</style>
