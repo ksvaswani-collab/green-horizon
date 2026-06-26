@@ -1,156 +1,196 @@
 ---
-// V2 Hero — scroll-driven reveal:
-// Phase 1 (load):  "HORIZON" text-mask — hero image visible through letterforms
-// Phase 2 (scroll): letters scatter outward + small element images fly out
-// Phase 3 (end):   full-bleed hero image, content fades in at bottom
-// NO marquee section — removed per request
+// V2 Hero — The Bend Club reference.
+// Phase 1: Dark bg, "GREEN HORIZON" centred wordmark, small photo embedded between words.
+// Phase 2: Small photo expands via clip-path to swallow entire viewport.
+// Phase 3: Full-bleed hero image, headline + CTAs appear bottom-left.
+// Scroll sequence removed — the reveal is the PAGE LOAD animation, not scroll-driven.
 ---
 
-<a href="#main" class="v2-skip-link">Skip to main content</a>
+<a href="#main" class="v2-skip">Skip to main content</a>
 
-<!-- Pin wrapper: 200vh gives scroll space for the reveal animation -->
-<div id="hero-pin-wrap" style="height:200vh;">
-  <section
-    id="v2-hero"
-    aria-label="Hero — Green Horizon hotel, Black Sea coast, Bulgaria"
-  >
-    <!-- Accessible H1 for screen readers -->
-    <h1 class="sr-only">Green Horizon — a boutique hotel on Bulgaria's Black Sea coast, opening 2026</h1>
+<section id="v2-hero" aria-label="Hero — Green Horizon, Black Sea coast, Bulgaria">
 
-    <!-- Full-bleed image: hidden initially, revealed on scroll -->
-    <div class="hero-fullbleed" id="hero-fullbleed" aria-hidden="true">
-      <img src="/images/hero.jpg" alt="" class="hero-fullbleed-img" fetchpriority="high" />
+  <!-- SR-only H1 -->
+  <h1 class="sr-only">Green Horizon — a boutique hotel on Bulgaria's Black Sea coast, opening 2026</h1>
+
+  <!-- ① Full-bleed hero image — always full size, clip-path makes it "small" initially -->
+  <div class="hero-img-wrap" id="hero-img-wrap" aria-hidden="true">
+    <img
+      src="/images/hero.jpg"
+      alt=""
+      class="hero-img"
+      id="hero-img"
+      fetchpriority="high"
+      loading="eager"
+    />
+  </div>
+
+  <!-- ② Centred wordmark — visible during phase 1, dissolves as image expands -->
+  <div class="hero-wordmark-wrap" id="hero-ww" aria-hidden="true">
+    <div class="hero-wordmark">
+      <!-- "Green" line — script weight italic -->
+      <div class="hero-w-line hero-w-green" id="hero-w-green">Green</div>
+      <!-- "Horizon" line — heavy weight -->
+      <div class="hero-w-line hero-w-horizon" id="hero-w-horizon">Horizon</div>
     </div>
+  </div>
 
-    <!-- Text-mask "HORIZON" — letters scatter outward on scroll -->
-    <div class="hero-mask-wrap" aria-hidden="true">
-      <!-- Each letter is a separate span for GSAP scatter -->
-      <div class="hero-mask-word" id="hero-mask-word">
-        <span class="hc" data-x="-120" data-y="-80"  data-r="-25">H</span>
-        <span class="hc" data-x="-60"  data-y="100"  data-r="15" >O</span>
-        <span class="hc" data-x="-20"  data-y="-110" data-r="-10">R</span>
-        <span class="hc" data-x="10"   data-y="90"   data-r="20" >I</span>
-        <span class="hc" data-x="40"   data-y="-100" data-r="-18">Z</span>
-        <span class="hc" data-x="80"   data-y="110"  data-r="12" >O</span>
-        <span class="hc" data-x="130"  data-y="-70"  data-r="22" >N</span>
+  <!-- ③ Bottom-left content — appears after image is full-bleed -->
+  <div class="hero-meta" id="hero-meta" aria-label="Hero content">
+    <div class="hero-meta-inner">
+      <p class="hero-coords">42°N · 27°E · Black Sea, Bulgaria</p>
+      <p class="hero-sub">A cliff above the Black Sea.<br>Between ancient forest and open water.</p>
+      <div class="hero-ctas">
+        <a href="#story"    class="v2-btn v2-btn-primary" data-magnetic>Discover the story</a>
+        <a href="#register" class="v2-btn v2-btn-outline"  data-magnetic>Register interest</a>
       </div>
     </div>
+  </div>
 
-    <!-- Scattered element images — fly out as chars scatter -->
-    <div class="hero-scatter-imgs" aria-hidden="true">
-      <img src="/images/earth.jpg" alt="" class="scatter-img" id="si-0" />
-      <img src="/images/water.jpg" alt="" class="scatter-img" id="si-1" />
-      <img src="/images/fire.jpg"  alt="" class="scatter-img" id="si-2" />
-      <img src="/images/air.jpg"   alt="" class="scatter-img" id="si-3" />
-    </div>
+  <!-- ④ Scroll hint — appears after animation completes -->
+  <div class="hero-scroll" id="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>scroll</span>
+  </div>
 
-    <!-- Meta content: appears when full-bleed is revealed -->
-    <div class="hero-meta" id="hero-meta">
-      <div class="hero-meta-left">
-        <p class="hero-coords">42°N · 27°E · Bulgaria</p>
-        <p class="hero-sub">A cliff above the Black Sea.<br>Between ancient forest and open water.</p>
-      </div>
-      <div class="hero-meta-right">
-        <a href="#story"    class="v2-btn-hero v2-btn-primary" data-magnetic>Discover the story</a>
-        <a href="#register" class="v2-btn-hero v2-btn-outline"  data-magnetic>Register interest</a>
-      </div>
-    </div>
-
-  </section>
-</div>
+</section>
 
 <style>
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-  .v2-skip-link{position:absolute;top:-9999px;left:1rem;padding:.5rem 1rem;background:#A8D5C2;color:#111816;font-family:'Manrope',system-ui,sans-serif;font-size:14px;font-weight:600;text-decoration:none;border-radius:4px;z-index:9999;}
-  .v2-skip-link:focus{top:1rem;}
+  .v2-skip{position:absolute;top:-9999px;left:1rem;padding:.5rem 1rem;background:#A8D5C2;color:#111816;font-family:'Manrope',system-ui,sans-serif;font-size:14px;font-weight:600;text-decoration:none;border-radius:4px;z-index:9999;}
+  .v2-skip:focus{top:1rem;}
 
-  /* Sticky hero fills viewport */
+  /* ── Section ── */
   #v2-hero{
-    position:sticky;top:0;
-    width:100%;height:100svh;
-    background:#111816;
+    position:relative;
+    width:100%;
+    height:100svh;
+    background:#0E1410;
     overflow:hidden;
-    display:flex;flex-direction:column;justify-content:flex-end;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
   }
 
-  /* Full-bleed image layer — initially opacity:0 */
-  .hero-fullbleed{
+  /* ── ① Full-bleed image — starts clipped small at centre ── */
+  .hero-img-wrap{
     position:absolute;inset:0;
-    opacity:0;
+    /* Clip starts as a small centred window (will-change for GPU) */
+    clip-path: inset(44% 40% 44% 40% round 10px);
+    will-change:clip-path;
+    z-index:1;
   }
-  .hero-fullbleed-img{
+  .hero-img{
     width:100%;height:100%;
     object-fit:cover;object-position:center 35%;
   }
-
-  /* Text-mask wrapper */
-  .hero-mask-wrap{
+  /* Subtle dark scrim — only visible once image is full-bleed */
+  .hero-img-wrap::after{
+    content:'';
     position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(14,20,16,.75) 0%, rgba(14,20,16,.1) 50%, transparent 100%);
+    opacity:0;
+    transition:opacity .6s ease;
+  }
+  .hero-img-wrap.is-expanded::after{ opacity:1; }
+
+  /* ── ② Centred wordmark ── */
+  .hero-wordmark-wrap{
+    position:absolute;inset:0;z-index:2;
     display:flex;align-items:center;justify-content:center;
-    pointer-events:none;user-select:none;
-  }
-  .hero-mask-word{
-    display:flex;align-items:center;
-    /* Image shows through the letterforms */
-    background-image:url('/images/hero.jpg');
-    background-size:cover;
-    background-position:center 35%;
-    background-clip:text;
-    -webkit-background-clip:text;
-    color:transparent;
-    font-family:'Manrope',system-ui,sans-serif;
-    font-weight:900;
-    font-size:clamp(14vw,18vw,22vw);
-    line-height:1;
-    letter-spacing:-.04em;
-    will-change:transform;
-  }
-  /* Each letter is individually positioned for scatter */
-  .hc{display:inline-block;will-change:transform,opacity;}
-
-  /* Scatter images — circular, start at centre, fly outward */
-  .hero-scatter-imgs{
-    position:absolute;inset:0;
     pointer-events:none;
   }
-  .scatter-img{
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%) scale(0);
-    width:clamp(60px,8vw,120px);
-    height:clamp(60px,8vw,120px);
-    border-radius:50%;
-    object-fit:cover;
-    opacity:0;
+  .hero-wordmark{
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+    line-height:1;
+  }
+  .hero-w-line{
+    display:block;
     will-change:transform,opacity;
   }
+  /* "Green" — DM Serif italic, lighter */
+  .hero-w-green{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    font-size:clamp(3.5rem,9vw,10rem);
+    font-weight:400;
+    color:#EAE6DE;
+    letter-spacing:-.01em;
+    line-height:1.05;
+    opacity:0;
+  }
+  /* "Horizon" — Manrope 900, fills width */
+  .hero-w-horizon{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-weight:900;
+    font-size:clamp(4.5rem,14vw,16rem);
+    letter-spacing:-.05em;
+    color:#EAE6DE;
+    line-height:.85;
+    opacity:0;
+  }
 
-  /* Meta strip */
+  /* ── ③ Bottom-left hero content ── */
   .hero-meta{
     position:relative;z-index:5;
-    display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;
-    padding:2.5rem clamp(1.5rem,4vw,4rem);
-    border-top:1px solid rgba(234,230,222,.1);
+    padding:0 clamp(1.5rem,4vw,4rem) 3rem;
     opacity:0;transform:translateY(20px);
-    background:linear-gradient(to top,rgba(17,24,22,.8) 0%,transparent 100%);
+    will-change:transform,opacity;
   }
-  .hero-meta-left{display:flex;flex-direction:column;gap:.5rem;}
-  .hero-coords{font-family:'Manrope',system-ui,sans-serif;font-size:11px;letter-spacing:.16em;color:rgba(168,213,194,.7);text-transform:uppercase;}
-  .hero-sub{font-family:'Manrope',system-ui,sans-serif;font-size:15px;line-height:1.65;color:rgba(234,230,222,.6);max-width:36ch;}
-  .hero-meta-right{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
+  .hero-meta-inner{display:flex;flex-direction:column;gap:.75rem;max-width:38rem;}
+  .hero-coords{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(168,213,194,.7);
+  }
+  .hero-sub{
+    font-family:'DM Serif Display',Georgia,serif;
+    font-style:italic;
+    font-size:clamp(1.25rem,2vw,1.75rem);
+    line-height:1.4;
+    color:rgba(234,230,222,.85);
+  }
+  .hero-ctas{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem;}
 
   /* Buttons */
-  .v2-btn-hero{display:inline-flex;align-items:center;padding:.875rem 1.75rem;font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;text-decoration:none;border-radius:16px;border:1px solid transparent;min-height:44px;cursor:none;transition:opacity .25s ease,background .25s ease,border-color .25s ease;will-change:transform;}
+  .v2-btn{
+    display:inline-flex;align-items:center;
+    padding:.8rem 1.75rem;
+    font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
+    text-decoration:none;border-radius:16px;border:1px solid transparent;
+    min-height:44px;cursor:none;
+    transition:opacity .25s ease,background .25s ease,border-color .25s ease;
+    will-change:transform;
+  }
   .v2-btn-primary{background:#2B4A3C;color:#EAE6DE;border-color:#2B4A3C;}
   .v2-btn-primary:hover{opacity:.82;}
   .v2-btn-outline{background:transparent;color:#A8D5C2;border-color:rgba(168,213,194,.5);}
   .v2-btn-outline:hover{background:rgba(168,213,194,.08);border-color:#A8D5C2;}
   :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
 
+  /* ── ④ Scroll indicator ── */
+  .hero-scroll{
+    position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:.4rem;
+    z-index:5;opacity:0;
+  }
+  .hero-scroll-line{width:1px;height:32px;background:rgba(234,230,222,.4);animation:scrollPulse 1.8s ease-in-out infinite;}
+  .hero-scroll span{font-family:'Manrope',system-ui,sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(234,230,222,.4);}
+  @keyframes scrollPulse{ 0%,100%{opacity:.4;transform:scaleY(1)} 50%{opacity:.8;transform:scaleY(1.15)} }
+
+  /* Mobile */
   @media(max-width:640px){
-    .hero-meta{flex-direction:column;align-items:flex-start;gap:1.25rem;}
-    .hero-meta-right{width:100%;}
-    .v2-btn-hero{flex:1;justify-content:center;cursor:pointer;}
+    .hero-ctas{flex-direction:column;}
+    .v2-btn{width:100%;justify-content:center;cursor:pointer;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .hero-img-wrap{clip-path:none!important;}
+    .hero-w-green,.hero-w-horizon{opacity:1!important;}
+    .hero-meta{opacity:1!important;transform:none!important;}
+    .hero-scroll{opacity:1!important;}
+    .hero-scroll-line{animation:none!important;}
   }
 </style>
 
@@ -158,121 +198,89 @@
 (function(){
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  // Scatter positions for the 4 element images (% from centre of viewport)
-  const scatterPositions = [
-    { x:'-35vw', y:'-30vh' }, // earth — top-left
-    { x:'35vw',  y:'-25vh' }, // water — top-right
-    { x:'-30vw', y:'32vh'  }, // fire  — bottom-left
-    { x:'32vw',  y:'28vh'  }, // air   — bottom-right
-  ]
+  if(rm){
+    // No animation — jump to final state
+    const wrap = document.getElementById('hero-img-wrap')
+    const ww   = document.getElementById('hero-ww')
+    const meta = document.getElementById('hero-meta')
+    const scrl = document.getElementById('hero-scroll')
+    if(wrap){ wrap.style.clipPath = 'inset(0% 0% 0% 0% round 0px)'; wrap.classList.add('is-expanded') }
+    if(ww)   ww.style.opacity = '0'
+    if(meta){ meta.style.opacity='1'; meta.style.transform='none' }
+    if(scrl) scrl.style.opacity='1'
+    return
+  }
 
   const init = () => {
-    const g  = (window as any).gsap
-    const ST = (window as any).ScrollTrigger
-    if(!g || !ST){setTimeout(init,60);return}
+    const g = (window as any).gsap
+    if(!g){ setTimeout(init,60); return }
 
-    const word     = document.getElementById('hero-mask-word')
-    const chars    = document.querySelectorAll<HTMLElement>('.hc')
-    const fullbleed= document.getElementById('hero-fullbleed')
-    const metaEl   = document.getElementById('hero-meta')
-    const scImgs   = document.querySelectorAll<HTMLElement>('.scatter-img')
+    const imgWrap = document.getElementById('hero-img-wrap')
+    const ww      = document.getElementById('hero-ww')
+    const greenEl = document.getElementById('hero-w-green')
+    const horizEl = document.getElementById('hero-w-horizon')
+    const metaEl  = document.getElementById('hero-meta')
+    const scrlEl  = document.getElementById('hero-scroll')
 
-    if(rm){
-      // Reduced motion: skip to end state immediately
-      if(word) word.style.opacity='0'
-      if(fullbleed) fullbleed.style.opacity='1'
-      if(metaEl){metaEl.style.opacity='1';metaEl.style.transform='none'}
-      return
+    const tl = g.timeline()
+
+    // ── PHASE 1: Wordmark appears (staggered lines from below) ──
+    tl.fromTo(greenEl,
+      { opacity:0, y:40 },
+      { opacity:1, y:0, duration:.8, ease:'power3.out' },
+      0.3
+    )
+    tl.fromTo(horizEl,
+      { opacity:0, y:50 },
+      { opacity:1, y:0, duration:.9, ease:'power3.out' },
+      0.5
+    )
+
+    // ── Hold wordmark readable for 0.6s ──
+
+    // ── PHASE 2: Image expands from small centred window to full-bleed ──
+    // The clip starts at ~12% visible centred area → expands to 0% inset (full)
+    tl.to(imgWrap,
+      {
+        clipPath:'inset(0% 0% 0% 0% round 0px)',
+        duration:1.3,
+        ease:'power3.inOut',
+      },
+      1.8
+    )
+    // Simultaneously: add scrim class (fade in dark overlay)
+    tl.add(() => { imgWrap?.classList.add('is-expanded') }, 2.8)
+
+    // ── PHASE 3: Wordmark dissolves as image fills ──
+    tl.to(ww,
+      { opacity:0, duration:.5, ease:'power2.in' },
+      1.9
+    )
+
+    // ── PHASE 4: Meta content rises from bottom-left ──
+    tl.to(metaEl,
+      { opacity:1, y:0, duration:.8, ease:'power3.out' },
+      3.0
+    )
+    tl.to(scrlEl,
+      { opacity:1, duration:.5, ease:'power2.out' },
+      3.4
+    )
+
+    // ── Magnetic buttons ──
+    if(window.matchMedia('(pointer: fine)').matches){
+      document.querySelectorAll('[data-magnetic]').forEach(btn=>{
+        const el = btn as HTMLElement
+        el.addEventListener('mousemove',(e:Event)=>{
+          const me=e as MouseEvent;const r=el.getBoundingClientRect()
+          g.to(el,{x:(me.clientX-r.left-r.width/2)*.28,y:(me.clientY-r.top-r.height/2)*.28,duration:.4,ease:'power3.out'})
+        })
+        el.addEventListener('mouseleave',()=>g.to(el,{x:0,y:0,duration:.5,ease:'elastic.out(1,.5)'}))
+      })
     }
-
-    // Phase 1 — NORMAL.supply style reveal:
-    // Each letter clips open left→right (like a shutter), then the image brightens into view.
-    const loadTl = g.timeline({delay:.2})
-
-    // Step 1a: word starts clipped from the right (invisible), wipes open left→right
-    g.set(word, { opacity: 1, filter: 'brightness(.6) saturate(.5)', scale: 1 })
-    loadTl.fromTo(word,
-      { clipPath: 'inset(0 100% 0 0 round 0px)' },
-      { clipPath: 'inset(0 0% 0 0 round 0px)', duration: 1.0, ease: 'power3.inOut' }
-    )
-
-    // Step 1b: as clip completes, image brightens and saturates through the letterforms
-    loadTl.to(word,
-      { filter: 'brightness(1.15) saturate(1.1)', duration: 0.8, ease: 'power2.out' },
-      '-=0.4'
-    )
-
-    // Phase 2 — scroll-driven: scatter + reveal
-    const scrollTl = g.timeline({
-      scrollTrigger:{
-        trigger:'#hero-pin-wrap',
-        start:'top top',
-        end:'bottom bottom',
-        scrub:1,
-      }
-    })
-
-    // 0→0.5: each letter flies to its own direction & fades out
-    chars.forEach((ch,i)=>{
-      const xDir = parseFloat(ch.dataset.x||'0')
-      const yDir = parseFloat(ch.dataset.y||'0')
-      const rot  = parseFloat(ch.dataset.r||'0')
-      scrollTl.to(ch,{
-        x:`${xDir * 8}px`,
-        y:`${yDir * 8}px`,
-        rotation:rot * 3,
-        scale:3,
-        opacity:0,
-        duration:.5,
-        ease:'power2.in',
-      }, 0 + i * 0.015)
-    })
-
-    // 0.1→0.4: element images fly out from centre
-    scImgs.forEach((img,i)=>{
-      const pos = scatterPositions[i]
-      scrollTl.fromTo(img,
-        {scale:0,opacity:0,x:0,y:0},
-        {scale:1,opacity:1,x:pos.x,y:pos.y,duration:.35,ease:'power3.out'},
-        0.08 + i*0.05
-      )
-      // Then fade them out as image comes in
-      scrollTl.to(img,
-        {opacity:0,scale:1.2,duration:.2,ease:'power2.in'},
-        0.45
-      )
-    })
-
-    // 0.35→0.75: full-bleed image scales in
-    scrollTl.fromTo(fullbleed,
-      {opacity:0,scale:1.06},
-      {opacity:1,scale:1,duration:.5,ease:'power2.out'},
-      0.35
-    )
-
-    // 0.65→1.0: meta content rises in
-    scrollTl.to(metaEl,
-      {opacity:1,y:0,duration:.35,ease:'power3.out'},
-      0.65
-    )
   }
 
-  if((window as any).gsap && (window as any).ScrollTrigger) init()
-  else window.addEventListener('load',init)
-
-  // Magnetic buttons
-  if(window.matchMedia('(pointer: fine)').matches){
-    document.querySelectorAll('[data-magnetic]').forEach(btn=>{
-      const el=btn as HTMLElement
-      el.addEventListener('mousemove',(e:Event)=>{
-        const g=(window as any).gsap;if(!g)return
-        const me=e as MouseEvent;const r=el.getBoundingClientRect()
-        g.to(el,{x:(me.clientX-r.left-r.width/2)*.28,y:(me.clientY-r.top-r.height/2)*.28,duration:.4,ease:'power3.out'})
-      })
-      el.addEventListener('mouseleave',()=>{
-        const g=(window as any).gsap;if(g)g.to(el,{x:0,y:0,duration:.5,ease:'elastic.out(1,.5)'})
-      })
-    })
-  }
+  if((window as any).gsap) init()
+  else window.addEventListener('load', init)
 })()
 </script>
