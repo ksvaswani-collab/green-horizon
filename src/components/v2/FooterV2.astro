@@ -1,185 +1,261 @@
 ---
-// V2 FooterV2 — minimal, wordmark left, links right
-const currentYear = new Date().getFullYear()
+// V2 FooterV2 — The Bend Club reference.
+// Dark forest green bg. Full-width card: big DM Serif heading left, inline form right.
+// Forest/cliff photo peeks up at the bottom. Minimal bottom bar.
 ---
+
 <footer id="v2-footer" role="contentinfo" aria-label="Site footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <!-- Wordmark -->
-      <div class="footer-wordmark-wrap">
-        <span class="footer-wordmark" aria-label="Green Horizon">HORIZON</span>
-        <p class="footer-tagline">A cliff above the Black Sea.<br />Bulgaria. Opening 2026.</p>
+
+  <!-- Forest image bleeding up from bottom -->
+  <div class="footer-forest" aria-hidden="true">
+    <img src="/images/exp-forest.jpg" alt="" class="footer-forest-img" loading="lazy" />
+    <div class="footer-forest-fade"></div>
+  </div>
+
+  <!-- Main card panel -->
+  <div class="footer-card">
+    <div class="footer-card-inner">
+
+      <!-- Left: heading + copy + location -->
+      <div class="footer-left">
+        <p class="footer-label">Register interest</p>
+        <h2 class="footer-heading">
+          Be first<br>on the horizon.
+        </h2>
+        <p class="footer-body">
+          Green Horizon opens in 2026. Share your details and the team will follow up with room selection and early access.
+        </p>
+        <p class="footer-location">
+          <span class="footer-coord">42°N · 27°E</span>
+          <span class="footer-place">Black Sea Coast, Bulgaria</span>
+        </p>
       </div>
 
-      <!-- Links -->
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <ul role="list">
-          <li><a href="#story">The story</a></li>
-          <li><a href="#elements">The elements</a></li>
-          <li><a href="#experiences">Experiences</a></li>
-          <li><a href="#suites">Rooms &amp; villas</a></li>
-          <li><a href="#journey">The build</a></li>
-          <li><a href="#register">Register interest</a></li>
-        </ul>
-        <div class="footer-contact">
-          <a
-            href="mailto:hello@greenhorizonhotel.com"
-            aria-label="Email Green Horizon at hello@greenhorizonhotel.com"
-            class="footer-email"
-          >
-            hello@greenhorizonhotel.com
-          </a>
+      <!-- Right: inquiry form -->
+      <form
+        class="footer-form"
+        name="footer-register"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        id="footer-form"
+      >
+        <p style="display:none;"><label>Skip: <input name="bot-field" /></label></p>
+
+        <div class="footer-row">
+          <label class="sr-only" for="ff-first">First name</label>
+          <input id="ff-first" type="text" name="firstname" placeholder="First name" required autocomplete="given-name" class="footer-input" />
+          <label class="sr-only" for="ff-last">Last name</label>
+          <input id="ff-last" type="text" name="lastname" placeholder="Last name" required autocomplete="family-name" class="footer-input" />
         </div>
-      </nav>
-    </div>
 
-    <div class="footer-rule" role="separator" aria-hidden="true"></div>
+        <label class="sr-only" for="ff-email">Email</label>
+        <input id="ff-email" type="email" name="email" placeholder="Email" required autocomplete="email" class="footer-input footer-input--full" />
 
-    <div class="footer-bottom">
-      <p class="footer-copy">
-        &copy; {currentYear} Green Horizon. All rights reserved.
-      </p>
-      <div class="footer-legal">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-      </div>
+        <label class="sr-only" for="ff-msg">Message</label>
+        <textarea id="ff-msg" name="message" placeholder="Message (optional)" rows="3" class="footer-input footer-input--full footer-textarea"></textarea>
+
+        <div class="footer-form-bottom">
+          <button type="submit" class="footer-submit">
+            Send inquiry <span class="footer-arrow">→</span>
+          </button>
+          <p class="footer-note">Replies within two business days.</p>
+        </div>
+      </form>
+
     </div>
   </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Green Horizon</span>
+    <div class="footer-bottom-links">
+      <a href="/v2/privacy" class="footer-blink">Privacy</a>
+      <span class="footer-bdot" aria-hidden="true">·</span>
+      <a href="/v2/cookies" class="footer-blink">Cookie policy</a>
+      <span class="footer-bdot" aria-hidden="true">·</span>
+      <a href="#story" class="footer-blink">Concept preview</a>
+    </div>
+  </div>
+
 </footer>
 
 <style>
-  #v2-footer {
-    background: #060A08;
-    border-top: 1px solid rgba(234, 230, 222, 0.1);
-    padding: 5rem clamp(2rem, 6vw, 8rem) 3rem;
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  /* ── Outer footer ── */
+  #v2-footer{
+    position:relative;
+    background:#182118;
+    overflow:hidden;
+    padding-bottom:0;
   }
 
-  .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
+  /* ── Forest image bleeding up from bottom ── */
+  .footer-forest{
+    position:absolute;
+    bottom:0;left:0;right:0;
+    height:45%;
+    z-index:0;
+    pointer-events:none;
+  }
+  .footer-forest-img{
+    width:100%;height:100%;
+    object-fit:cover;object-position:center top;
+    filter:saturate(.6) brightness(.55);
+  }
+  /* Gradient: footer bg at top, transparent at bottom reveals image */
+  .footer-forest-fade{
+    position:absolute;inset:0;
+    background:linear-gradient(
+      to bottom,
+      #182118 0%,
+      #182118 30%,
+      rgba(24,33,24,.7) 65%,
+      rgba(24,33,24,.1) 100%
+    );
   }
 
-  .footer-top {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: flex-start;
-    margin-bottom: 4rem;
+  /* ── Card panel ── */
+  .footer-card{
+    position:relative;z-index:1;
+    padding:5rem clamp(1.5rem,4vw,4rem) 4rem;
+  }
+  .footer-card-inner{
+    max-width:1280px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5rem;
+    align-items:start;
+    /* Subtle card bg — slightly lighter than outer footer */
+    background:rgba(26,38,26,.7);
+    border:1px solid rgba(234,230,222,.08);
+    border-radius:4px;
+    padding:3.5rem;
+    backdrop-filter:blur(8px);
   }
 
-  .footer-wordmark {
-    display: block;
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    color: #EAE6DE;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin-bottom: 1.25rem;
+  /* ── Left: copy ── */
+  .footer-label{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+    color:#A8D5C2;margin-bottom:1.25rem;
+  }
+  .footer-heading{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(2rem,4vw,4rem);line-height:1.08;letter-spacing:-.02em;
+    color:#EAE6DE;margin:0 0 1.5rem;
+  }
+  .footer-body{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:14px;line-height:1.8;
+    color:rgba(234,230,222,.5);
+    max-width:28rem;margin-bottom:2rem;
+  }
+  .footer-location{
+    display:flex;flex-direction:column;gap:.25rem;
+    border-top:1px solid rgba(234,230,222,.1);padding-top:1.25rem;
+  }
+  .footer-coord{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:11px;font-weight:500;letter-spacing:.16em;
+    color:#A8D5C2;
+  }
+  .footer-place{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:13px;color:rgba(234,230,222,.4);
   }
 
-  .footer-tagline {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 400;
-    font-size: 0.875rem;
-    color: #7A8C84;
-    line-height: 1.7;
+  /* ── Form ── */
+  .footer-form{display:flex;flex-direction:column;gap:1rem;}
+
+  .footer-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+
+  .footer-input{
+    background:transparent;
+    border:none;border-bottom:1px solid rgba(234,230,222,.2);
+    padding:.65rem 0;
+    font-family:'Manrope',system-ui,sans-serif;font-size:14px;
+    color:#EAE6DE;outline:none;width:100%;
+    transition:border-color .2s ease;
+  }
+  .footer-input::placeholder{color:rgba(234,230,222,.3);}
+  .footer-input:focus{border-color:rgba(234,230,222,.55);}
+  .footer-input--full{display:block;}
+  .footer-textarea{resize:none;line-height:1.6;}
+
+  .footer-form-bottom{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;flex-wrap:wrap;margin-top:.5rem;
+  }
+  .footer-submit{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:transparent;
+    border:1px solid rgba(234,230,222,.35);
+    border-radius:100px;
+    padding:.65rem 1.5rem;
+    font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
+    color:#EAE6DE;cursor:pointer;
+    transition:background .2s ease,border-color .2s ease;
+  }
+  .footer-submit:hover{background:rgba(234,230,222,.08);border-color:rgba(234,230,222,.6);}
+  .footer-submit:focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;}
+  .footer-arrow{transition:transform .3s ease;}
+  .footer-submit:hover .footer-arrow{transform:translateX(4px);}
+
+  .footer-note{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:11px;color:rgba(234,230,222,.3);
+    letter-spacing:.03em;
   }
 
-  /* Nav links */
-  .footer-nav ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    margin-bottom: 2rem;
+  /* ── Bottom bar ── */
+  .footer-bottom{
+    position:relative;z-index:1;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:1.5rem;flex-wrap:wrap;
+    padding:.875rem clamp(1.5rem,4vw,4rem);
+    border-top:1px solid rgba(234,230,222,.06);
   }
-
-  .footer-nav a {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 400;
-    font-size: 0.9375rem;
-    color: #7A8C84;
-    text-decoration: none;
-    transition: color 0.2s ease;
+  .footer-copy{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:11px;color:rgba(234,230,222,.3);letter-spacing:.06em;
   }
-
-  .footer-nav a:hover {
-    color: #A8D5C2;
+  .footer-bottom-links{display:flex;align-items:center;gap:.5rem;}
+  .footer-blink{
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:11px;color:rgba(234,230,222,.3);
+    text-decoration:none;letter-spacing:.06em;
+    transition:color .2s ease;
   }
+  .footer-blink:hover{color:rgba(234,230,222,.7);}
+  .footer-bdot{font-size:10px;color:rgba(234,230,222,.15);}
 
-  .footer-contact {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(234, 230, 222, 0.1);
-  }
-
-  .footer-email {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-weight: 500;
-    font-size: 0.9375rem;
-    color: #A8D5C2;
-    text-decoration: none;
-    transition: opacity 0.2s ease;
-  }
-
-  .footer-email:hover {
-    opacity: 0.75;
-  }
-
-  /* Rule */
-  .footer-rule {
-    height: 1px;
-    background: rgba(234, 230, 222, 0.1);
-    margin-bottom: 2rem;
-  }
-
-  /* Bottom bar */
-  .footer-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-
-  .footer-copy {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    color: #7A8C84;
-  }
-
-  .footer-legal {
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .footer-legal a {
-    font-family: 'Manrope', system-ui, sans-serif;
-    font-size: 0.8125rem;
-    color: #7A8C84;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .footer-legal a:hover {
-    color: #EAE6DE;
-  }
-
-  :focus-visible {
-    outline: 2px solid #A8D5C2;
-    outline-offset: 4px;
-  }
-
-  @media (max-width: 768px) {
-    .footer-top {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+  /* Mobile */
+  @media(max-width:768px){
+    .footer-card-inner{
+      grid-template-columns:1fr;gap:2.5rem;padding:2rem;
     }
-
-    .footer-bottom {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
+    .footer-bottom{flex-direction:column;align-items:flex-start;gap:.75rem;}
+    .footer-row{grid-template-columns:1fr;}
   }
 </style>
+
+<script>
+  const form = document.getElementById('footer-form') as HTMLFormElement|null
+  if(form){
+    form.addEventListener('submit', async(e)=>{
+      e.preventDefault()
+      try{
+        const res = await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form) as any).toString()})
+        if(res.ok){
+          form.innerHTML = `<div style="padding:2rem 0;text-align:center;">
+            <p style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:1.5rem;color:#EAE6DE;margin-bottom:.75rem;">We have your details.</p>
+            <p style="font-family:'Manrope',system-ui,sans-serif;font-size:14px;color:rgba(234,230,222,.5);">The team will be in touch personally.</p>
+          </div>`
+        }
+      }catch{ form.submit() }
+    })
+  }
+</script>
