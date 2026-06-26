@@ -1,56 +1,78 @@
 ---
-// V2 Hero — The Bend Club reference.
-// Phase 1: Dark bg, "GREEN HORIZON" centred wordmark, small photo embedded between words.
-// Phase 2: Small photo expands via clip-path to swallow entire viewport.
-// Phase 3: Full-bleed hero image, headline + CTAs appear bottom-left.
-// Scroll sequence removed — the reveal is the PAGE LOAD animation, not scroll-driven.
+// V2 Hero — The Bend Club reference, corrected animation + carousel.
+//
+// Animation sequence:
+//   Phase 1 (0–1.5s):  Dark bg. "Green / Horizon" wordmark fades in.
+//   Phase 2 (1.5–3s):  Image expands from centered clip (scale:1.2 → 1.0 = zoom-out reveal).
+//   Phase 3 (3s+):     Wordmark gone. Heading + overline + CTAs appear. Carousel starts.
+//
+// Carousel: 4 images, auto-advance every 5s, ← → arrows.
+
+const slides = [
+  { src:'/images/hero.jpg',      alt:'The cliff above the Black Sea at golden hour' },
+  { src:'/images/room-water.jpg',alt:'Suite with panoramic sea view'                },
+  { src:'/images/water.jpg',     alt:'The Black Sea at dusk from the clifftop'      },
+  { src:'/images/exp-sea.jpg',   alt:'The sea at evening — calm and open'           },
+]
 ---
 
 <a href="#main" class="v2-skip">Skip to main content</a>
 
-<section id="v2-hero" aria-label="Hero — Green Horizon, Black Sea coast, Bulgaria">
+<section id="v2-hero" aria-label="Hero — Green Horizon hotel, Black Sea coast">
 
-  <!-- SR-only H1 -->
   <h1 class="sr-only">Green Horizon — a boutique hotel on Bulgaria's Black Sea coast, opening 2026</h1>
 
-  <!-- ① Full-bleed hero image — always full size, clip-path makes it "small" initially -->
-  <div class="hero-img-wrap" id="hero-img-wrap" aria-hidden="true">
-    <img
-      src="/images/hero.jpg"
-      alt=""
-      class="hero-img"
-      id="hero-img"
-      fetchpriority="high"
-      loading="eager"
-    />
-  </div>
-
-  <!-- ② Centred wordmark — visible during phase 1, dissolves as image expands -->
-  <div class="hero-wordmark-wrap" id="hero-ww" aria-hidden="true">
-    <div class="hero-wordmark">
-      <!-- "Green" line — script weight italic -->
-      <div class="hero-w-line hero-w-green" id="hero-w-green">Green</div>
-      <!-- "Horizon" line — heavy weight -->
-      <div class="hero-w-line hero-w-horizon" id="hero-w-horizon">Horizon</div>
-    </div>
-  </div>
-
-  <!-- ③ Bottom-left content — appears after image is full-bleed -->
-  <div class="hero-meta" id="hero-meta" aria-label="Hero content">
-    <div class="hero-meta-inner">
-      <p class="hero-coords">42°N · 27°E · Black Sea, Bulgaria</p>
-      <p class="hero-sub">A cliff above the Black Sea.<br>Between ancient forest and open water.</p>
-      <div class="hero-ctas">
-        <a href="#story"    class="v2-btn v2-btn-primary" data-magnetic>Discover the story</a>
-        <a href="#register" class="v2-btn v2-btn-outline"  data-magnetic>Register interest</a>
+  <!-- ── Carousel slides (full-bleed, all stacked) ── -->
+  <div class="hero-slides" id="hero-slides" aria-live="polite" aria-atomic="true">
+    {slides.map((sl, i) => (
+      <div
+        class={`hero-slide${i === 0 ? ' is-active' : ''}`}
+        data-index={i}
+        aria-hidden={i !== 0}
+      >
+        <img
+          src={sl.src}
+          alt={sl.alt}
+          class="hero-slide-img"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : undefined}
+        />
       </div>
+    ))}
+    <!-- Scrim — visibility controlled by JS after animation -->
+    <div class="hero-scrim" id="hero-scrim" aria-hidden="true"></div>
+  </div>
+
+  <!-- ── Clip-path overlay: starts clipped, expands to reveal slides ── -->
+  <!--   This is a transparent mask — the clip-path on #hero-slides creates the expand effect -->
+
+  <!-- ── Centred wordmark (phase 1 only) ── -->
+  <div class="hero-ww" id="hero-ww" aria-hidden="true">
+    <div class="hero-wm">
+      <div class="hero-wm-green" id="hwg">Green</div>
+      <div class="hero-wm-horizon" id="hwh">Horizon</div>
     </div>
   </div>
 
-  <!-- ④ Scroll hint — appears after animation completes -->
-  <div class="hero-scroll" id="hero-scroll" aria-hidden="true">
-    <div class="hero-scroll-line"></div>
-    <span>scroll</span>
+  <!-- ── Bottom-left: overline + heading + CTAs ── -->
+  <div class="hero-content" id="hero-content">
+    <p class="hero-overline">Discover Green Horizon · Black Sea, Bulgaria</p>
+    <h2 class="hero-heading">
+      One conviction.<br>
+      One cliff.<br>
+      One sea.
+    </h2>
+    <div class="hero-ctas">
+      <a href="#story"    class="v2-btn v2-btn-primary" data-magnetic>Discover the story</a>
+      <a href="#register" class="v2-btn v2-btn-ghost"   data-magnetic>Register interest</a>
+    </div>
+  </div>
+
+  <!-- ── Carousel arrows (bottom-right) ── -->
+  <div class="hero-arrows" id="hero-arrows" aria-label="Carousel navigation" role="group">
+    <button id="hero-prev" class="hero-arrow" aria-label="Previous image">‹</button>
+    <span class="hero-counter" id="hero-counter" aria-live="polite" aria-atomic="true">1 / {slides.length}</span>
+    <button id="hero-next" class="hero-arrow" aria-label="Next image">›</button>
   </div>
 
 </section>
@@ -62,101 +84,92 @@
 
   /* ── Section ── */
   #v2-hero{
-    position:relative;
-    width:100%;
-    height:100svh;
-    background:#0E1410;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
+    position:relative;width:100%;height:100svh;
+    background:#0E1410;overflow:hidden;
   }
 
-  /* ── ① Full-bleed image — starts clipped small at centre ── */
-  .hero-img-wrap{
-    position:absolute;inset:0;
-    /* Clip starts as a small centred window (will-change for GPU) */
-    clip-path: inset(44% 40% 44% 40% round 10px);
+  /* ── Slides container — clip-path starts small (centred), expands ── */
+  .hero-slides{
+    position:absolute;inset:0;z-index:1;
+    /* Initial state: small centred clip. JS will expand on load. */
+    clip-path:inset(46% 44% 46% 44% round 10px);
     will-change:clip-path;
-    z-index:1;
   }
-  .hero-img{
+
+  /* Individual slides */
+  .hero-slide{
+    position:absolute;inset:0;
+    opacity:0;transition:opacity .8s ease;
+    will-change:opacity;
+  }
+  .hero-slide.is-active{opacity:1;}
+
+  /* Slide images — start scale(1.18), zoom to 1.0 as clip expands */
+  .hero-slide-img{
     width:100%;height:100%;
     object-fit:cover;object-position:center 35%;
+    transform:scale(1.18);
+    will-change:transform;
   }
-  /* Subtle dark scrim — only visible once image is full-bleed */
-  .hero-img-wrap::after{
-    content:'';
-    position:absolute;inset:0;
-    background:linear-gradient(to top, rgba(14,20,16,.75) 0%, rgba(14,20,16,.1) 50%, transparent 100%);
-    opacity:0;
-    transition:opacity .6s ease;
-  }
-  .hero-img-wrap.is-expanded::after{ opacity:1; }
+  /* Once expanded, images are at natural scale */
+  .hero-slides.is-expanded .hero-slide-img{transform:scale(1);}
 
-  /* ── ② Centred wordmark ── */
-  .hero-wordmark-wrap{
+  /* Dark scrim at bottom for heading legibility */
+  .hero-scrim{
     position:absolute;inset:0;z-index:2;
+    background:linear-gradient(
+      to top,
+      rgba(10,16,13,.82) 0%,
+      rgba(10,16,13,.45) 35%,
+      rgba(10,16,13,.1)  60%,
+      transparent        100%
+    );
+    opacity:0;transition:opacity .6s ease;
+  }
+  .hero-slides.is-expanded .hero-scrim{opacity:1;}
+
+  /* ── Centred wordmark (phase 1) ── */
+  .hero-ww{
+    position:absolute;inset:0;z-index:10;
     display:flex;align-items:center;justify-content:center;
     pointer-events:none;
   }
-  .hero-wordmark{
-    display:flex;flex-direction:column;align-items:center;
-    text-align:center;
-    line-height:1;
+  .hero-wm{display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1;}
+  .hero-wm-green{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(3rem,8vw,9rem);letter-spacing:-.01em;line-height:1.05;
+    color:#EAE6DE;opacity:0;
   }
-  .hero-w-line{
-    display:block;
-    will-change:transform,opacity;
-  }
-  /* "Green" — DM Serif italic, lighter */
-  .hero-w-green{
-    font-family:'DM Serif Display',Georgia,serif;
-    font-style:italic;
-    font-size:clamp(3.5rem,9vw,10rem);
-    font-weight:400;
-    color:#EAE6DE;
-    letter-spacing:-.01em;
-    line-height:1.05;
-    opacity:0;
-  }
-  /* "Horizon" — Manrope 900, fills width */
-  .hero-w-horizon{
-    font-family:'Manrope',system-ui,sans-serif;
-    font-weight:900;
-    font-size:clamp(4.5rem,14vw,16rem);
-    letter-spacing:-.05em;
-    color:#EAE6DE;
-    line-height:.85;
-    opacity:0;
+  .hero-wm-horizon{
+    font-family:'Manrope',system-ui,sans-serif;font-weight:900;
+    font-size:clamp(4rem,13vw,15rem);letter-spacing:-.05em;line-height:.85;
+    color:#EAE6DE;opacity:0;
   }
 
-  /* ── ③ Bottom-left hero content ── */
-  .hero-meta{
-    position:relative;z-index:5;
-    padding:0 clamp(1.5rem,4vw,4rem) 3rem;
+  /* ── Bottom-left content ── */
+  .hero-content{
+    position:absolute;bottom:0;left:0;right:0;z-index:5;
+    padding:0 clamp(1.5rem,4vw,4rem) clamp(2.5rem,5vh,4rem);
     opacity:0;transform:translateY(20px);
     will-change:transform,opacity;
   }
-  .hero-meta-inner{display:flex;flex-direction:column;gap:.75rem;max-width:38rem;}
-  .hero-coords{
+  .hero-overline{
     font-family:'Manrope',system-ui,sans-serif;
-    font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
-    color:rgba(168,213,194,.7);
+    font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(168,213,194,.8);margin-bottom:1rem;
   }
-  .hero-sub{
-    font-family:'DM Serif Display',Georgia,serif;
-    font-style:italic;
-    font-size:clamp(1.25rem,2vw,1.75rem);
-    line-height:1.4;
-    color:rgba(234,230,222,.85);
+  .hero-heading{
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(2.5rem,6vw,6.5rem);line-height:1.05;letter-spacing:-.01em;
+    color:#F5F2EC;margin:0 0 2rem;
+    /* Text-shadow ensures legibility over any image */
+    text-shadow:0 2px 32px rgba(0,0,0,.4);
   }
-  .hero-ctas{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem;}
+  .hero-ctas{display:flex;gap:.875rem;flex-wrap:wrap;}
 
   /* Buttons */
   .v2-btn{
-    display:inline-flex;align-items:center;
-    padding:.8rem 1.75rem;
+    display:inline-flex;align-items:center;padding:.85rem 1.75rem;
     font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
     text-decoration:none;border-radius:16px;border:1px solid transparent;
     min-height:44px;cursor:none;
@@ -165,122 +178,176 @@
   }
   .v2-btn-primary{background:#2B4A3C;color:#EAE6DE;border-color:#2B4A3C;}
   .v2-btn-primary:hover{opacity:.82;}
-  .v2-btn-outline{background:transparent;color:#A8D5C2;border-color:rgba(168,213,194,.5);}
-  .v2-btn-outline:hover{background:rgba(168,213,194,.08);border-color:#A8D5C2;}
+  .v2-btn-ghost{background:rgba(234,230,222,.08);color:#EAE6DE;border-color:rgba(234,230,222,.35);}
+  .v2-btn-ghost:hover{background:rgba(234,230,222,.14);border-color:rgba(234,230,222,.6);}
   :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
 
-  /* ── ④ Scroll indicator ── */
-  .hero-scroll{
-    position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
-    display:flex;flex-direction:column;align-items:center;gap:.4rem;
-    z-index:5;opacity:0;
+  /* ── Carousel arrows ── */
+  .hero-arrows{
+    position:absolute;bottom:clamp(2rem,4vh,3.5rem);right:clamp(1.5rem,4vw,4rem);
+    z-index:6;display:flex;align-items:center;gap:.75rem;
+    opacity:0;transition:opacity .4s ease;
   }
-  .hero-scroll-line{width:1px;height:32px;background:rgba(234,230,222,.4);animation:scrollPulse 1.8s ease-in-out infinite;}
-  .hero-scroll span{font-family:'Manrope',system-ui,sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(234,230,222,.4);}
-  @keyframes scrollPulse{ 0%,100%{opacity:.4;transform:scaleY(1)} 50%{opacity:.8;transform:scaleY(1.15)} }
+  .hero-slides.is-expanded ~ .hero-arrows,
+  .hero-arrows.is-visible{opacity:1;}
+  .hero-arrow{
+    width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(234,230,222,.1);border:1px solid rgba(234,230,222,.25);
+    border-radius:50%;color:#EAE6DE;font-size:1.2rem;cursor:pointer;
+    transition:background .2s ease,border-color .2s ease;
+    line-height:1;
+  }
+  .hero-arrow:hover{background:rgba(234,230,222,.2);border-color:rgba(234,230,222,.5);}
+  .hero-counter{
+    font-family:'Manrope',system-ui,sans-serif;font-size:11px;font-weight:500;
+    letter-spacing:.12em;color:rgba(234,230,222,.5);min-width:3.5rem;text-align:center;
+  }
 
-  /* Mobile */
   @media(max-width:640px){
     .hero-ctas{flex-direction:column;}
-    .v2-btn{width:100%;justify-content:center;cursor:pointer;}
+    .v2-btn{cursor:pointer;}
+    .hero-arrows{bottom:5.5rem;}
   }
-
   @media(prefers-reduced-motion:reduce){
-    .hero-img-wrap{clip-path:none!important;}
-    .hero-w-green,.hero-w-horizon{opacity:1!important;}
-    .hero-meta{opacity:1!important;transform:none!important;}
-    .hero-scroll{opacity:1!important;}
-    .hero-scroll-line{animation:none!important;}
+    .hero-slides{clip-path:none!important;}
+    .hero-slide-img{transform:none!important;}
+    .hero-wm-green,.hero-wm-horizon{opacity:0!important;}
+    .hero-content{opacity:1!important;transform:none!important;}
+    .hero-arrows{opacity:1!important;}
+    .hero-scrim{opacity:1!important;}
+    .hero-slide{transition:none!important;}
   }
 </style>
 
 <script>
 (function(){
-  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const rm        = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const slidesEl  = document.getElementById('hero-slides') as HTMLElement
+  const slides    = Array.from(document.querySelectorAll<HTMLElement>('.hero-slide'))
+  const imgs      = Array.from(document.querySelectorAll<HTMLElement>('.hero-slide-img'))
+  const wwEl      = document.getElementById('hero-ww')     as HTMLElement
+  const greenEl   = document.getElementById('hwg')          as HTMLElement
+  const horizEl   = document.getElementById('hwh')          as HTMLElement
+  const contentEl = document.getElementById('hero-content') as HTMLElement
+  const arrowsEl  = document.getElementById('hero-arrows')  as HTMLElement
+  const prevBtn   = document.getElementById('hero-prev')    as HTMLButtonElement
+  const nextBtn   = document.getElementById('hero-next')    as HTMLButtonElement
+  const counterEl = document.getElementById('hero-counter') as HTMLElement
+  const N         = slides.length
+  let   current   = 0
+  let   autoTimer: ReturnType<typeof setTimeout>
 
-  if(rm){
-    // No animation — jump to final state
-    const wrap = document.getElementById('hero-img-wrap')
-    const ww   = document.getElementById('hero-ww')
-    const meta = document.getElementById('hero-meta')
-    const scrl = document.getElementById('hero-scroll')
-    if(wrap){ wrap.style.clipPath = 'inset(0% 0% 0% 0% round 0px)'; wrap.classList.add('is-expanded') }
-    if(ww)   ww.style.opacity = '0'
-    if(meta){ meta.style.opacity='1'; meta.style.transform='none' }
-    if(scrl) scrl.style.opacity='1'
+  // ── Carousel logic ──
+  function goTo(idx: number) {
+    const next = ((idx % N) + N) % N
+    slides[current].classList.remove('is-active')
+    slides[current].setAttribute('aria-hidden', 'true')
+    slides[next].classList.add('is-active')
+    slides[next].setAttribute('aria-hidden', 'false')
+    current = next
+    if (counterEl) counterEl.textContent = `${current + 1} / ${N}`
+    resetAuto()
+  }
+
+  function resetAuto() {
+    clearTimeout(autoTimer)
+    autoTimer = setTimeout(() => goTo(current + 1), 5000)
+  }
+
+  prevBtn?.addEventListener('click', () => goTo(current - 1))
+  nextBtn?.addEventListener('click', () => goTo(current + 1))
+
+  // Keyboard: ← → when hero is in view
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  goTo(current - 1)
+    if (e.key === 'ArrowRight') goTo(current + 1)
+  })
+
+  // ── Intro animation ──
+  if (rm) {
+    // Skip to final state immediately
+    slidesEl?.classList.add('is-expanded')
+    if (slidesEl)  slidesEl.style.clipPath = 'inset(0% 0% 0% 0% round 0px)'
+    imgs.forEach(img => img.style.transform = 'scale(1)')
+    if (wwEl)     wwEl.style.opacity = '0'
+    if (contentEl){ contentEl.style.opacity='1'; contentEl.style.transform='none' }
+    if (arrowsEl) arrowsEl.classList.add('is-visible')
+    resetAuto()
     return
   }
 
   const init = () => {
     const g = (window as any).gsap
-    if(!g){ setTimeout(init,60); return }
-
-    const imgWrap = document.getElementById('hero-img-wrap')
-    const ww      = document.getElementById('hero-ww')
-    const greenEl = document.getElementById('hero-w-green')
-    const horizEl = document.getElementById('hero-w-horizon')
-    const metaEl  = document.getElementById('hero-meta')
-    const scrlEl  = document.getElementById('hero-scroll')
+    if (!g) { setTimeout(init, 60); return }
 
     const tl = g.timeline()
 
-    // ── PHASE 1: Wordmark appears (staggered lines from below) ──
+    // Phase 1 — Wordmark appears on dark bg
     tl.fromTo(greenEl,
-      { opacity:0, y:40 },
-      { opacity:1, y:0, duration:.8, ease:'power3.out' },
-      0.3
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: .75, ease: 'power3.out' },
+      0.4
     )
     tl.fromTo(horizEl,
-      { opacity:0, y:50 },
-      { opacity:1, y:0, duration:.9, ease:'power3.out' },
-      0.5
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: .8, ease: 'power3.out' },
+      0.6
     )
 
-    // ── Hold wordmark readable for 0.6s ──
-
-    // ── PHASE 2: Image expands from small centred window to full-bleed ──
-    // The clip starts at ~12% visible centred area → expands to 0% inset (full)
-    tl.to(imgWrap,
+    // Phase 2 — Clip-path expands from centre (image zooms out simultaneously)
+    // Clip goes: tiny centred window → full viewport
+    tl.to(slidesEl,
       {
-        clipPath:'inset(0% 0% 0% 0% round 0px)',
-        duration:1.3,
-        ease:'power3.inOut',
+        clipPath: 'inset(0% 0% 0% 0% round 0px)',
+        duration: 1.4,
+        ease: 'power3.inOut',
       },
       1.8
     )
-    // Simultaneously: add scrim class (fade in dark overlay)
-    tl.add(() => { imgWrap?.classList.add('is-expanded') }, 2.8)
+    // All slide images zoom out from 1.18 → 1.0 as clip opens
+    tl.to(imgs,
+      { scale: 1, duration: 1.4, ease: 'power3.out' },
+      1.8
+    )
+    // Activate scrim
+    tl.add(() => {
+      slidesEl?.classList.add('is-expanded')
+    }, 2.4)
 
-    // ── PHASE 3: Wordmark dissolves as image fills ──
-    tl.to(ww,
-      { opacity:0, duration:.5, ease:'power2.in' },
+    // Phase 3 — Wordmark dissolves as image fills screen
+    tl.to(wwEl,
+      { opacity: 0, duration: .5, ease: 'power2.in' },
       1.9
     )
 
-    // ── PHASE 4: Meta content rises from bottom-left ──
-    tl.to(metaEl,
-      { opacity:1, y:0, duration:.8, ease:'power3.out' },
-      3.0
-    )
-    tl.to(scrlEl,
-      { opacity:1, duration:.5, ease:'power2.out' },
-      3.4
+    // Phase 4 — Heading + CTAs rise from bottom-left
+    tl.to(contentEl,
+      { opacity: 1, y: 0, duration: .9, ease: 'power3.out' },
+      3.1
     )
 
-    // ── Magnetic buttons ──
-    if(window.matchMedia('(pointer: fine)').matches){
-      document.querySelectorAll('[data-magnetic]').forEach(btn=>{
+    // Phase 5 — Arrows appear + carousel starts
+    tl.add(() => {
+      arrowsEl?.classList.add('is-visible')
+      resetAuto()
+    }, 3.5)
+
+    // Magnetic buttons
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.querySelectorAll('[data-magnetic]').forEach(btn => {
         const el = btn as HTMLElement
-        el.addEventListener('mousemove',(e:Event)=>{
-          const me=e as MouseEvent;const r=el.getBoundingClientRect()
-          g.to(el,{x:(me.clientX-r.left-r.width/2)*.28,y:(me.clientY-r.top-r.height/2)*.28,duration:.4,ease:'power3.out'})
+        el.addEventListener('mousemove', (e: Event) => {
+          const me = e as MouseEvent
+          const r  = el.getBoundingClientRect()
+          g.to(el, { x:(me.clientX-r.left-r.width/2)*.28, y:(me.clientY-r.top-r.height/2)*.28, duration:.4, ease:'power3.out' })
         })
-        el.addEventListener('mouseleave',()=>g.to(el,{x:0,y:0,duration:.5,ease:'elastic.out(1,.5)'}))
+        el.addEventListener('mouseleave', () => g.to(el, { x:0, y:0, duration:.5, ease:'elastic.out(1,.5)' }))
       })
     }
   }
 
-  if((window as any).gsap) init()
+  if ((window as any).gsap) init()
   else window.addEventListener('load', init)
 })()
 </script>
