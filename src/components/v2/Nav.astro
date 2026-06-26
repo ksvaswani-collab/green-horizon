@@ -1,34 +1,69 @@
 ---
-// V2 Nav — The Bend Club reference.
-// Wordmark left · centre links (dot-separated) · CTA right.
-// No pills, no borders. Transparent. Slides down after hero animation completes.
+// V2 Nav — Bend Club style + language dropdown.
+// Wordmark left · centre links · lang dropdown + CTA right.
+// Slides down after hero animation.
 ---
 <header id="v2-nav" role="banner">
   <a href="#main" class="v2-nav-skip">Skip to main content</a>
 
   <div class="v2-nav-container">
-  <nav aria-label="Primary navigation">
+    <nav aria-label="Primary navigation">
 
-    <!-- Left: wordmark -->
-    <a href="/v2/" class="v2-nav-wordmark" aria-label="Green Horizon — home">
-      <span class="wm-italic">Green</span> Horizon
-    </a>
+      <!-- Left: wordmark -->
+      <a href="/v2/" class="v2-nav-wordmark" aria-label="Green Horizon — home">
+        <span class="wm-italic">Green</span> Horizon
+      </a>
 
-    <!-- Centre: links separated by · -->
-    <ul class="v2-nav-links" role="list">
-      <li><a href="#story"      class="v2-nl">The story</a></li>
-      <li class="v2-nl-sep" aria-hidden="true">·</li>
-      <li><a href="#elements"   class="v2-nl">Elements</a></li>
-      <li class="v2-nl-sep" aria-hidden="true">·</li>
-      <li><a href="#rooms"      class="v2-nl">Rooms</a></li>
-      <li class="v2-nl-sep" aria-hidden="true">·</li>
-      <li><a href="#experiences"class="v2-nl">Experiences</a></li>
-    </ul>
+      <!-- Centre: links -->
+      <ul class="v2-nav-links" role="list">
+        <li><a href="#story"       class="v2-nl">The story</a></li>
+        <li class="v2-nl-sep" aria-hidden="true">·</li>
+        <li><a href="#elements"    class="v2-nl">Elements</a></li>
+        <li class="v2-nl-sep" aria-hidden="true">·</li>
+        <li><a href="#rooms"       class="v2-nl">Rooms</a></li>
+        <li class="v2-nl-sep" aria-hidden="true">·</li>
+        <li><a href="#experiences" class="v2-nl">Experiences</a></li>
+      </ul>
 
-    <!-- Right: single text CTA -->
-    <a href="#register" class="v2-nav-cta">Register interest</a>
+      <!-- Right: language dropdown + CTA -->
+      <div class="v2-nav-right">
 
-  </nav>
+        <!-- Language dropdown -->
+        <div class="v2-lang-wrap" id="v2-lang-wrap">
+          <button
+            id="v2-lang-btn"
+            class="v2-lang-btn"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-label="Select language"
+          >
+            EN
+            <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true" id="v2-lang-chevron" style="transition:transform .25s ease;">
+              <path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div id="v2-lang-menu" class="v2-lang-menu" role="listbox" aria-label="Language" style="display:none;">
+            <a href="/en/" role="option" aria-selected="false" class="v2-lang-opt">
+              <span class="v2-lang-code">EN</span>
+              <span class="v2-lang-name">English</span>
+            </a>
+            <a href="/nl/" role="option" aria-selected="false" class="v2-lang-opt">
+              <span class="v2-lang-code">NL</span>
+              <span class="v2-lang-name">Nederlands</span>
+            </a>
+            <a href="/bg/" role="option" aria-selected="false" class="v2-lang-opt">
+              <span class="v2-lang-code">БГ</span>
+              <span class="v2-lang-name">Български</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Register CTA -->
+        <a href="#register" class="v2-nav-cta">Register interest</a>
+
+      </div>
+
+    </nav>
   </div>
 </header>
 
@@ -36,97 +71,131 @@
   #v2-nav{
     position:fixed;top:0;left:0;right:0;z-index:900;
     padding:0;
-    /* Starts invisible — slides down in JS after hero animation */
     opacity:0;transform:translateY(-12px);
     transition:background .4s ease;
   }
-  /* 1280px container constrains nav content; header itself stays full-width */
-  .v2-nav-container{
-    max-width:1280px;
-    margin:0 auto;
-    padding:1.75rem clamp(1.5rem,3vw,2.5rem);
-  }
   #v2-nav.is-scrolled{
-    background:rgba(14,20,16,.88);
+    background:rgba(14,20,16,.9);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid rgba(234,230,222,.07);
+  }
+
+  .v2-nav-container{
+    max-width:1280px;margin:0 auto;
+    padding:1.5rem clamp(1.5rem,3vw,2.5rem);
   }
 
   nav{
     display:flex;align-items:center;justify-content:space-between;gap:2rem;
   }
 
-  /* Wordmark — "Green" italic serif + "Horizon" bold */
+  /* Wordmark */
   .v2-nav-wordmark{
     font-family:'Manrope',system-ui,sans-serif;
     font-weight:700;font-size:1rem;letter-spacing:-.01em;
     color:#EAE6DE;text-decoration:none;
-    display:flex;align-items:baseline;gap:.2rem;
-    flex-shrink:0;
+    display:flex;align-items:baseline;gap:.2rem;flex-shrink:0;
     transition:opacity .2s ease;
   }
   .v2-nav-wordmark:hover{opacity:.7;}
   .wm-italic{
     font-family:'DM Serif Display',Georgia,serif;
-    font-style:italic;font-weight:400;
-    font-size:1.1rem;
+    font-style:italic;font-weight:400;font-size:1.1rem;
   }
 
-  /* Centre nav links */
+  /* Centre links */
   .v2-nav-links{
-    list-style:none;display:flex;align-items:center;gap:.5rem;
-    padding:0;margin:0;
+    list-style:none;display:flex;align-items:center;gap:.5rem;padding:0;margin:0;
   }
   .v2-nl{
-    font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
-    color:rgba(234,230,222,.5);text-decoration:none;
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:15px;font-weight:500;
+    color:rgba(234,230,222,.6);text-decoration:none;
+    padding:.25rem .4rem;
     transition:color .2s ease;
-    padding:.25rem .35rem;
   }
   .v2-nl:hover{color:#EAE6DE;}
-  .v2-nl-sep{
-    color:rgba(234,230,222,.2);font-size:13px;
-    pointer-events:none;user-select:none;
-  }
+  .v2-nl-sep{color:rgba(234,230,222,.18);font-size:14px;pointer-events:none;user-select:none;}
 
-  /* Right CTA — just a text link with underline on hover */
+  /* Right group */
+  .v2-nav-right{display:flex;align-items:center;gap:1.5rem;flex-shrink:0;}
+
+  /* Language dropdown */
+  .v2-lang-wrap{position:relative;}
+  .v2-lang-btn{
+    display:flex;align-items:center;gap:.35rem;
+    background:none;border:none;cursor:pointer;
+    font-family:'Manrope',system-ui,sans-serif;font-size:14px;font-weight:500;
+    color:rgba(234,230,222,.55);padding:.25rem .35rem;
+    transition:color .2s ease;
+  }
+  .v2-lang-btn:hover{color:#EAE6DE;}
+  .v2-lang-menu{
+    position:absolute;top:calc(100% + .5rem);right:0;
+    min-width:9rem;
+    background:rgba(22,32,22,.97);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(234,230,222,.1);border-radius:10px;
+    padding:.3rem;
+    display:flex;flex-direction:column;gap:.05rem;
+    box-shadow:0 8px 32px rgba(0,0,0,.35);
+    z-index:10;
+  }
+  .v2-lang-opt{
+    display:flex;align-items:center;gap:.5rem;
+    padding:.5rem .75rem;border-radius:6px;
+    text-decoration:none;color:#EAE6DE;
+    transition:background .15s ease;
+  }
+  .v2-lang-opt:hover{background:rgba(234,230,222,.08);}
+  .v2-lang-code{font-family:'Manrope',system-ui,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;color:#A8D5C2;}
+  .v2-lang-name{font-family:'Manrope',system-ui,sans-serif;font-size:13px;color:rgba(234,230,222,.6);}
+
+  /* CTA */
   .v2-nav-cta{
-    font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:500;
+    font-family:'Manrope',system-ui,sans-serif;font-size:14px;font-weight:500;
     color:#A8D5C2;text-decoration:none;
     border-bottom:1px solid transparent;padding-bottom:1px;
     transition:border-color .2s ease;
-    flex-shrink:0;
   }
   .v2-nav-cta:hover{border-color:#A8D5C2;}
 
-  /* Skip link */
+  /* Skip */
   .v2-nav-skip{position:absolute;top:-100%;left:50%;transform:translateX(-50%);z-index:10000;background:#A8D5C2;color:#111816;padding:.75rem 1.5rem;border-radius:0 0 12px 12px;font-family:'Manrope',system-ui,sans-serif;font-weight:700;font-size:14px;text-decoration:none;}
   .v2-nav-skip:focus{top:0;}
   :focus-visible{outline:3px solid #A8D5C2;outline-offset:3px;border-radius:4px;}
 
-  /* Mobile: hide centre links */
-  @media(max-width:768px){.v2-nav-links{display:none;}}
+  @media(max-width:768px){
+    .v2-nav-links{display:none;}
+    .v2-nav-cta{display:none;}
+  }
 </style>
 
 <script>
+  // Show nav after hero animation (~3.4s)
   const nav = document.getElementById('v2-nav')
-
-  // Slide nav in after hero animation completes (~3.4s)
   const showNav = () => {
     const g = (window as any).gsap
-    if(g && nav){
-      g.to(nav,{ opacity:1, y:0, duration:.7, ease:'power3.out', delay:3.4 })
-    } else if(nav){
-      setTimeout(()=>{ nav.style.opacity='1'; nav.style.transform='none' }, 3400)
-    }
+    if(g && nav) g.to(nav,{opacity:1,y:0,duration:.7,ease:'power3.out',delay:3.4})
+    else if(nav) setTimeout(()=>{nav.style.opacity='1';nav.style.transform='none'},3400)
   }
-  if((window as any).gsap) showNav()
-  else window.addEventListener('load', showNav)
+  if((window as any).gsap) showNav(); else window.addEventListener('load',showNav)
 
-  // Scroll: add bg
-  if(nav){
-    window.addEventListener('scroll',()=>{
-      nav.classList.toggle('is-scrolled', window.scrollY > 40)
-    },{ passive:true })
+  // Scroll bg
+  if(nav) window.addEventListener('scroll',()=>nav.classList.toggle('is-scrolled',window.scrollY>40),{passive:true})
+
+  // Language dropdown
+  const langBtn  = document.getElementById('v2-lang-btn')
+  const langMenu = document.getElementById('v2-lang-menu')
+  const chevron  = document.getElementById('v2-lang-chevron')
+  let open = false
+  function toggleLang(v: boolean){
+    open=v
+    langBtn?.setAttribute('aria-expanded',String(v))
+    if(langMenu) langMenu.style.display=v?'flex':'none'
+    if(chevron)  chevron.style.transform=v?'rotate(180deg)':'rotate(0deg)'
   }
+  langBtn?.addEventListener('click',(e)=>{e.stopPropagation();toggleLang(!open)})
+  document.addEventListener('click',()=>{if(open)toggleLang(false)})
+  document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&open)toggleLang(false)})
 </script>
