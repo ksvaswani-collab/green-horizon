@@ -1,35 +1,34 @@
 ---
 ---
 <footer class="foot" role="contentinfo" aria-label="Site footer">
-  <div class="foot-upper">
-    <div class="foot-brand">
-      <p class="foot-tagline">A family. A cliff.<br>The Black Sea coast of Bulgaria.</p>
+  <div class="foot-top">
+    <div class="foot-top-left">
+      <p class="foot-brand-name">Green Horizon</p>
       <a href="mailto:hello@greenhorizon.bg" class="foot-email">hello@greenhorizon.bg</a>
     </div>
-
-    <nav class="foot-nav" aria-label="Footer navigation">
-      <div class="foot-nav-col">
-        <p class="foot-nav-label">Explore</p>
-        <a href="#story" class="foot-link">Our Story</a>
-        <a href="#elements" class="foot-link">Elements</a>
-        <a href="#experiences" class="foot-link">Experiences</a>
-        <a href="#suites" class="foot-link">Suites</a>
-      </div>
-      <div class="foot-nav-col">
-        <p class="foot-nav-label">Visit</p>
-        <a href="#journey" class="foot-link">The Build</a>
-        <a href="#register" class="foot-link">Register Interest</a>
-        <a href="mailto:hello@greenhorizon.bg" class="foot-link">Contact</a>
-      </div>
-    </nav>
-
-    <div class="foot-coords">
-      <p class="foot-coord-label">Location</p>
-      <p class="foot-coord-val">42°N · 27°E</p>
-      <p class="foot-coord-val">Black Sea Coast, Bulgaria</p>
-      <p class="foot-coord-val">Opening 2026</p>
+    <div class="foot-top-right">
+      <p class="foot-coord">42°N · 27°E · Black Sea, Bulgaria</p>
+      <p class="foot-coord">Opening 2026</p>
     </div>
   </div>
+
+  <div class="foot-rule-wrap">
+    <div class="foot-rule"></div>
+  </div>
+
+  <nav class="foot-nav" aria-label="Footer navigation">
+    <a href="#story" class="foot-link">Our Story</a>
+    <span class="foot-dot" aria-hidden="true">·</span>
+    <a href="#elements" class="foot-link">Elements</a>
+    <span class="foot-dot" aria-hidden="true">·</span>
+    <a href="#experiences" class="foot-link">Experiences</a>
+    <span class="foot-dot" aria-hidden="true">·</span>
+    <a href="#suites" class="foot-link">Suites</a>
+    <span class="foot-dot" aria-hidden="true">·</span>
+    <a href="#journey" class="foot-link">The Build</a>
+    <span class="foot-dot" aria-hidden="true">·</span>
+    <a href="#register" class="foot-link">Register Interest</a>
+  </nav>
 
   <div class="foot-wordmark-wrap" aria-hidden="true">
     <span class="foot-wordmark">Green Horizon</span>
@@ -46,84 +45,92 @@
 
 <style>
   .foot {
-    background: var(--v3-dark);
+    background: var(--v3-dark, #2A1F16);
     overflow: hidden;
+    border-top: 3px solid rgba(245, 240, 232, 0.12);
   }
 
-  .foot-upper {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 4rem;
-    padding: 5rem clamp(2rem, 6vw, 6rem) 4rem;
-    border-bottom: 1px solid rgba(245, 240, 232, 0.1);
+  .foot-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 4rem clamp(2rem, 6vw, 6rem) 2.5rem;
   }
 
-  .foot-tagline {
+  .foot-brand-name {
     font-family: var(--font-v3-primary);
     font-style: italic;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: rgba(245, 240, 232, 0.7);
-    margin: 0 0 1.5rem;
+    font-size: 1.25rem;
+    color: rgba(245, 240, 232, 0.9);
     font-weight: 400;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
   }
 
   .foot-email {
     font-family: var(--font-v3-fine);
     font-size: 12px;
-    letter-spacing: 0.06em;
-    color: rgba(245, 240, 232, 0.45);
+    letter-spacing: 0.05em;
+    color: rgba(245, 240, 232, 0.4);
     text-decoration: none;
-    transition: color 0.2s ease;
     display: block;
+    transition: color 0.2s ease;
   }
 
-  .foot-email:hover { color: rgba(245, 240, 232, 0.9); }
+  .foot-email:hover { color: rgba(245, 240, 232, 0.8); }
 
-  .foot-nav { display: flex; gap: 3rem; }
-  .foot-nav-col { display: flex; flex-direction: column; gap: 0.6rem; }
+  .foot-top-right { text-align: right; }
 
-  .foot-nav-label {
+  .foot-coord {
     font-family: var(--font-v3-fine);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(245, 240, 232, 0.3);
-    margin: 0 0 0.5rem;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: rgba(245, 240, 232, 0.35);
+    margin: 0 0 0.3rem;
+  }
+
+  .foot-rule-wrap {
+    padding: 0 clamp(2rem, 6vw, 6rem);
+  }
+
+  .foot-rule {
+    height: 1px;
+    background: rgba(245, 240, 232, 0.1);
+  }
+
+  .foot-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 2rem clamp(2rem, 6vw, 6rem);
   }
 
   .foot-link {
     font-family: var(--font-v3-primary);
     font-style: italic;
-    font-size: 14px;
-    color: rgba(245, 240, 232, 0.55);
+    font-size: 1.1rem;
+    color: rgba(245, 240, 232, 0.45);
     text-decoration: none;
     font-weight: 400;
+    padding: 0.2rem 0.4rem;
     transition: color 0.2s ease;
-    line-height: 1.4;
+    letter-spacing: -0.01em;
   }
 
   .foot-link:hover { color: rgba(245, 240, 232, 0.95); }
 
-  .foot-coord-label {
-    font-family: var(--font-v3-fine);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(245, 240, 232, 0.3);
-    margin: 0 0 0.5rem;
-  }
-
-  .foot-coord-val {
-    font-family: var(--font-v3-fine);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: rgba(245, 240, 232, 0.45);
-    margin: 0 0 0.25rem;
+  .foot-dot {
+    font-size: 0.8rem;
+    color: rgba(245, 240, 232, 0.2);
+    padding: 0 0.2rem;
+    user-select: none;
   }
 
   .foot-wordmark-wrap {
-    padding: 0 clamp(1rem, 3vw, 3rem);
+    margin: 1rem -0.05em 0;
+    line-height: 1;
     pointer-events: none;
     user-select: none;
   }
@@ -133,12 +140,12 @@
     font-family: var(--font-v3-primary);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(5rem, 18vw, 18rem);
-    line-height: 0.85;
+    font-size: clamp(5rem, 20vw, 22rem);
+    line-height: 0.82;
     letter-spacing: -0.04em;
     white-space: nowrap;
-    color: rgba(245, 240, 232, 0.07);
-    margin-left: -0.05em;
+    color: rgba(245, 240, 232, 0.06);
+    padding-left: clamp(1rem, 2vw, 2rem);
   }
 
   .foot-strip {
@@ -147,15 +154,15 @@
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-    padding: 1.25rem clamp(2rem, 6vw, 6rem);
-    border-top: 1px solid rgba(245, 240, 232, 0.08);
+    padding: 1.5rem clamp(2rem, 6vw, 6rem);
+    border-top: 1px solid rgba(245, 240, 232, 0.07);
   }
 
   .foot-copy {
     font-family: var(--font-v3-fine);
     font-size: 11px;
-    letter-spacing: 0.06em;
-    color: rgba(245, 240, 232, 0.25);
+    letter-spacing: 0.05em;
+    color: rgba(245, 240, 232, 0.2);
     margin: 0;
   }
 
@@ -164,25 +171,24 @@
   .foot-legal-link {
     font-family: var(--font-v3-fine);
     font-size: 11px;
-    letter-spacing: 0.06em;
-    color: rgba(245, 240, 232, 0.25);
+    letter-spacing: 0.05em;
+    color: rgba(245, 240, 232, 0.2);
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
   .foot-legal-link:hover { color: rgba(245, 240, 232, 0.6); }
 
-  @media (max-width: 768px) {
-    .foot-upper { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-    .foot-brand { grid-column: 1 / -1; }
+  @media (max-width: 640px) {
+    .foot-top { flex-direction: column; gap: 1.5rem; }
+    .foot-top-right { text-align: left; }
+    .foot-nav { gap: 0; }
     .foot-strip { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-    .foot-wordmark { font-size: clamp(3.5rem, 22vw, 10rem); }
+    .foot-wordmark { font-size: clamp(3.5rem, 24vw, 8rem); }
   }
 
-  @media (max-width: 480px) {
-    .foot-upper { grid-template-columns: 1fr; }
-    .foot-nav { gap: 2rem; }
+  :focus-visible {
+    outline: 2px solid rgba(245, 240, 232, 0.5);
+    outline-offset: 3px;
   }
-
-  :focus-visible { outline: 2px solid rgba(245, 240, 232, 0.5); outline-offset: 3px; }
 </style>
