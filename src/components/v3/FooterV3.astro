@@ -1,31 +1,188 @@
 ---
 ---
 <footer class="foot" role="contentinfo" aria-label="Site footer">
-  <div class="foot-wordmark-wrap">
-    <a href="/v3/" class="foot-wordmark" aria-label="Green Horizon — home">Green<br>Horizon</a>
-  </div>
-  <div class="foot-strip">
-    <p class="foot-copy">© 2026 Green Horizon · Bulgaria</p>
+  <div class="foot-upper">
+    <div class="foot-brand">
+      <p class="foot-tagline">A family. A cliff.<br>The Black Sea coast of Bulgaria.</p>
+      <a href="mailto:hello@greenhorizon.bg" class="foot-email">hello@greenhorizon.bg</a>
+    </div>
+
     <nav class="foot-nav" aria-label="Footer navigation">
-      <a href="#story" class="foot-link">Story</a>
-      <a href="#elements" class="foot-link">Elements</a>
-      <a href="#experiences" class="foot-link">Experiences</a>
-      <a href="#register" class="foot-link">Register</a>
+      <div class="foot-nav-col">
+        <p class="foot-nav-label">Explore</p>
+        <a href="#story" class="foot-link">Our Story</a>
+        <a href="#elements" class="foot-link">Elements</a>
+        <a href="#experiences" class="foot-link">Experiences</a>
+        <a href="#suites" class="foot-link">Suites</a>
+      </div>
+      <div class="foot-nav-col">
+        <p class="foot-nav-label">Visit</p>
+        <a href="#journey" class="foot-link">The Build</a>
+        <a href="#register" class="foot-link">Register Interest</a>
+        <a href="mailto:hello@greenhorizon.bg" class="foot-link">Contact</a>
+      </div>
     </nav>
-    <a href="mailto:hello@greenhorizon.bg" class="foot-email">hello@greenhorizon.bg</a>
+
+    <div class="foot-coords">
+      <p class="foot-coord-label">Location</p>
+      <p class="foot-coord-val">42°N · 27°E</p>
+      <p class="foot-coord-val">Black Sea Coast, Bulgaria</p>
+      <p class="foot-coord-val">Opening 2026</p>
+    </div>
+  </div>
+
+  <div class="foot-wordmark-wrap" aria-hidden="true">
+    <span class="foot-wordmark">Green Horizon</span>
+  </div>
+
+  <div class="foot-strip">
+    <p class="foot-copy">© 2026 Green Horizon. All rights reserved.</p>
+    <div class="foot-legal">
+      <a href="/privacy" class="foot-legal-link">Privacy policy</a>
+      <a href="/cookies" class="foot-legal-link">Cookie policy</a>
+    </div>
   </div>
 </footer>
+
 <style>
-  .foot{background:var(--v3-bg);border-top:1px solid var(--v3-rule);overflow:hidden}
-  .foot-wordmark-wrap{padding:4rem clamp(2rem,6vw,6rem) 2rem}
-  .foot-wordmark{display:block;font-family:var(--font-v3-primary);font-style:italic;font-weight:400;font-size:clamp(4.5rem,14vw,14rem);line-height:.9;letter-spacing:-.03em;color:var(--v3-ink);text-decoration:none;transition:opacity .2s ease}
-  .foot-wordmark:hover{opacity:.6}
-  .foot-strip{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;padding:1.25rem clamp(2rem,6vw,6rem);border-top:1px solid var(--v3-rule)}
-  .foot-copy{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.08em;color:var(--v3-muted);margin:0}
-  .foot-nav{display:flex;gap:.25rem;align-items:center;flex-wrap:wrap}
-  .foot-link{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.08em;color:var(--v3-muted);text-decoration:none;padding:.25rem .6rem;transition:color .2s ease}
-  .foot-link:hover{color:var(--v3-ink)}
-  .foot-email{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.06em;color:var(--v3-muted);text-decoration:none;transition:color .2s ease}
-  .foot-email:hover{color:var(--v3-ink)}
-  @media(max-width:640px){.foot-strip{flex-direction:column;align-items:flex-start;gap:1rem}}
+  .foot {
+    background: var(--v3-dark);
+    overflow: hidden;
+  }
+
+  .foot-upper {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 4rem;
+    padding: 5rem clamp(2rem, 6vw, 6rem) 4rem;
+    border-bottom: 1px solid rgba(245, 240, 232, 0.1);
+  }
+
+  .foot-tagline {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: rgba(245, 240, 232, 0.7);
+    margin: 0 0 1.5rem;
+    font-weight: 400;
+  }
+
+  .foot-email {
+    font-family: var(--font-v3-fine);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: rgba(245, 240, 232, 0.45);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: block;
+  }
+
+  .foot-email:hover { color: rgba(245, 240, 232, 0.9); }
+
+  .foot-nav { display: flex; gap: 3rem; }
+  .foot-nav-col { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .foot-nav-label {
+    font-family: var(--font-v3-fine);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.3);
+    margin: 0 0 0.5rem;
+  }
+
+  .foot-link {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(245, 240, 232, 0.55);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+    line-height: 1.4;
+  }
+
+  .foot-link:hover { color: rgba(245, 240, 232, 0.95); }
+
+  .foot-coord-label {
+    font-family: var(--font-v3-fine);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.3);
+    margin: 0 0 0.5rem;
+  }
+
+  .foot-coord-val {
+    font-family: var(--font-v3-fine);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: rgba(245, 240, 232, 0.45);
+    margin: 0 0 0.25rem;
+  }
+
+  .foot-wordmark-wrap {
+    padding: 0 clamp(1rem, 3vw, 3rem);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .foot-wordmark {
+    display: block;
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(5rem, 18vw, 18rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    color: rgba(245, 240, 232, 0.07);
+    margin-left: -0.05em;
+  }
+
+  .foot-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.25rem clamp(2rem, 6vw, 6rem);
+    border-top: 1px solid rgba(245, 240, 232, 0.08);
+  }
+
+  .foot-copy {
+    font-family: var(--font-v3-fine);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgba(245, 240, 232, 0.25);
+    margin: 0;
+  }
+
+  .foot-legal { display: flex; gap: 1.5rem; }
+
+  .foot-legal-link {
+    font-family: var(--font-v3-fine);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgba(245, 240, 232, 0.25);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .foot-legal-link:hover { color: rgba(245, 240, 232, 0.6); }
+
+  @media (max-width: 768px) {
+    .foot-upper { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .foot-brand { grid-column: 1 / -1; }
+    .foot-strip { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .foot-wordmark { font-size: clamp(3.5rem, 22vw, 10rem); }
+  }
+
+  @media (max-width: 480px) {
+    .foot-upper { grid-template-columns: 1fr; }
+    .foot-nav { gap: 2rem; }
+  }
+
+  :focus-visible { outline: 2px solid rgba(245, 240, 232, 0.5); outline-offset: 3px; }
 </style>
