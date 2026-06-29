@@ -1,213 +1,31 @@
 ---
-// FooterV3.astro — V3 "Paper & Grain"
-// Dark warm background, large serif wordmark left, nav links right
-// Fine print: Manrope 11px only — coordinates, email, copyright, legal
 ---
-
-<footer class="v3-footer" role="contentinfo" aria-label="Site footer">
-
-  <!-- Top section: wordmark + nav -->
-  <div class="v3-footer__top">
-
-    <!-- Left: large italic wordmark -->
-    <div class="v3-footer__wordmark-wrap">
-      <p class="v3-footer__wordmark" aria-label="Green Horizon">
-        <em>Green<br />Horizon</em>
-      </p>
-    </div>
-
-    <!-- Right: nav links as typographic list -->
-    <nav class="v3-footer__nav" aria-label="Footer navigation">
-      <ul class="v3-footer__nav-list" role="list">
-        <li><a href="#story">Our Story</a></li>
-        <li><a href="#elements">Elements</a></li>
-        <li><a href="#experiences">Experiences</a></li>
-        <li><a href="#build">The Build</a></li>
-        <li><a href="#suites">Suites &amp; Rooms</a></li>
-        <li><a href="#register">Register Interest</a></li>
-      </ul>
+<footer class="foot" role="contentinfo" aria-label="Site footer">
+  <div class="foot-wordmark-wrap">
+    <a href="/v3/" class="foot-wordmark" aria-label="Green Horizon — home">Green<br>Horizon</a>
+  </div>
+  <div class="foot-strip">
+    <p class="foot-copy">© 2026 Green Horizon · Bulgaria</p>
+    <nav class="foot-nav" aria-label="Footer navigation">
+      <a href="#story" class="foot-link">Story</a>
+      <a href="#elements" class="foot-link">Elements</a>
+      <a href="#experiences" class="foot-link">Experiences</a>
+      <a href="#register" class="foot-link">Register</a>
     </nav>
-
+    <a href="mailto:hello@greenhorizon.bg" class="foot-email">hello@greenhorizon.bg</a>
   </div>
-
-  <!-- Divider rule -->
-  <hr class="v3-footer__rule" aria-hidden="true" />
-
-  <!-- Fine print: Manrope only — coordinates, email, copyright, legal -->
-  <div class="v3-footer__fine" role="contentinfo">
-
-    <div class="v3-footer__fine-left">
-      <p class="v3-fine">
-        43.3972° N, 28.4833° E — Kamen Bryag, Dobrich, Bulgaria
-      </p>
-      <p class="v3-fine">
-        <a href="mailto:hello@greenhorizon.bg" class="v3-footer__fine-link">
-          hello@greenhorizon.bg
-        </a>
-      </p>
-    </div>
-
-    <div class="v3-footer__fine-right">
-      <p class="v3-fine">
-        &copy; 2026 Green Horizon Ltd.
-        &ensp;
-        <a href="/privacy" class="v3-footer__fine-link">Privacy Policy</a>
-        &ensp;·&ensp;
-        <a href="/cookies" class="v3-footer__fine-link">Cookie Policy</a>
-      </p>
-      <p class="v3-fine v3-footer__version-note">
-        All images black &amp; white. All rooms face the sea.
-      </p>
-    </div>
-
-  </div>
-
 </footer>
-
 <style>
-  .v3-footer {
-    background-color: var(--v3-dark);
-    color: var(--v3-bg);
-    padding: 6rem var(--v3-content-pad) 3rem;
-  }
-
-  /* Override text colors for dark section */
-  .v3-footer p,
-  .v3-footer a {
-    color: var(--v3-bg);
-  }
-
-  /* ── Top: wordmark + nav ─────────────────────────────────── */
-  .v3-footer__top {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4rem;
-    align-items: start;
-    margin-bottom: 4rem;
-  }
-
-  /* Large editorial wordmark */
-  .v3-footer__wordmark {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: clamp(3.5rem, 7vw, 7rem);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    color: var(--v3-bg);
-    user-select: none;
-  }
-
-  /* Nav list — typographic, no bullets */
-  .v3-footer__nav {
-    padding-top: 0.5rem;
-  }
-
-  .v3-footer__nav-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    text-align: right;
-  }
-
-  .v3-footer__nav-list li a {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: 15px;
-    color: rgba(247, 242, 234, 0.55);
-    text-decoration: none;
-    padding: 0.35rem 0;
-    display: inline-block;
-    letter-spacing: 0.02em;
-    transition: color 0.2s ease;
-  }
-
-  .v3-footer__nav-list li a:hover {
-    color: var(--v3-bg);
-    text-decoration: none;
-  }
-
-  /* Rule */
-  .v3-footer__rule {
-    border: none;
-    border-top: 1px solid rgba(247, 242, 234, 0.12);
-    margin-bottom: 2rem;
-  }
-
-  /* ── Fine print ─────────────────────────────────────────── */
-  .v3-footer__fine {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  /* Override .v3-fine for dark bg */
-  .v3-footer__fine .v3-fine {
-    color: rgba(247, 242, 234, 0.35);
-    line-height: 1.8;
-    display: block;
-  }
-
-  .v3-footer__fine-left {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .v3-footer__fine-right {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    text-align: right;
-  }
-
-  /* Fine print links */
-  .v3-footer__fine-link {
-    font-family: var(--font-v3-fine) !important;
-    font-size: 11px !important;
-    color: rgba(247, 242, 234, 0.4) !important;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    transition: color 0.2s ease;
-  }
-
-  .v3-footer__fine-link:hover {
-    color: var(--v3-bg) !important;
-    text-decoration: underline;
-  }
-
-  .v3-footer__version-note {
-    font-style: italic;
-  }
-
-  /* ── Tablet ─────────────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .v3-footer__top {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-
-    .v3-footer__nav-list {
-      text-align: left;
-    }
-  }
-
-  /* ── Mobile ─────────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .v3-footer {
-      padding: 4rem 2rem 2.5rem;
-    }
-
-    .v3-footer__fine {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .v3-footer__fine-right {
-      text-align: left;
-    }
-  }
+  .foot{background:var(--v3-bg);border-top:1px solid var(--v3-rule);overflow:hidden}
+  .foot-wordmark-wrap{padding:4rem clamp(2rem,6vw,6rem) 2rem}
+  .foot-wordmark{display:block;font-family:var(--font-v3-primary);font-style:italic;font-weight:400;font-size:clamp(4.5rem,14vw,14rem);line-height:.9;letter-spacing:-.03em;color:var(--v3-ink);text-decoration:none;transition:opacity .2s ease}
+  .foot-wordmark:hover{opacity:.6}
+  .foot-strip{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;padding:1.25rem clamp(2rem,6vw,6rem);border-top:1px solid var(--v3-rule)}
+  .foot-copy{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.08em;color:var(--v3-muted);margin:0}
+  .foot-nav{display:flex;gap:.25rem;align-items:center;flex-wrap:wrap}
+  .foot-link{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.08em;color:var(--v3-muted);text-decoration:none;padding:.25rem .6rem;transition:color .2s ease}
+  .foot-link:hover{color:var(--v3-ink)}
+  .foot-email{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.06em;color:var(--v3-muted);text-decoration:none;transition:color .2s ease}
+  .foot-email:hover{color:var(--v3-ink)}
+  @media(max-width:640px){.foot-strip{flex-direction:column;align-items:flex-start;gap:1rem}}
 </style>
