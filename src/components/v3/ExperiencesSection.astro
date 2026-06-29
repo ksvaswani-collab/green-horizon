@@ -1,50 +1,252 @@
 ---
 const experiences = [
-  { n:'01', label:'Strandzha to the north', heading:'On the cliff path.', body:'The path runs north along the cliff top for eleven kilometres, passing three villages and two cape headlands before turning inland near the nature reserve at Yaylata. Start from the hotel gate at first light. Return for lunch.', src:'/images/exp-forest.jpg', alt:'The cliff path heading north through ancient Strandzha forest' },
-  { n:'02', label:'One sitting. One menu.', heading:'At the table.', body:'The kitchen is not a restaurant. One sitting per service, built from what has arrived that morning. Wine is Bulgarian. You may bring your own — we will not charge corkage.', src:'/images/exp-dunes.jpg', alt:'The open-air dining terrace at golden hour' },
-  { n:'03', label:'By kayak, by foot, or by swimming', heading:'On the water.', body:'At the base of the cliff, accessed by a cut staircase through the rock, a simple landing dock. Kayaks for independent use. Fishing trips arranged with the men from Kamen Bryag.', src:'/images/exp-sea.jpg', alt:'The Black Sea from the cliff base, morning light' },
+  {
+    n: '01',
+    label: 'Strandzha to the north',
+    heading: 'On the cliff path.',
+    body: 'The path runs north along the cliff top for eleven kilometres, passing three villages and two cape headlands before turning inland near the nature reserve at Yaylata. Start from the hotel gate at first light. Return for lunch.',
+    src: '/images/exp-forest.jpg',
+    alt: 'The cliff path heading north through ancient Strandzha forest',
+  },
+  {
+    n: '02',
+    label: 'One sitting. One menu.',
+    heading: 'At the table.',
+    body: 'The kitchen is not a restaurant. One sitting per service, built from what has arrived that morning. Wine is Bulgarian, mostly from the Danube Plain. We will not charge corkage on wine you bring yourself.',
+    src: '/images/exp-dunes.jpg',
+    alt: 'The open-air dining terrace at golden hour',
+  },
+  {
+    n: '03',
+    label: 'By kayak, by foot, or by swimming',
+    heading: 'On the water.',
+    body: 'At the base of the cliff, accessed by a cut staircase through the rock, a simple landing dock. Kayaks for independent use. Fishing trips arranged with the men from Kamen Bryag — they have been fishing this stretch of coast since before there was a coast road.',
+    src: '/images/exp-sea.jpg',
+    alt: 'The Black Sea from the cliff base, morning light',
+  },
 ]
 ---
-<section id="experiences" class="exp" aria-labelledby="exp-heading">
+
+<section id="experiences" class="exp" aria-labelledby="exp-hdg">
   <header class="exp-header">
-    <p class="exp-overline">Experiences</p>
-    <h2 class="exp-title" id="exp-heading">The Black Sea,<br>your way.</h2>
+    <h2 class="exp-title" id="exp-hdg">The Black Sea,<br>your way.</h2>
+    <p class="exp-subtitle">Three ways to spend time at Green Horizon — none of them optional.</p>
   </header>
-  <div class="exp-list">
-    {experiences.map((item) => (
+
+  <div class="exp-entries">
+    {experiences.map((item, i) => (
       <article class="exp-entry v3-reveal" aria-label={item.heading}>
-        <div class="exp-entry-top">
+        <div class="exp-meta">
           <span class="exp-n" aria-hidden="true">{item.n}</span>
-          <p class="exp-label">{item.label}</p>
+          <span class="exp-label">{item.label}</span>
+          <span class="exp-arrow" aria-hidden="true">→</span>
         </div>
+
         <div class="exp-img-wrap">
-          <img class="exp-img" src={item.src} alt={item.alt} loading="lazy" />
+          <img
+            class="exp-img"
+            src={item.src}
+            alt={item.alt}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+          <div class="exp-img-rule" aria-hidden="true"></div>
         </div>
+
         <div class="exp-text">
           <h3 class="exp-heading">{item.heading}</h3>
           <p class="exp-body">{item.body}</p>
         </div>
-        <hr class="exp-rule" aria-hidden="true" />
       </article>
     ))}
   </div>
 </section>
+
 <style>
-  .exp{background:var(--v3-bg);padding:5rem clamp(2rem,6vw,6rem) 0}
-  .exp-header{max-width:80rem;margin:0 auto 4rem;display:flex;align-items:flex-start;gap:3rem}
-  .exp-overline{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--v3-muted);margin:0;white-space:nowrap;padding-top:.4rem}
-  .exp-title{font-family:var(--font-v3-primary);font-style:italic;font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.05;color:var(--v3-ink);font-weight:400;margin:0;letter-spacing:-.02em}
-  .exp-list{max-width:80rem;margin:0 auto}
-  .exp-entry{padding:3rem 0 0}
-  .exp-entry-top{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:1.5rem}
-  .exp-n{font-family:var(--font-v3-primary);font-style:italic;font-size:clamp(4rem,8vw,8rem);line-height:.85;color:rgba(26,21,16,.09);font-weight:400;user-select:none;flex-shrink:0;margin-bottom:-1rem}
-  .exp-label{font-family:var(--font-v3-fine);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--v3-muted);margin:0}
-  .exp-img-wrap{width:100%;overflow:hidden}
-  .exp-img{width:100%;aspect-ratio:21/9;object-fit:cover;display:block;filter:brightness(.95) contrast(1.03);transition:transform .7s ease}
-  .exp-img-wrap:hover .exp-img{transform:scale(1.02)}
-  .exp-text{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;padding:1.5rem 0 2rem}
-  .exp-heading{font-family:var(--font-v3-primary);font-style:italic;font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.1;color:var(--v3-ink);font-weight:400;margin:0}
-  .exp-body{font-family:var(--font-v3-primary);font-size:14px;line-height:1.85;color:var(--v3-muted);margin:0;font-weight:400}
-  .exp-rule{border:none;border-top:1px solid var(--v3-rule);margin:0}
-  @media(max-width:700px){.exp-header{flex-direction:column;gap:.75rem}.exp-img{aspect-ratio:16/9}.exp-text{grid-template-columns:1fr;gap:1rem}.exp-n{font-size:clamp(3rem,12vw,5rem)}}
+  .exp {
+    background: var(--v3-bg);
+    padding: 6rem clamp(2rem, 6vw, 6rem);
+    border-top: 1px solid var(--v3-rule);
+  }
+
+  .exp-header {
+    max-width: 80rem;
+    margin: 0 auto 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: end;
+  }
+
+  .exp-title {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: clamp(2.5rem, 5.5vw, 5rem);
+    line-height: 1;
+    color: var(--v3-ink);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.025em;
+  }
+
+  .exp-subtitle {
+    font-family: var(--font-v3-primary);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--v3-muted);
+    margin: 0;
+    font-weight: 400;
+    padding-bottom: 0.2rem;
+  }
+
+  .exp-entries {
+    max-width: 80rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .exp-entry {
+    padding: 3rem 0;
+    border-top: 1px solid var(--v3-rule);
+    cursor: default;
+  }
+
+  .exp-entry:last-child {
+    border-bottom: 1px solid var(--v3-rule);
+  }
+
+  .exp-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .exp-n {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--v3-muted);
+    font-weight: 400;
+    flex-shrink: 0;
+    transition: color 0.25s ease;
+  }
+
+  .exp-entry:hover .exp-n {
+    color: var(--v3-rust);
+  }
+
+  .exp-label {
+    font-family: var(--font-v3-fine);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--v3-muted);
+    flex: 1;
+    transition: color 0.25s ease;
+  }
+
+  .exp-entry:hover .exp-label {
+    color: var(--v3-ink);
+  }
+
+  .exp-arrow {
+    font-family: var(--font-v3-fine);
+    font-size: 14px;
+    color: var(--v3-muted);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .exp-entry:hover .exp-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .exp-img-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .exp-entry.v3-visible .exp-img-wrap {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  .exp-img {
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.95);
+    transform: scale(1.04);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  }
+
+  .exp-entry.v3-visible .exp-img {
+    transform: scale(1);
+  }
+
+  .exp-entry:hover .exp-img {
+    filter: brightness(1.02);
+  }
+
+  .exp-img-rule {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--v3-rule);
+  }
+
+  .exp-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    padding-top: 1.5rem;
+  }
+
+  .exp-heading {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: clamp(1.75rem, 3.5vw, 3rem);
+    line-height: 1.05;
+    color: var(--v3-ink);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.015em;
+    position: relative;
+    display: inline;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.4s ease;
+  }
+
+  .exp-entry:hover .exp-heading {
+    background-size: 100% 1px;
+  }
+
+  .exp-body {
+    font-family: var(--font-v3-primary);
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--v3-muted);
+    margin: 0.3rem 0 0;
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    .exp-header { grid-template-columns: 1fr; gap: 1rem; }
+    .exp-img { aspect-ratio: 16 / 9; }
+    .exp-text { grid-template-columns: 1fr; gap: 1.25rem; }
+    .exp-heading { background-image: none; }
+  }
 </style>
