@@ -9,11 +9,11 @@ const suites = [
 <section id="suites" class="v3-suites">
   <div class="v3-suites-inner">
     <p class="v3-suites-label">Suites &amp; Rooms</p>
-    <h2 class="v3-suites-title" data-aos="fade-up">Four rooms. One standard.</h2>
+    <h2 class="v3-suites-title" data-v3-reveal="up">Four rooms. One standard.</h2>
     <hr class="v3-hr" />
     {suites.map((s, i) => (
       <div>
-        <div class={`v3-suite${s.rev ? ' v3-suite-rev' : ''}`} data-aos="fade-up" data-aos-delay={i * 60}>
+        <div class={`v3-suite${s.rev ? ' v3-suite-rev' : ''}`} data-v3-reveal="up" data-v3-delay={i * 60}>
           <div class="v3-suite-imgwrap">
             <img class="v3-suite-img" src={s.image} alt={s.alt} loading="lazy" />
           </div>

@@ -2,7 +2,6 @@
    GREEN HORIZON V3 — Paper & Grain
    Single typeface: Lora (400, 600, 700 — italic & normal)
    ============================================================ */
-@import 'aos/dist/aos.css';
 @import '@fontsource/lora/400.css';
 @import '@fontsource/lora/400-italic.css';
 @import '@fontsource/lora/600.css';

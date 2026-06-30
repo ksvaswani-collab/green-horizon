@@ -54,24 +54,59 @@ import '../styles/v3.css';
   </main>
 
   <script>
-    import AOS from 'aos'
-    import 'aos/dist/aos.css'
+    import gsap from 'gsap'
+    import ScrollTrigger from 'gsap/ScrollTrigger'
+    gsap.registerPlugin(ScrollTrigger)
 
-    AOS.init({
-      duration: 750,
-      easing: 'ease-out',
-      once: true,
-      offset: 80,
-      delay: 0,
-    })
+    // ── Scroll-reveal ──────────────────────────────────────────
+    // Elements marked data-v3-reveal="up|left|right" animate in when they enter viewport
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    // Nav scroll state
+    if (!rm) {
+      // fade-up (default)
+      gsap.utils.toArray<HTMLElement>('[data-v3-reveal="up"]').forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          y: 28,
+          opacity: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          delay: Number(el.dataset.v3Delay ?? 0) / 1000,
+        })
+      })
+
+      // fade-right
+      gsap.utils.toArray<HTMLElement>('[data-v3-reveal="right"]').forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          x: -32,
+          opacity: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          delay: Number(el.dataset.v3Delay ?? 0) / 1000,
+        })
+      })
+
+      // fade-left
+      gsap.utils.toArray<HTMLElement>('[data-v3-reveal="left"]').forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          x: 32,
+          opacity: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          delay: Number(el.dataset.v3Delay ?? 0) / 1000,
+        })
+      })
+    }
+
+    // ── Nav scroll state ───────────────────────────────────────
     const nav = document.getElementById('v3-nav')
     window.addEventListener('scroll', () => {
       nav?.classList.toggle('v3-nav--scrolled', window.scrollY > 48)
     }, { passive: true })
 
-    // Hamburger
+    // ── Hamburger ──────────────────────────────────────────────
     const hamburger = document.querySelector('.v3-hamburger') as HTMLButtonElement
     const navLinks  = document.getElementById('v3-nav-links')
     hamburger?.addEventListener('click', () => {

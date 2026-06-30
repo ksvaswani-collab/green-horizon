@@ -8,11 +8,11 @@ const entries = [
 <section id="build" class="v3-build">
   <div class="v3-build-inner">
     <p class="v3-build-overline">The Build · Live from the site</p>
-    <h2 class="v3-build-title" data-aos="fade-up">A record of progress.</h2>
+    <h2 class="v3-build-title" data-v3-reveal="up">A record of progress.</h2>
     <hr class="v3-hr" />
     <div class="v3-build-grid">
       {entries.map((e, i) => (
-        <article class="v3-build-entry" data-aos="fade-up" data-aos-delay={i * 80} aria-label={`${e.date}: ${e.heading}`}>
+        <article class="v3-build-entry" data-v3-reveal="up" data-v3-delay={i * 80} aria-label={`${e.date}: ${e.heading}`}>
           <p class="v3-build-date">{e.date}</p>
           <h3 class="v3-build-heading">{e.heading}</h3>
           <img class="v3-build-img" src={e.image} alt={e.alt} loading="lazy" />

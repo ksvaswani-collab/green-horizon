@@ -8,14 +8,14 @@ const elements = [
 ---
 <section id="elements" class="v3-elements">
   <div class="v3-elements-inner">
-    <div class="v3-elements-head" data-aos="fade-up">
+    <div class="v3-elements-head" data-v3-reveal="up">
       <span class="v3-elements-marker">—02—</span>
       <h2 class="v3-elements-title">Four elements. One place.</h2>
     </div>
     <hr class="v3-hr" />
     {elements.map((el, i) => (
       <div>
-        <div class="v3-element-row" data-aos="fade-up" data-aos-delay={i * 60}>
+        <div class="v3-element-row" data-v3-reveal="up" data-v3-delay={i * 60}>
           <div class="v3-element-name">{el.name}</div>
           <p class="v3-element-body">{el.body}</p>
           <img class="v3-element-img" src={el.image} alt={el.alt} loading="lazy" />
