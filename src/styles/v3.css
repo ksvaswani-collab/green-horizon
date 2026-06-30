@@ -1,11 +1,14 @@
-/* =============================================================
-   Green Horizon V3 — "Paper & Grain"
-   Full stylesheet — no Tailwind, no framework utilities
-   ============================================================= */
+/* ============================================================
+   GREEN HORIZON — V3 "Paper & Grain"
+   ============================================================ */
 
-/* --- Font imports ------------------------------------------- */
+/* Lora — full type system (headings + body) */
 @import '@fontsource/lora/400.css';
 @import '@fontsource/lora/400-italic.css';
+@import '@fontsource/lora/600.css';
+@import '@fontsource/lora/600-italic.css';
+@import '@fontsource/lora/700.css';
+@import '@fontsource/lora/700-italic.css';
 @import '@fontsource/manrope/400.css';
 
 /* --- Design tokens ------------------------------------------ */

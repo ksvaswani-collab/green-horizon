@@ -2,8 +2,8 @@
 @import '@fontsource/manrope/400.css';
 @import '@fontsource/manrope/500.css';
 @import '@fontsource/manrope/600.css';
-@import '@fontsource/lora/400.css';
-@import '@fontsource/lora/400-italic.css';
+@import '@fontsource/dm-serif-display/400.css';
+@import '@fontsource/dm-serif-display/400-italic.css';
 
 @theme {
   /* Core palette */
@@ -26,7 +26,7 @@
   --color-air-light:   #EAF0EC;   /* pale sage */
 
   /* Typography */
-  --font-display: 'Lora', 'Alegreya', Georgia, serif;
+  --font-display: 'DM Serif Display', 'Alegreya', Georgia, serif;
   --font-body:    'Manrope', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
 

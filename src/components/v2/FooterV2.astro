@@ -144,7 +144,7 @@
     color:#A8D5C2;margin-bottom:1.25rem;
   }
   .footer-heading{
-    font-family:'Lora',Georgia,serif;font-style:italic;font-weight:400;
+    font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(2rem,4vw,4rem);line-height:1.08;letter-spacing:-.02em;
     color:#EAE6DE;margin:0 0 1.5rem;
   }
@@ -252,7 +252,7 @@
         const res = await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form) as any).toString()})
         if(res.ok){
           form.innerHTML = `<div style="padding:2rem 0;text-align:center;">
-            <p style="font-family:'Lora',Georgia,serif;font-style:italic;font-size:1.5rem;color:#EAE6DE;margin-bottom:.75rem;">We have your details.</p>
+            <p style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:1.5rem;color:#EAE6DE;margin-bottom:.75rem;">We have your details.</p>
             <p style="font-family:'Manrope',system-ui,sans-serif;font-size:14px;color:rgba(234,230,222,.5);">The team will be in touch personally.</p>
           </div>`
         }
