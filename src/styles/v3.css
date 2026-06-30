@@ -9,9 +9,8 @@
 @import '@fontsource/lora/600-italic.css';
 @import '@fontsource/lora/700.css';
 @import '@fontsource/lora/700-italic.css';
-@import '@fontsource/manrope/400.css';
 
-/* --- Design tokens ------------------------------------------ */
+/* ── Tokens ── */
 :root {
   --v3-bg:       #F7F2EA;
   --v3-surface:  #EDE8DF;
@@ -21,47 +20,33 @@
   --v3-rule:     rgba(26, 21, 16, 0.15);
   --v3-dark:     #2A1F16;
 
-  --font-v3-primary: 'Lora', Georgia, 'Times New Roman', serif;
-  --font-v3-fine:    'Manrope', system-ui, sans-serif;
+  /* Single typeface — Lora throughout */
+  --font-v3-primary: 'Lora', Georgia, serif;
+  --font-v3-fine:    'Lora', Georgia, serif;
 
-  --v3-sidebar-width: 220px;
-
-  /* Baseline rhythm */
-  --v3-space-xs:  0.5rem;
-  --v3-space-sm:  1rem;
-  --v3-space-md:  2rem;
-  --v3-space-lg:  4rem;
-  --v3-space-xl:  8rem;
-
-  /* Content max width */
-  --v3-content-max: 1200px;
-  --v3-content-pad: 4rem;
+  --v3-space-xl:    8rem;
+  --v3-space-lg:    5rem;
+  --v3-space-md:    3rem;
+  --v3-content-pad: clamp(2rem, 6vw, 6rem);
+  --v3-max-w:       80rem;
 }
 
-/* --- Reset -------------------------------------------------- */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
-/* --- Body & grain texture ----------------------------------- */
+/* ── Base ── */
 body {
-  background-color: var(--v3-bg);
+  background: var(--v3-bg);
   color: var(--v3-ink);
   font-family: var(--font-v3-primary);
-  font-size: 18px;
-  line-height: 1.9;
-  overflow-x: hidden;
-  position: relative;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Grain overlay — subtle SVG noise applied over everything */
+/* Paper grain texture */
 body::after {
   content: '';
   position: fixed;
@@ -69,166 +54,22 @@ body::after {
   z-index: 9999;
   pointer-events: none;
   opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   background-repeat: repeat;
-  background-size: 300px 300px;
 }
 
-/* --- Typography system -------------------------------------- */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-v3-primary);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--v3-ink);
-}
+img { display: block; max-width: 100%; height: auto; }
 
-h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
-h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
-h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
-h4 { font-size: 1.25rem; }
+/* ── Lora weight system ──
+   Display / H1:      700 italic (Bold Italic)
+   Section H2:        600 italic (SemiBold Italic)
+   Sub-heading H3:    600 italic
+   Body paragraphs:   400 normal
+   Labels/overlines:  600 normal (no italic)
+   Nav links:         600 italic
+   ────────────────────── */
 
-p {
-  font-family: var(--font-v3-primary);
-  font-size: 18px;
-  line-height: 1.9;
-  color: var(--v3-ink);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* --- Fine print (Manrope only) ------------------------------ */
-.v3-fine {
-  font-family: var(--font-v3-fine);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--v3-muted);
-}
-
-/* --- Labels / overlines (italic small caps sim) ------------ */
-.v3-label {
-  font-family: var(--font-v3-primary);
-  font-style: italic;
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  color: var(--v3-muted);
-  text-transform: uppercase;
-}
-
-/* --- Section numbers --------------------------------------- */
-.v3-section-number {
-  font-family: var(--font-v3-primary);
-  font-style: italic;
-  font-size: 6rem;
-  color: var(--v3-muted);
-  opacity: 0.35;
-  line-height: 1;
-  user-select: none;
-}
-
-/* --- Horizontal rules -------------------------------------- */
-.v3-rule {
-  border: none;
-  border-top: 1px solid var(--v3-rule);
-  margin: 0;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid var(--v3-rule);
-}
-
-/* --- Buttons & CTA links ----------------------------------- */
-/* All CTAs are <a> tags styled as flat, square-edged links */
-.v3-cta {
-  display: inline-block;
-  font-family: var(--font-v3-primary);
-  font-style: italic;
-  font-size: 14px;
-  letter-spacing: 0.02em;
-  border-radius: 0;
-  border: 1px solid currentColor;
-  padding: 0.65em 1.4em;
-  text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.v3-cta:hover {
-  text-decoration: none;
-  background-color: var(--v3-ink);
-  color: var(--v3-bg);
-  border-color: var(--v3-ink);
-}
-
-.v3-cta--ghost {
-  border-color: var(--v3-bg);
-  color: var(--v3-bg);
-}
-
-.v3-cta--ghost:hover {
-  background-color: var(--v3-bg);
-  color: var(--v3-ink);
-}
-
-/* Submit button gets 4px radius only */
-.v3-submit {
-  display: inline-block;
-  font-family: var(--font-v3-primary);
-  font-style: italic;
-  font-size: 14px;
-  border-radius: 4px;
-  border: none;
-  padding: 0.8em 2em;
-  background-color: #2B4A3C;
-  color: var(--v3-bg);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  letter-spacing: 0.02em;
-}
-
-.v3-submit:hover {
-  background-color: #1e3529;
-  text-decoration: none;
-}
-
-/* Inline text CTA */
-.v3-text-link {
-  font-family: var(--font-v3-primary);
-  font-style: italic;
-  font-size: 16px;
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 1px;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.v3-text-link:hover {
-  text-decoration: none;
-  color: var(--v3-rust);
-  border-bottom-color: var(--v3-rust);
-}
-
-/* --- Images: always B&W ------------------------------------ */
-img {
-  display: block;
-  filter: grayscale(1) contrast(1.1);
-  transition: filter 0.4s ease;
-}
-
-img:hover {
-  filter: grayscale(0.7) contrast(1.05);
-}
-
-/* --- Layout: top nav + content ----------------------------- */
-
-/* ── Top navigation bar ── */
+/* Top nav */
 .v3-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -245,17 +86,16 @@ img:hover {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  max-width: 1280px;
+  max-width: var(--v3-max-w);
   margin: 0 auto;
   padding: 1.1rem clamp(1.5rem,3vw,2.5rem);
 }
-
-/* Wordmark */
 .v3-header-wordmark {
   font-family: var(--font-v3-primary);
   font-style: italic;
+  font-weight: 600;
   font-size: 1.15rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--v3-ink);
   text-decoration: none;
   flex-shrink: 0;
@@ -263,7 +103,6 @@ img:hover {
 }
 .v3-header-wordmark:hover { opacity: 0.65; }
 
-/* Centre nav links */
 .v3-header-nav {
   display: flex;
   align-items: center;
@@ -271,12 +110,12 @@ img:hover {
   flex: 1;
   justify-content: center;
 }
-
 .v3-nav-link {
   font-family: var(--font-v3-primary);
   font-style: italic;
+  font-weight: 400;
   font-size: 14px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   color: var(--v3-muted);
   text-decoration: none;
   padding: 0.3rem 0.7rem;
@@ -284,7 +123,6 @@ img:hover {
 }
 .v3-nav-link:hover { color: var(--v3-ink); }
 
-/* Right: CTA + hamburger */
 .v3-header-right {
   display: flex;
   align-items: center;
@@ -294,6 +132,7 @@ img:hover {
 .v3-header-cta {
   font-family: var(--font-v3-primary);
   font-style: italic;
+  font-weight: 400;
   font-size: 14px;
   color: var(--v3-rust);
   text-decoration: none;
@@ -303,7 +142,6 @@ img:hover {
 }
 .v3-header-cta:hover { border-color: var(--v3-rust); }
 
-/* Hamburger (mobile only) */
 .v3-hamburger {
   display: none;
   flex-direction: column;
@@ -321,51 +159,44 @@ img:hover {
 }
 .v3-hamburger-line--short { width: 15px; }
 
-/* Main content — offset by header height */
-.v3-main {
-  padding-top: 56px; /* matches header height */
-  min-width: 0;
-}
+/* Main offset */
+.v3-main { padding-top: 56px; min-width: 0; }
 
-/* --- Section base ------------------------------------------ */
+/* Sections */
 .v3-section {
   padding: var(--v3-space-xl) var(--v3-content-pad);
   position: relative;
 }
-
 @media (max-width: 900px) {
-  .v3-section {
-    padding: var(--v3-space-lg) 2rem;
-  }
+  .v3-section { padding: var(--v3-space-lg) 2rem; }
 }
 
-/* --- Scroll reveal ----------------------------------------- */
+/* Rules */
+.v3-rule {
+  border: none;
+  border-top: 1px solid var(--v3-rule);
+  margin: 2rem 0;
+}
+
+/* Scroll reveal */
 .v3-reveal {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
-
-.v3-visible {
-  opacity: 1;
-  transform: none;
-}
-
+.v3-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-  .v3-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+  .v3-reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* --- Skip link --------------------------------------------- */
+/* Skip link */
 .v3-skip-link {
   position: absolute;
   top: -100%;
   left: 1rem;
   z-index: 10000;
   font-family: var(--font-v3-primary);
+  font-weight: 400;
   font-size: 14px;
   background: var(--v3-rust);
   color: #fff;
@@ -373,25 +204,27 @@ img:hover {
   text-decoration: none;
   transition: top 0.2s;
 }
+.v3-skip-link:focus { top: 1rem; }
 
-.v3-skip-link:focus {
-  top: 1rem;
+/* Focus */
+:focus-visible { outline: 2px solid var(--v3-rust); outline-offset: 3px; }
+
+/* Visually hidden */
+.v3-visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
 }
 
-/* --- Focus visible ----------------------------------------- */
-:focus-visible {
-  outline: 2px solid var(--v3-rust);
-  outline-offset: 3px;
-}
+/* Image hover (subtle desaturate) */
+img:hover { filter: grayscale(0.3) contrast(1.02); transition: filter 0.3s ease; }
 
-/* --- Mobile nav -------------------------------------------- */
+/* Mobile nav */
 @media (max-width: 768px) {
-  /* Hide centre links; show hamburger */
   .v3-header-nav { display: none; }
   .v3-header-cta  { display: none; }
   .v3-hamburger   { display: flex; }
 
-  /* Mobile overlay nav */
   .v3-header-nav.is-open {
     display: flex;
     flex-direction: column;
@@ -406,21 +239,9 @@ img:hover {
   }
   .v3-header-nav.is-open .v3-nav-link {
     font-size: clamp(1.5rem, 6vw, 2.5rem);
+    font-weight: 600;
     padding: 0.75rem 0;
     border-bottom: 1px solid var(--v3-rule);
     color: var(--v3-ink);
   }
 }
-
-/* --- Utility helpers --------------------------------------- */
-.v3-visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-}
-
-.v3-text-muted { color: var(--v3-muted); }
-.v3-text-rust  { color: var(--v3-rust); }
