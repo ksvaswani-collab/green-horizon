@@ -4,8 +4,8 @@
    ============================================================= */
 
 /* --- Font imports ------------------------------------------- */
-@import '@fontsource/dm-serif-display/400.css';
-@import '@fontsource/dm-serif-display/400-italic.css';
+@import '@fontsource/lora/400.css';
+@import '@fontsource/lora/400-italic.css';
 @import '@fontsource/manrope/400.css';
 
 /* --- Design tokens ------------------------------------------ */
@@ -18,7 +18,7 @@
   --v3-rule:     rgba(26, 21, 16, 0.15);
   --v3-dark:     #2A1F16;
 
-  --font-v3-primary: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-v3-primary: 'Lora', Georgia, 'Times New Roman', serif;
   --font-v3-fine:    'Manrope', system-ui, sans-serif;
 
   --v3-sidebar-width: 220px;
