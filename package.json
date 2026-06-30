@@ -9,11 +9,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.9.0",
-    "@tailwindcss/vite": "^4.1.10",
-    "tailwindcss": "^4.1.10",
-    "gsap": "^3.12.7",
+    "@fontsource/lora": "^5.2.8",
     "@fontsource/manrope": "^5.2.5",
-    "@fontsource/dm-serif-display": "^5.2.5"
+    "@tailwindcss/vite": "^4.1.10",
+    "astro": "^5.9.0",
+    "gsap": "^3.12.7",
+    "tailwindcss": "^4.1.10"
   }
 }
