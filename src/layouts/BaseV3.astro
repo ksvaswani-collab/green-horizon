@@ -8,6 +8,8 @@ const {
   title = "Green Horizon — A cliff-edge hotel on Bulgaria's Black Sea coast",
   description = "Green Horizon is a family-built boutique hotel perched on an ancient volcanic cliff above the Black Sea. Opening 2026.",
 } = Astro.props;
+
+import '../styles/v3.css';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +19,6 @@ const {
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/src/styles/v3.css" />
 </head>
 <body>
   <a href="#main-content" class="v3-skip">Skip to main content</a>
