@@ -1,15 +1,15 @@
 ---
 ---
-<section class="v3-hero" aria-label="Green Horizon — Bulgaria Black Sea Coast">
-  <img class="v3-hero-img" src="/images/carousel-1.jpg" alt="The Black Sea cliff at Green Horizon, Bulgaria" loading="eager" fetchpriority="high" />
+<section class="v3-hero">
+  <img class="v3-hero-img" src="/images/carousel-1.jpg" alt="The Black Sea cliff at Green Horizon" loading="eager" fetchpriority="high" />
   <div class="v3-hero-scrim" aria-hidden="true"></div>
   <div class="v3-hero-content">
     <p class="v3-hero-overline">Bulgaria · Black Sea Coast</p>
     <h1 class="v3-hero-title">Green Horizon</h1>
     <p class="v3-hero-sub">A family. A cliff. The Black Sea coast of Bulgaria.</p>
     <div class="v3-hero-actions">
-      <a href="#story"    class="v3-hero-btn">Discover the story</a>
-      <a href="#register" class="v3-hero-btn">Register interest</a>
+      <a href="#" class="v3-hero-btn">Discover the story</a>
+      <a href="#" class="v3-hero-btn">Register interest</a>
     </div>
   </div>
   <div class="v3-hero-scroll" aria-hidden="true">
@@ -17,26 +17,3 @@
     <div class="v3-hero-scroll-line"></div>
   </div>
 </section>
-
-<style>
-  .v3-hero { position:relative; height:100svh; overflow:hidden; background:var(--v3-dark); }
-  .v3-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.72); }
-  .v3-hero-scrim { position:absolute; inset:0; background:linear-gradient(to top, rgba(42,31,22,.75) 0%, rgba(42,31,22,.25) 55%, transparent 100%); }
-  .v3-hero-content {
-    position:absolute; inset:0; z-index:2;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:0 2rem;
-    animation: v3HeroIn 1.1s 0.3s ease both;
-  }
-  .v3-hero-overline { font-family:var(--font-v3-fine); font-weight:600; font-style:normal; font-size:11px; letter-spacing:.22em; color:rgba(245,240,232,.6); text-transform:uppercase; margin:0 0 .75rem; }
-  .v3-hero-title { font-family:var(--font-v3-primary); font-style:italic; font-weight:700; font-size:clamp(3.5rem,8vw,8rem); color:#F5F0E8; letter-spacing:-.02em; margin:.5rem 0; line-height:1; }
-  .v3-hero-sub { font-family:var(--font-v3-primary); font-style:italic; font-weight:400; font-size:clamp(1rem,2vw,1.4rem); color:rgba(245,240,232,.7); margin:0 0 2.5rem; }
-  .v3-hero-actions { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
-  .v3-hero-btn { display:inline-flex; align-items:center; border:1px solid rgba(245,240,232,.4); padding:.7rem 1.5rem; background:transparent; color:#F5F0E8; font-family:var(--font-v3-primary); font-style:italic; font-weight:400; font-size:15px; text-decoration:none; transition:background .2s ease; }
-  .v3-hero-btn:hover { background:rgba(245,240,232,.1); }
-  .v3-hero-scroll { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:.5rem; }
-  .v3-hero-scroll-label { font-family:var(--font-v3-fine); font-weight:400; font-style:normal; font-size:9px; letter-spacing:.15em; color:rgba(245,240,232,.4); text-transform:lowercase; }
-  .v3-hero-scroll-line { width:1px; height:40px; background:rgba(245,240,232,.35); }
-  @keyframes v3HeroIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-  @media(prefers-reduced-motion:reduce) { .v3-hero-content { animation:none; } }
-</style>
