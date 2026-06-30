@@ -1,231 +1,27 @@
 ---
-// ElementsSection.astro — V3 "Paper & Grain"
-// Four elemental rows separated by horizontal rules
-// Background: v3-surface, B&W images fixed 300×200px
-
 const elements = [
-  {
-    name: 'Earth',
-    body: 'The ancient volcanic cliff. One hundred metres of basalt and limestone, built by pressures that were done with their work long before any human watched the sea. Walk the forest floor from the hotel to the edge and you cross through hornbeam, wild pear, and old oak before the ground simply stops. Geology as invitation.',
-    image: '/images/earth.jpg',
-    alt: 'The volcanic cliff face above the Black Sea, viewed from below — raw basalt columns, vertical drop',
-  },
-  {
-    name: 'Water',
-    body: 'The Black Sea below — with at least twelve nations reflected in it, depending on the century and the map. This is not a decorative sea. It has moods, tides, and a thermocline that makes it genuinely two seas stacked on top of each other. In summer the surface reaches 26°C. At depth, it has been anoxic since before recorded history.',
-    image: '/images/water.jpg',
-    alt: 'The Black Sea from the cliff top — flat horizon, light texture on the water surface, grey morning sky',
-  },
-  {
-    name: 'Fire',
-    body: 'A table lit at golden hour, at the edge of something. Food grown within thirty kilometres: the farms of Dobrich, the orchards above Kavarna, the fishing boats at Kamen Bryag. We will not curate an experience. We will cook what is available, honestly, and lay it on a table facing the water.',
-    image: '/images/fire.jpg',
-    alt: 'Ceramic dishes on a stone table, late afternoon light raking across the surface, sea visible in background',
-  },
-  {
-    name: 'Air',
-    body: 'Open sky. The lightness of sitting somewhere high, where the air comes off the sea without interruption for two thousand kilometres. The cliff is exposed to weather. That is not a warning. When the wind picks up and the whole horizon turns dark in thirty minutes, you will understand why people have built temples at cliff edges for as long as there have been people.',
-    image: '/images/air.jpg',
-    alt: 'Wide open sky above the cliff, cumulus clouds over the sea, small figure standing at the edge',
-  },
-];
+  { name:'Earth', body:'The ancient volcanic cliff. One hundred metres of basalt and limestone, built by pressures that were done with their work long before any human watched the sea. Walk the forest floor from the hotel to the edge and you cross through hornbeam, wild pear, and old oak before the ground simply stops. Geology as invitation.', image:'/images/earth.jpg', alt:'Strandzha forest floor at the cliff edge' },
+  { name:'Water', body:'The Black Sea below — with at least twelve nations reflected in it, depending on the century and the map. This is not a decorative sea. It has moods, tides, and a thermocline that makes it genuinely two seas stacked on top of each other. In summer the surface reaches 26°C. At depth, it has been anoxic since before recorded history.', image:'/images/water.jpg', alt:'Black Sea surface viewed from the cliff' },
+  { name:'Fire',  body:'A table lit at golden hour, at the edge of something. Food grown within thirty kilometres: the farms of Dobrich, the orchards above Kavarna, the fishing boats at Kamen Bryag. We will not curate an experience. We will cook what is available, honestly, and lay it on a table facing the water.', image:'/images/fire.jpg', alt:'Golden hour dining at the cliff edge' },
+  { name:'Air',   body:'Open sky. The lightness of sitting somewhere high, where the air comes off the sea without interruption for two thousand kilometres. The cliff is exposed to weather. That is not a warning. When the wind picks up and the whole horizon turns dark in thirty minutes, you will understand why people have built temples at cliff edges.', image:'/images/air.jpg', alt:'Open sky above the Black Sea cliff' },
+]
 ---
-
-<section id="elements" class="v3-section v3-elements" aria-labelledby="elements-heading">
-
-  <hr class="v3-rule" aria-hidden="true" />
-
-  <!-- Section header -->
-  <div class="v3-elements__header v3-reveal">
-    <span class="v3-section-number" aria-hidden="true">—02—</span>
-    <h2 id="elements-heading" class="v3-elements__heading">
-      Four elements.<br />One place.
-    </h2>
-  </div>
-
-  <!-- Element rows -->
-  {elements.map((el, i) => (
-    <article class="v3-elements__row v3-reveal" aria-label={`Element: ${el.name}`}>
-      <hr class="v3-rule" aria-hidden="true" />
-      <div class="v3-elements__row-inner" data-index={i}>
-
-        <!-- Element name — huge typographic anchor -->
-        <div class="v3-elements__name-wrap" aria-hidden="true">
-          <span class="v3-elements__name">{el.name}</span>
+<section id="elements" class="v3-elements">
+  <div class="v3-elements-inner">
+    <div class="v3-elements-head" data-aos="fade-up">
+      <span class="v3-elements-marker">—02—</span>
+      <h2 class="v3-elements-title">Four elements. One place.</h2>
+    </div>
+    <hr class="v3-hr" />
+    {elements.map((el, i) => (
+      <div>
+        <div class="v3-element-row" data-aos="fade-up" data-aos-delay={i * 60}>
+          <div class="v3-element-name">{el.name}</div>
+          <p class="v3-element-body">{el.body}</p>
+          <img class="v3-element-img" src={el.image} alt={el.alt} loading="lazy" />
         </div>
-
-        <!-- Body text -->
-        <div class="v3-elements__body">
-          <h3 class="v3-visually-hidden">{el.name}</h3>
-          <p>{el.body}</p>
-        </div>
-
-        <!-- B&W image — fixed size, deliberate whitespace -->
-        <div class="v3-elements__image-wrap">
-          <img
-            src={el.image}
-            alt={el.alt}
-            width="300"
-            height="200"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-
+        <hr class="v3-element-divider" />
       </div>
-    </article>
-  ))}
-
-  <hr class="v3-rule" aria-hidden="true" />
-
+    ))}
+  </div>
 </section>
-
-<style>
-  .v3-elements {
-    background-color: var(--v3-surface);
-    padding-top: 0;
-  }
-
-  /* Section header */
-  .v3-elements__header {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 3rem 0 3rem;
-    flex-wrap: wrap;
-  }
-
-  .v3-elements__header .v3-section-number {
-    flex-shrink: 0;
-    font-size: 4rem;
-    line-height: 1;
-    padding-top: 0.1em;
-  }
-
-  .v3-elements__heading {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    line-height: 1.15;
-    color: var(--v3-ink);
-    flex: 1;
-    min-width: 200px;
-  }
-
-  /* Each element row */
-  .v3-elements__row {
-    /* no additional padding — rule acts as separator */
-  }
-
-  .v3-elements__row-inner {
-    display: grid;
-    grid-template-columns: 200px 1fr 300px;
-    grid-template-areas: 'name body image';
-    align-items: center;
-    gap: 3rem;
-    padding: 3.5rem 0;
-  }
-
-  /* Element name — huge */
-  .v3-elements__name-wrap {
-    grid-area: name;
-    display: flex;
-    align-items: center;
-  }
-
-  .v3-elements__name {
-    font-family: var(--font-v3-primary);
-    font-weight: 400;
-    font-size: clamp(2.5rem, 4vw, 5rem);
-    line-height: 1;
-    color: var(--v3-ink);
-    letter-spacing: -0.02em;
-  }
-
-  /* Body text */
-  .v3-elements__body {
-    grid-area: body;
-  }
-
-  .v3-elements__body p {
-    font-size: 17px;
-    line-height: 1.85;
-    color: var(--v3-ink);
-    max-width: 55ch;
-  }
-
-  /* Image */
-  .v3-elements__image-wrap {
-    grid-area: image;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .v3-elements__image-wrap img {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-    flex-shrink: 0;
-    /* No border-radius — flat edges */
-  }
-
-  /* ── Tablet ─────────────────────────────────────────────── */
-  @media (max-width: 1100px) {
-    .v3-elements__row-inner {
-      grid-template-columns: 140px 1fr;
-      grid-template-areas:
-        'name image'
-        'body body';
-      gap: 2rem;
-    }
-
-    .v3-elements__image-wrap {
-      justify-content: flex-end;
-    }
-
-    .v3-elements__image-wrap img {
-      width: 220px;
-      height: 147px;
-    }
-  }
-
-  /* ── Mobile ─────────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .v3-elements__row-inner {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        'name'
-        'image'
-        'body';
-      gap: 1.5rem;
-      padding: 2.5rem 0;
-    }
-
-    .v3-elements__image-wrap {
-      justify-content: flex-start;
-    }
-
-    .v3-elements__image-wrap img {
-      width: 100%;
-      height: auto;
-      max-height: 200px;
-      object-fit: cover;
-    }
-
-    .v3-elements__name {
-      font-size: 3rem;
-    }
-
-    .v3-elements__header {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-  }
-
-  /* ── Lora weight/style system ──────────────────────────── */
-  .v3-elements__heading  { font-weight: 600; font-style: italic; }
-  .v3-section-number     { font-weight: 400; font-style: italic; }
-  .v3-elements__name     { font-weight: 700; font-style: italic; }
-  .v3-elements__body p   { font-weight: 400; font-style: normal; }
-</style>
