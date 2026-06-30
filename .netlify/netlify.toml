@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "D:\\projects\\green-horizon\\dist"
+publish = "dist"
 publishOrigin = "config"
 commandOrigin = "config"
 command = "pnpm run build"
