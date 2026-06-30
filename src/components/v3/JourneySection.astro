@@ -1,220 +1,217 @@
 ---
-// JourneySection.astro — V3 "Paper & Grain"
-// Newspaper-style section: three journal columns, no timeline borders
-// Background: v3-surface
-
-const journalEntries = [
+const entries = [
   {
     date: 'April 2024',
-    headline: 'Ground is broken. The oak survives.',
-    body: 'Excavation began on the fourteenth. The oak at the north-east corner of the plot — the one that appears on the earliest cadastral maps — was marked for preservation from the start. The structural engineer redesigned the terrace foundation around it without complaint. Work proceeds at the pace the cliff dictates.',
-    image: '/images/build-june-2025.jpg',
-    imageAlt: 'Excavator on clay soil, old oak tree to the right, sea visible in the background, early spring',
+    heading: 'Ground is broken. The oak survives.',
+    body: 'Excavation began on the fourteenth. The oak at the north-east corner — the one on the earliest cadastral maps — was marked for preservation. The structural engineer redesigned the terrace foundation around it without complaint.',
+    src: '/images/build-june-2025.jpg',
+    alt: 'Excavation at the Green Horizon cliff site, April 2024',
   },
   {
     date: 'September 2024',
-    headline: 'The bones are standing. The view is confirmed.',
-    body: 'The concrete frame of the main structure is complete to roof level. For the first time since we broke ground, we can stand in what will be the dining room and look out through the framed opening where the glass will go. The view is what we said it would be. There was a collective exhale among the family. The structural engineer had told us this would happen. He was right again.',
-    image: '/images/build-march-2025.jpg',
-    imageAlt: 'Concrete structure skeleton against the sea, formwork still in place, golden afternoon light',
+    heading: 'The bones are standing. The view is confirmed.',
+    body: 'The concrete frame is complete to roof level. For the first time, we stand in what will be the dining room and look through the framed opening. The view is what we said it would be. There was a collective exhale.',
+    src: '/images/build-march-2025.jpg',
+    alt: 'Concrete frame of Green Horizon with sea view, September 2024',
   },
   {
     date: 'February 2025',
-    headline: 'Stone from Provadia. Glass from Plovdiv.',
-    body: 'The interior cladding is under way. We settled on local limestone from the Provadia quarry — the same material that built the old fortifications at Ovech. The glazing is custom fabricated in Plovdiv, floor-to-ceiling panels that will carry none of the horizontal sightline breaks common in hotel construction. The whole coast will be visible from the bed.',
-    image: '/images/build-nov-2024.jpg',
-    imageAlt: 'Stone blocks being laid on interior wall, plasterer at work, open window frame showing the cliff edge beyond',
+    heading: 'Stone from Provadia. Glass from Plovdiv.',
+    body: 'Interior cladding under way. Local limestone from Provadia quarry — the same material that built the old fortifications at Ovech. Floor-to-ceiling glazing fabricated in Plovdiv. The whole coast will be visible from the bed.',
+    src: '/images/build-nov-2024.jpg',
+    alt: 'Interior limestone cladding work, February 2025',
   },
-];
+]
 ---
 
-<section id="build" class="v3-section v3-journey" aria-labelledby="journey-heading">
+<section id="journey" class="jn" aria-labelledby="jn-hdg">
 
-  <hr class="v3-rule" aria-hidden="true" />
+  <div class="jn-head">
+    <p class="jn-overline">The Build · Live from the site</p>
+    <h2 class="jn-title" id="jn-hdg">A record<br>of progress.</h2>
+  </div>
 
-  <!-- Section masthead — newspaper style -->
-  <header class="v3-journey__masthead v3-reveal">
-    <p class="v3-label" aria-hidden="true">—04—</p>
-    <div class="v3-journey__masthead-text">
-      <h2 id="journey-heading" class="v3-journey__main-head">The Build</h2>
-      <p class="v3-journey__deck">
-        <em>Live from the site. The cliff has been rising since April 2024.</em>
-      </p>
-    </div>
-  </header>
+  <!-- Large counter -->
+  <p class="jn-stat" aria-label="Three updates">
+    <span class="jn-stat-n">03</span>
+    <span class="jn-stat-l">dispatches<br>from the cliff</span>
+  </p>
 
-  <hr class="v3-rule" aria-hidden="true" />
+  <div class="jn-entries">
+    {entries.map((entry, i) => (
+      <article class="jn-card v3-reveal" aria-label={`${entry.date}: ${entry.heading}`}>
 
-  <!-- Three newspaper columns -->
-  <div class="v3-journey__columns v3-reveal" role="list">
-    {journalEntries.map((entry) => (
-      <article class="v3-journey__entry" role="listitem" aria-label={`Build journal: ${entry.headline}`}>
+        <div class="jn-img-wrap">
+          <img class="jn-img" src={entry.src} alt={entry.alt} loading="lazy" />
+          <span class="jn-img-date" aria-hidden="true">{entry.date}</span>
+        </div>
 
-        <!-- Byline date -->
-        <p class="v3-journey__byline">
-          <strong><em>{entry.date}</em></strong>
-        </p>
-
-        <!-- Entry headline -->
-        <h3 class="v3-journey__entry-head">{entry.headline}</h3>
-
-        <!-- B&W image -->
-        <figure class="v3-journey__figure">
-          <img
-            src={entry.image}
-            alt={entry.imageAlt}
-            loading="lazy"
-            decoding="async"
-            class="v3-journey__img"
-          />
-        </figure>
-
-        <!-- Body text -->
-        <p class="v3-journey__entry-body">{entry.body}</p>
+        <div class="jn-body">
+          <p class="jn-date">{entry.date}</p>
+          <h3 class="jn-heading">{entry.heading}</h3>
+          <p class="jn-text">{entry.body}</p>
+        </div>
 
       </article>
     ))}
   </div>
 
-  <hr class="v3-rule" aria-hidden="true" />
-
 </section>
 
 <style>
-  .v3-journey {
-    background-color: var(--v3-surface);
-    padding-top: 0;
+  .jn {
+    background: var(--v3-surface);
+    padding: 6rem clamp(2rem, 6vw, 6rem);
+    border-top: 1px solid var(--v3-rule);
   }
 
-  /* Masthead */
-  .v3-journey__masthead {
-    display: grid;
-    grid-template-columns: 4rem 1fr;
-    gap: 2rem;
-    align-items: end;
-    padding: 3rem 0 2.5rem;
+  .jn-head {
+    max-width: 80rem;
+    margin: 0 auto 1rem;
   }
-
-  .v3-journey__masthead > .v3-label {
-    font-size: 13px;
+  .jn-overline {
+    font-family: var(--font-v3-fine);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--v3-muted);
-    padding-bottom: 0.3em;
-    text-align: right;
+    margin: 0 0 1rem;
   }
-
-  /* Main headline — large newspaper-style */
-  .v3-journey__main-head {
-    font-family: var(--font-v3-primary);
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    font-weight: 400;
-    line-height: 1.05;
-    color: var(--v3-ink);
-    letter-spacing: -0.02em;
-    margin-bottom: 0.75rem;
-  }
-
-  /* Deck / sub-deck */
-  .v3-journey__deck {
+  .jn-title {
     font-family: var(--font-v3-primary);
     font-style: italic;
-    font-size: 18px;
+    font-size: clamp(2.5rem, 5.5vw, 5rem);
+    line-height: 1.0;
+    color: var(--v3-ink);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.025em;
+  }
+
+  /* Large editorial counter */
+  .jn-stat {
+    max-width: 80rem;
+    margin: 2rem auto 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border-top: 1px solid var(--v3-rule);
+    padding-top: 1.5rem;
+  }
+  .jn-stat-n {
+    font-family: var(--font-v3-primary);
+    font-style: italic;
+    font-size: clamp(3rem, 6vw, 6rem);
+    color: rgba(26, 21, 16, 0.12);
+    line-height: 1;
+    font-weight: 400;
+  }
+  .jn-stat-l {
+    font-family: var(--font-v3-fine);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--v3-muted);
     line-height: 1.6;
   }
 
-  /* Three-column layout */
-  .v3-journey__columns {
+  /* Entries: 3-column on desktop */
+  .jn-entries {
+    max-width: 80rem;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    column-gap: 3rem;
-    padding: 3rem 0 4rem;
-    /* Column rules between entries */
-    column-rule: 1px solid var(--v3-rule);
+    gap: 2.5rem;
   }
 
-  /* Individual journal entry */
-  .v3-journey__entry {
-    padding: 0;
-    break-inside: avoid;
+  /* Each card */
+  .jn-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    cursor: default;
   }
 
-  /* Byline / date */
-  .v3-journey__byline {
-    font-family: var(--font-v3-primary);
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    color: var(--v3-muted);
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
+  .jn-img-wrap {
+    position: relative;
+    overflow: hidden;
   }
-
-  .v3-journey__byline strong {
-    font-weight: 400;
-  }
-
-  /* Entry headline */
-  .v3-journey__entry-head {
-    font-family: var(--font-v3-primary);
-    font-weight: 400;
-    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
-    line-height: 1.25;
-    color: var(--v3-ink);
-    margin-bottom: 1.25rem;
-  }
-
-  /* Image */
-  .v3-journey__figure {
-    margin: 0 0 1.25rem;
-  }
-
-  .v3-journey__img {
+  .jn-img {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    filter: grayscale(1) contrast(1.1);
+    display: block;
+    filter: grayscale(0.5) brightness(0.9);
+    transform: scale(1.04);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.5s ease;
+  }
+  .jn-card:hover .jn-img {
+    transform: scale(1.0);
+    filter: grayscale(0.1) brightness(0.97);
   }
 
-  /* Body text */
-  .v3-journey__entry-body {
+  /* Date badge overlaid on image bottom */
+  .jn-img-date {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    font-family: var(--font-v3-fine);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.7);
+    background: rgba(42, 31, 22, 0.55);
+    padding: 0.3rem 0.6rem;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .jn-body { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .jn-date {
+    font-family: var(--font-v3-fine);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--v3-muted);
+    margin: 0;
+    transition: color 0.25s ease;
+  }
+  .jn-card:hover .jn-date { color: var(--v3-rust); }
+
+  .jn-heading {
     font-family: var(--font-v3-primary);
-    font-size: 16px;
-    line-height: 1.85;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+    line-height: 1.2;
     color: var(--v3-ink);
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.01em;
+    /* Underline grows on hover */
+    background-image: linear-gradient(var(--v3-ink), var(--v3-ink));
+    background-size: 0 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    display: inline;
+    transition: background-size 0.4s ease;
   }
+  .jn-card:hover .jn-heading { background-size: 100% 1px; }
 
-  /* ── Tablet ─────────────────────────────────────────────── */
-  @media (max-width: 960px) {
-    .v3-journey__columns {
-      grid-template-columns: 1fr 1fr;
-    }
+  .jn-text {
+    font-family: var(--font-v3-primary);
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--v3-muted);
+    margin: 0;
+    font-weight: 400;
+    /* Opacity lifts on hover */
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
   }
+  .jn-card:hover .jn-text { opacity: 1; }
 
-  /* ── Mobile ─────────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .v3-journey__columns {
-      grid-template-columns: 1fr;
-      column-gap: 0;
-    }
-
-    .v3-journey__entry {
-      border-bottom: 1px solid var(--v3-rule);
-      padding-bottom: 2.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .v3-journey__entry:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-    }
-
-    .v3-journey__masthead {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-
-    .v3-journey__masthead > .v3-label {
-      text-align: left;
-    }
-  }
+  @media (max-width: 900px) { .jn-entries { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .jn-entries { grid-template-columns: 1fr; } }
 </style>
