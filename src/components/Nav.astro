@@ -32,13 +32,13 @@ const currentLangLabel = langLabels[lang]
   <nav class="nav-pill nav-links-pill" aria-label="Main navigation" style="
     pointer-events:auto;display:flex;align-items:center;gap:0.25rem;padding:0.6rem 1rem;
   ">
-    <a href={`${lp}/#experiences`} class="nav-link">{t.nav.experiences}</a>
+    <a href="#" class="nav-link">{t.nav.experiences}</a>
     <span class="nav-sep" aria-hidden="true">·</span>
-    <a href={`${lp}/#story`}       class="nav-link">{t.nav.story}</a>
+    <a href="#" class="nav-link">{t.nav.story}</a>
     <span class="nav-sep" aria-hidden="true">·</span>
-    <a href={`${lp}/#rooms`}       class="nav-link">{t.nav.rooms}</a>
+    <a href="#" class="nav-link">{t.nav.rooms}</a>
     <span class="nav-sep" aria-hidden="true">·</span>
-    <a href={`${lp}/#contact`}     class="nav-link">{t.nav.contact}</a>
+    <a href="#" class="nav-link">{t.nav.contact}</a>
   </nav>
 
   <!-- PILL 3 — Lang dropdown + CTA button -->
@@ -108,7 +108,7 @@ const currentLangLabel = langLabels[lang]
     </div>
 
     <!-- Register Interest — primary button -->
-    <a href={`${lp}/#contact`} class="btn btn-primary desktop-cta" style="padding:0.6rem 1.25rem;font-size:12px;border-radius:16px;letter-spacing:0;text-transform:none;font-family:var(--font-body);font-weight:500;">
+    <a href="#" class="btn btn-primary desktop-cta" style="padding:0.6rem 1.25rem;font-size:12px;border-radius:16px;letter-spacing:0;text-transform:none;font-family:var(--font-body);font-weight:500;">
       {t.nav.registerInterest}
     </a>
 
@@ -132,10 +132,10 @@ const currentLangLabel = langLabels[lang]
   pointer-events:none;
 ">
   <ul style="list-style:none;display:flex;flex-direction:column;gap:2rem;">
-    <li><a href={`${lp}/#experiences`} class="mml">{t.nav.experiences}</a></li>
-    <li><a href={`${lp}/#story`}       class="mml">{t.nav.story}</a></li>
-    <li><a href={`${lp}/#rooms`}       class="mml">{t.nav.rooms}</a></li>
-    <li><a href={`${lp}/#contact`}     class="mml" style="color:var(--color-copper)!important;">{t.nav.registerInterest}</a></li>
+    <li><a href="#" class="mml">{t.nav.experiences}</a></li>
+    <li><a href="#" class="mml">{t.nav.story}</a></li>
+    <li><a href="#" class="mml">{t.nav.rooms}</a></li>
+    <li><a href="#" class="mml" style="color:var(--color-copper)!important;">{t.nav.registerInterest}</a></li>
   </ul>
   <div style="margin-top:auto;display:flex;gap:1rem;">
     <a href="/en/" class={`mob-lang${lang==='en'?' mob-active':''}`}>EN</a>
@@ -198,6 +198,11 @@ const currentLangLabel = langLabels[lang]
   }
   window.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
+
+  // Prevent nav links navigating anywhere
+  document.querySelectorAll('.nav-link, .mml').forEach(link => {
+    link.addEventListener('click', e => e.preventDefault())
+  })
 
   // Language dropdown
   const langBtn  = document.getElementById('lang-btn')

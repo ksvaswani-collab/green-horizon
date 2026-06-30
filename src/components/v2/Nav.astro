@@ -16,13 +16,13 @@
 
       <!-- Centre: links -->
       <ul class="v2-nav-links" role="list">
-        <li><a href="#story"       class="v2-nl">The story</a></li>
+        <li><a href="#" class="v2-nl">The story</a></li>
         <li class="v2-nl-sep" aria-hidden="true">·</li>
-        <li><a href="#elements"    class="v2-nl">Elements</a></li>
+        <li><a href="#" class="v2-nl">Elements</a></li>
         <li class="v2-nl-sep" aria-hidden="true">·</li>
-        <li><a href="#rooms"       class="v2-nl">Rooms</a></li>
+        <li><a href="#" class="v2-nl">Rooms</a></li>
         <li class="v2-nl-sep" aria-hidden="true">·</li>
-        <li><a href="#experiences" class="v2-nl">Experiences</a></li>
+        <li><a href="#" class="v2-nl">Experiences</a></li>
       </ul>
 
       <!-- Right: language dropdown + CTA -->
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Register CTA -->
-        <a href="#register" class="v2-nav-cta">Register interest</a>
+        <a href="#" class="v2-nav-cta">Register interest</a>
 
       </div>
 
@@ -198,4 +198,9 @@
   langBtn?.addEventListener('click',(e)=>{e.stopPropagation();toggleLang(!open)})
   document.addEventListener('click',()=>{if(open)toggleLang(false)})
   document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&open)toggleLang(false)})
+
+  // Prevent nav links navigating anywhere
+  document.querySelectorAll('.v2-nl, .v2-nav-cta').forEach(link => {
+    link.addEventListener('click', (e: Event) => e.preventDefault())
+  })
 </script>

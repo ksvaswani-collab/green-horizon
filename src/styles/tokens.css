@@ -49,6 +49,10 @@ body {
 }
 :lang(bg) { --font-display: 'Alegreya', Georgia, serif; }
 
+@media (max-width: 768px) {
+  body { font-size: 12px; }
+}
+
 .text-hero    { font-size: clamp(52px,7vw,96px);   line-height: 1.05; letter-spacing: -0.02em; }
 .text-section { font-size: clamp(32px,4vw,56px);   line-height: 1.1;  letter-spacing: -0.01em; }
 .text-element { font-size: clamp(80px,10vw,140px); line-height: 0.9; }
