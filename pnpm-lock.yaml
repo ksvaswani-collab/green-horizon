@@ -8,8 +8,11 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/dm-serif-display':
+        specifier: ^5.2.5
+        version: 5.2.8
       '@fontsource/lora':
-        specifier: ^5.2.8
+        specifier: ^5.0.0
         version: 5.2.8
       '@fontsource/manrope':
         specifier: ^5.2.5
@@ -381,6 +384,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/dm-serif-display@5.2.8':
+    resolution: {integrity: sha512-GYSDSlGU6vyhv9a5MwaiVNf9HCuSVpK8hEFRyG4NNDHCDeHiX7YHDAcWsaoLKKcfXLgWG9YkBkk9T3SxM4rAjQ==}
 
   '@fontsource/lora@5.2.8':
     resolution: {integrity: sha512-AQlfsHw4TP1x/eb2IZ6VjQ70ctKa39m9JN9A4zlvDOeKYLrCs+GaYIEQ86Y6YfSPGHn01bErXkRcyktOW0LOPQ==}
@@ -2121,6 +2127,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.7':
     optional: true
+
+  '@fontsource/dm-serif-display@5.2.8': {}
 
   '@fontsource/lora@5.2.8': {}
 
