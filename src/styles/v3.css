@@ -1,8 +1,4 @@
-/* ============================================================
-   GREEN HORIZON — V3 "Paper & Grain"
-   ============================================================ */
-
-/* Lora — full type system (headings + body) */
+/* GREEN HORIZON — V3 "Paper & Grain" */
 @import '@fontsource/lora/400.css';
 @import '@fontsource/lora/400-italic.css';
 @import '@fontsource/lora/600.css';
@@ -10,7 +6,6 @@
 @import '@fontsource/lora/700.css';
 @import '@fontsource/lora/700-italic.css';
 
-/* ── Tokens ── */
 :root {
   --v3-bg:       #F7F2EA;
   --v3-surface:  #EDE8DF;
@@ -19,23 +14,17 @@
   --v3-rust:     #B85C38;
   --v3-rule:     rgba(26, 21, 16, 0.15);
   --v3-dark:     #2A1F16;
-
-  /* Single typeface — Lora throughout */
   --font-v3-primary: 'Lora', Georgia, serif;
   --font-v3-fine:    'Lora', Georgia, serif;
-
   --v3-space-xl:    8rem;
   --v3-space-lg:    5rem;
-  --v3-space-md:    3rem;
   --v3-content-pad: clamp(2rem, 6vw, 6rem);
   --v3-max-w:       80rem;
 }
 
-/* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
-/* ── Base ── */
 body {
   background: var(--v3-bg);
   color: var(--v3-ink);
@@ -46,7 +35,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Paper grain texture */
 body::after {
   content: '';
   position: fixed;
@@ -60,16 +48,6 @@ body::after {
 
 img { display: block; max-width: 100%; height: auto; }
 
-/* ── Lora weight system ──
-   Display / H1:      700 italic (Bold Italic)
-   Section H2:        600 italic (SemiBold Italic)
-   Sub-heading H3:    600 italic
-   Body paragraphs:   400 normal
-   Labels/overlines:  600 normal (no italic)
-   Nav links:         600 italic
-   ────────────────────── */
-
-/* Top nav */
 .v3-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -78,9 +56,8 @@ img { display: block; max-width: 100%; height: auto; }
   border-bottom: 1px solid var(--v3-rule);
   transition: box-shadow 0.3s ease;
 }
-.v3-header.is-scrolled {
-  box-shadow: 0 2px 16px rgba(26,21,16,0.06);
-}
+.v3-header.is-scrolled { box-shadow: 0 2px 16px rgba(26,21,16,0.06); }
+
 .v3-header-inner {
   display: flex;
   align-items: center;
@@ -90,12 +67,12 @@ img { display: block; max-width: 100%; height: auto; }
   margin: 0 auto;
   padding: 1.1rem clamp(1.5rem,3vw,2.5rem);
 }
+
 .v3-header-wordmark {
   font-family: var(--font-v3-primary);
   font-style: italic;
   font-weight: 600;
   font-size: 1.15rem;
-  letter-spacing: 0.01em;
   color: var(--v3-ink);
   text-decoration: none;
   flex-shrink: 0;
@@ -110,12 +87,12 @@ img { display: block; max-width: 100%; height: auto; }
   flex: 1;
   justify-content: center;
 }
+
 .v3-nav-link {
   font-family: var(--font-v3-primary);
   font-style: italic;
   font-weight: 400;
   font-size: 14px;
-  letter-spacing: 0.02em;
   color: var(--v3-muted);
   text-decoration: none;
   padding: 0.3rem 0.7rem;
@@ -123,12 +100,8 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .v3-nav-link:hover { color: var(--v3-ink); }
 
-.v3-header-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-shrink: 0;
-}
+.v3-header-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+
 .v3-header-cta {
   font-family: var(--font-v3-primary);
   font-style: italic;
@@ -142,84 +115,36 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .v3-header-cta:hover { border-color: var(--v3-rust); }
 
-.v3-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-}
-.v3-hamburger-line {
-  display: block;
-  width: 22px;
-  height: 1px;
-  background: var(--v3-ink);
-}
+.v3-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.v3-hamburger-line { display: block; width: 22px; height: 1px; background: var(--v3-ink); }
 .v3-hamburger-line--short { width: 15px; }
 
-/* Main offset */
 .v3-main { padding-top: 56px; min-width: 0; }
 
-/* Sections */
-.v3-section {
-  padding: var(--v3-space-xl) var(--v3-content-pad);
-  position: relative;
-}
-@media (max-width: 900px) {
-  .v3-section { padding: var(--v3-space-lg) 2rem; }
-}
+.v3-section { padding: var(--v3-space-xl) var(--v3-content-pad); position: relative; }
+@media (max-width: 900px) { .v3-section { padding: var(--v3-space-lg) 2rem; } }
 
-/* Rules */
-.v3-rule {
-  border: none;
-  border-top: 1px solid var(--v3-rule);
-  margin: 2rem 0;
-}
+.v3-rule { border: none; border-top: 1px solid var(--v3-rule); margin: 2rem 0; }
 
-/* Scroll reveal */
-.v3-reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
+.v3-reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .v3-visible { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .v3-reveal { opacity: 1; transform: none; transition: none; }
-}
+@media (prefers-reduced-motion: reduce) { .v3-reveal { opacity: 1; transform: none; transition: none; } }
 
-/* Skip link */
 .v3-skip-link {
-  position: absolute;
-  top: -100%;
-  left: 1rem;
-  z-index: 10000;
-  font-family: var(--font-v3-primary);
-  font-weight: 400;
-  font-size: 14px;
-  background: var(--v3-rust);
-  color: #fff;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  transition: top 0.2s;
+  position: absolute; top: -100%; left: 1rem; z-index: 10000;
+  font-family: var(--font-v3-primary); font-weight: 400; font-size: 14px;
+  background: var(--v3-rust); color: #fff; padding: 0.5rem 1rem;
+  text-decoration: none; transition: top 0.2s;
 }
 .v3-skip-link:focus { top: 1rem; }
 
-/* Focus */
 :focus-visible { outline: 2px solid var(--v3-rust); outline-offset: 3px; }
 
-/* Visually hidden */
 .v3-visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0;
-  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
-  white-space: nowrap; border: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 
-/* Image hover (subtle desaturate) */
-img:hover { filter: grayscale(0.3) contrast(1.02); transition: filter 0.3s ease; }
-
-/* Mobile nav */
 @media (max-width: 768px) {
   .v3-header-nav { display: none; }
   .v3-header-cta  { display: none; }
