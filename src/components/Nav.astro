@@ -12,26 +12,11 @@ const langLabels: Record<string, string> = { en: 'EN', nl: 'NL', bg: 'BG' }
 const currentLangLabel = langLabels[lang]
 ---
 
-<header id="site-header" aria-label="Site header" style="
-  position:fixed;top:0;left:0;right:0;z-index:50;
-  padding:1rem 1.5rem;
-  display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
-  pointer-events:none;
-">
+<header id="site-header" class="site-header" aria-label="Site header">
 
-  <!-- PILL 1 — Wordmark -->
-  <a href={`${lp}/`} class="nav-pill" aria-label="Green Horizon — Home" style="
-    pointer-events:auto;
-    display:flex;align-items:center;
-    padding:0.6rem 1.25rem;
-    font-family:var(--font-display);font-weight:300;font-size:1rem;
-    color:var(--color-midnight);text-decoration:none;letter-spacing:-0.01em;white-space:nowrap;
-  ">HORIZON</a>
+  <a href={`${lp}/`} class="nav-pill nav-wordmark" aria-label="Green Horizon — Home">HORIZON</a>
 
-  <!-- PILL 2 — Nav links (desktop) -->
-  <nav class="nav-pill nav-links-pill" aria-label="Main navigation" style="
-    pointer-events:auto;display:flex;align-items:center;gap:0.25rem;padding:0.6rem 1rem;
-  ">
+  <nav class="nav-pill nav-links-pill" aria-label="Main navigation">
     <a href="#" class="nav-link">{t.nav.experiences}</a>
     <span class="nav-sep" aria-hidden="true">·</span>
     <a href="#" class="nav-link">{t.nav.story}</a>
@@ -41,64 +26,25 @@ const currentLangLabel = langLabels[lang]
     <a href="#" class="nav-link">{t.nav.contact}</a>
   </nav>
 
-  <!-- PILL 3 — Lang dropdown + CTA button -->
-  <div class="nav-pill" style="
-    pointer-events:auto;display:flex;align-items:center;gap:0.875rem;padding:0.5rem 0.6rem 0.5rem 1.1rem;
-  ">
-
-    <!-- Language dropdown -->
-    <div id="lang-dropdown-wrap" style="position:relative;">
-      <button
-        id="lang-btn"
-        aria-haspopup="listbox"
-        aria-expanded="false"
-        aria-label="Select language"
-        style="
-          display:flex;align-items:center;gap:0.35rem;
-          background:none;border:none;cursor:pointer;
-          font-family:var(--font-body);font-size:12px;letter-spacing:0;font-weight:500;color:var(--color-muted);
-          padding:0.25rem 0.35rem;border-radius:4px;
-          transition:color 0.2s ease;
-        "
-      >
+  <div class="nav-pill nav-right-pill">
+    <div id="lang-dropdown-wrap" class="lang-wrap">
+      <button id="lang-btn" class="lang-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language">
         {currentLangLabel}
-        <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true" id="lang-chevron" style="transition:transform 0.25s ease;">
+        <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true" id="lang-chevron" class="lang-chevron">
           <path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-
-      <!-- Dropdown panel -->
-      <div
-        id="lang-menu"
-        role="listbox"
-        aria-label="Language"
-        style="
-          position:absolute;top:calc(100% + 0.5rem);right:0;
-          min-width:9rem;
-          background:rgba(240,237,230,0.97);
-          backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-          border:1px solid rgba(13,17,23,0.1);
-          border-radius:12px;
-          padding:0.35rem;
-          display:none;flex-direction:column;gap:0.1rem;
-          box-shadow:0 8px 32px rgba(13,17,23,0.1);
-        "
-      >
+      <div id="lang-menu" role="listbox" aria-label="Language" class="lang-menu">
         {[
           { code: 'en', label: 'EN', name: 'English' },
           { code: 'nl', label: 'NL', name: 'Nederlands' },
           { code: 'bg', label: 'БГ', name: 'Български' },
         ].map(l => (
-          <a
-            href={`/${l.code}/`}
-            role="option"
-            aria-selected={l.code === lang}
-            class={`lang-option${l.code === lang ? ' active' : ''}`}
-          >
-            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;">{l.label}</span>
-            <span style="font-family:var(--font-body);font-size:12px;color:var(--color-muted);">{l.name}</span>
+          <a href={`/${l.code}/`} role="option" aria-selected={l.code === lang} class={`lang-option${l.code === lang ? ' active' : ''}`}>
+            <span class="lang-code">{l.label}</span>
+            <span class="lang-name">{l.name}</span>
             {l.code === lang && (
-              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true" style="margin-left:auto;">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true" class="lang-check">
                 <path d="M1 4l2.5 2.5L9 1" stroke="var(--color-copper)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             )}
@@ -107,37 +53,24 @@ const currentLangLabel = langLabels[lang]
       </div>
     </div>
 
-    <!-- Register Interest — primary button -->
-    <a href="#" class="btn btn-primary desktop-cta" style="padding:0.6rem 1.25rem;font-size:12px;border-radius:16px;letter-spacing:0;text-transform:none;font-family:var(--font-body);font-weight:500;">
-      {t.nav.registerInterest}
-    </a>
+    <a href="#" class="btn btn-primary desktop-cta nav-cta-btn">{t.nav.registerInterest}</a>
 
-    <!-- Hamburger — mobile only -->
-    <button id="hamburger" aria-label="Open menu" aria-expanded="false" class="hb"
-      style="display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.25rem;">
+    <button id="hamburger" aria-label="Open menu" aria-expanded="false" class="hb">
       <span class="bar"></span>
       <span class="bar"></span>
-      <span class="bar" style="width:16px;"></span>
+      <span class="bar bar-short"></span>
     </button>
   </div>
 </header>
 
-<!-- Mobile overlay -->
-<div id="mobile-menu" role="dialog" aria-modal="true" style="
-  position:fixed;inset:0;z-index:49;
-  background:var(--color-linen);
-  display:flex;flex-direction:column;justify-content:center;
-  padding:6rem 2rem 3rem;
-  transform:translateY(-100%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
-  pointer-events:none;
-">
-  <ul style="list-style:none;display:flex;flex-direction:column;gap:2rem;">
+<div id="mobile-menu" role="dialog" aria-modal="true" class="mobile-menu">
+  <ul class="mobile-menu-list">
     <li><a href="#" class="mml">{t.nav.experiences}</a></li>
     <li><a href="#" class="mml">{t.nav.story}</a></li>
     <li><a href="#" class="mml">{t.nav.rooms}</a></li>
-    <li><a href="#" class="mml" style="color:var(--color-copper)!important;">{t.nav.registerInterest}</a></li>
+    <li><a href="#" class="mml mml-cta">{t.nav.registerInterest}</a></li>
   </ul>
-  <div style="margin-top:auto;display:flex;gap:1rem;">
+  <div class="mobile-langs">
     <a href="/en/" class={`mob-lang${lang==='en'?' mob-active':''}`}>EN</a>
     <a href="/nl/" class={`mob-lang${lang==='nl'?' mob-active':''}`}>NL</a>
     <a href="/bg/" class={`mob-lang${lang==='bg'?' mob-active':''}`}>БГ</a>
@@ -145,52 +78,108 @@ const currentLangLabel = langLabels[lang]
 </div>
 
 <style>
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    pointer-events: none;
+  }
   .nav-pill {
-    background:rgba(240,237,230,0.88);
-    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-    border:1px solid rgba(13,17,23,0.08);border-radius:100px;
-    transition:background 0.35s ease,border-color 0.35s ease;
+    background: rgba(240,237,230,0.88);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(13,17,23,0.08); border-radius: 100px;
+    transition: background 0.35s ease, border-color 0.35s ease;
   }
-  .nav-pill.scrolled { background:rgba(240,237,230,0.97);border-color:rgba(13,17,23,0.13); }
-
+  .nav-pill.scrolled { background: rgba(240,237,230,0.97); border-color: rgba(13,17,23,0.13); }
+  .nav-wordmark {
+    pointer-events: auto;
+    display: flex; align-items: center;
+    padding: 0.6rem 1.25rem;
+    font-family: var(--font-display); font-weight: 300; font-size: 1rem;
+    color: var(--color-midnight); text-decoration: none;
+    letter-spacing: -0.01em; white-space: nowrap;
+  }
+  .nav-links-pill {
+    pointer-events: auto;
+    display: flex; align-items: center; gap: 0.25rem; padding: 0.6rem 1rem;
+  }
+  .nav-right-pill {
+    pointer-events: auto;
+    display: flex; align-items: center; gap: 0.875rem;
+    padding: 0.5rem 0.6rem 0.5rem 1.1rem;
+  }
   .nav-link {
-    font-family:var(--font-body);font-size:13px;letter-spacing:-0.01em;font-weight:500;
-    color:var(--color-muted);text-decoration:none;
-    padding:0.35rem 0.75rem;border-radius:100px;
-    transition:color 0.2s ease,background 0.2s ease;
+    font-family: var(--font-body); font-size: 13px; font-weight: 500;
+    color: var(--color-muted); text-decoration: none;
+    padding: 0.35rem 0.75rem; border-radius: 100px;
+    transition: color 0.2s ease, background 0.2s ease;
   }
-  .nav-link:hover { color:var(--color-midnight);background:rgba(13,17,23,0.06); }
-  .nav-sep { font-size:13px;color:var(--color-muted);opacity:0.25;pointer-events:none;user-select:none; }
-
-  /* Language dropdown options */
+  .nav-link:hover { color: var(--color-midnight); background: rgba(13,17,23,0.06); }
+  .nav-sep { font-size: 13px; color: var(--color-muted); opacity: 0.25; pointer-events: none; user-select: none; }
+  .nav-cta-btn { padding: 0.6rem 1.25rem; font-size: 12px; border-radius: 16px; }
+  .lang-wrap { position: relative; }
+  .lang-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-body); font-size: 12px; font-weight: 500;
+    color: var(--color-muted); padding: 0.25rem 0.35rem; border-radius: 4px;
+    transition: color 0.2s ease;
+  }
+  .lang-btn:hover { color: var(--color-midnight); }
+  .lang-chevron { transition: transform 0.25s ease; }
+  .lang-menu {
+    position: absolute; top: calc(100% + 0.5rem); right: 0;
+    min-width: 9rem;
+    background: rgba(240,237,230,0.97);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(13,17,23,0.1); border-radius: 12px;
+    padding: 0.35rem;
+    display: none; flex-direction: column; gap: 0.1rem;
+    box-shadow: 0 8px 32px rgba(13,17,23,0.1);
+  }
   .lang-option {
-    display:flex;align-items:center;gap:0.5rem;
-    padding:0.55rem 0.75rem;border-radius:8px;
-    text-decoration:none;color:var(--color-midnight);
-    transition:background 0.15s ease;
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 0.75rem; border-radius: 8px;
+    text-decoration: none; color: var(--color-midnight);
+    transition: background 0.15s ease;
   }
-  .lang-option:hover { background:rgba(13,17,23,0.06); }
-  .lang-option.active { color:var(--color-midnight); }
-  #lang-btn:hover { color:var(--color-midnight); }
-
-  /* Hamburger */
-  .bar { display:block;width:22px;height:1px;background:var(--color-midnight);transition:transform 0.3s ease; }
-
-  /* Mobile nav */
-  .mml { font-family:var(--font-display);font-weight:300;font-size:clamp(2rem,8vw,4rem);color:var(--color-midnight);text-decoration:none;display:block; }
-  .mob-lang { font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;color:var(--color-muted);text-decoration:none;transition:color 0.2s ease; }
-  .mob-lang:hover,.mob-active { color:var(--color-midnight); }
-  .mob-active { text-decoration:underline;text-underline-offset:3px; }
-
+  .lang-option:hover { background: rgba(13,17,23,0.06); }
+  .lang-code { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; }
+  .lang-name { font-family: var(--font-body); font-size: 12px; color: var(--color-muted); }
+  .lang-check { margin-left: auto; }
+  .bar { display: block; width: 22px; height: 1px; background: var(--color-midnight); transition: transform 0.3s ease; }
+  .bar-short { width: 16px; }
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 49;
+    background: var(--color-linen);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 2rem 3rem;
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+  .mobile-menu-list { list-style: none; display: flex; flex-direction: column; gap: 2rem; }
+  .mobile-langs { margin-top: auto; display: flex; gap: 1rem; }
+  .mml {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(2rem,8vw,4rem);
+    color: var(--color-midnight); text-decoration: none; display: block;
+  }
+  .mml-cta { color: var(--color-copper) !important; }
+  .mob-lang {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em;
+    color: var(--color-muted); text-decoration: none; transition: color 0.2s ease;
+  }
+  .mob-lang:hover, .mob-active { color: var(--color-midnight); }
+  .mob-active { text-decoration: underline; text-underline-offset: 3px; }
   @media(max-width:768px) {
-    .nav-links-pill { display:none!important; }
-    .desktop-cta    { display:none!important; }
-    .hb             { display:flex!important; }
+    .nav-links-pill { display: none !important; }
+    .desktop-cta    { display: none !important; }
+    .hb             { display: flex !important; }
   }
 </style>
 
 <script>
-  // Scrolled state
   const pills = document.querySelectorAll('.nav-pill')
   const onScroll = () => {
     const s = window.scrollY > 60
@@ -199,12 +188,10 @@ const currentLangLabel = langLabels[lang]
   window.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
 
-  // Prevent nav links navigating anywhere
   document.querySelectorAll('.nav-link, .mml').forEach(link => {
     link.addEventListener('click', e => e.preventDefault())
   })
 
-  // Language dropdown
   const langBtn  = document.getElementById('lang-btn')
   const langMenu = document.getElementById('lang-menu')
   const chevron  = document.getElementById('lang-chevron')
@@ -221,7 +208,6 @@ const currentLangLabel = langLabels[lang]
   document.addEventListener('click', () => { if (langOpen) toggleLang(false) })
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && langOpen) toggleLang(false) })
 
-  // Mobile menu
   const btn  = document.getElementById('hamburger')
   const menu = document.getElementById('mobile-menu')
   let menuOpen = false

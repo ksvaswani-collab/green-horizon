@@ -63,7 +63,7 @@ const GAP_REM = 1.5  // matches CSS gap
         class="el-card"
         id={`el-card-${i}`}
         data-index={i}
-        style={`background:${el.bg};--accent:${el.accent};`}
+        style={`--el-bg:${el.bg};--accent:${el.accent};`}
         aria-label={`${el.number} of 04 — ${el.name}: ${el.body}`}
         aria-hidden={i!==0}
       >
@@ -73,13 +73,13 @@ const GAP_REM = 1.5  // matches CSS gap
         </div>
         <div class="el-card-inner">
           <div class="el-card-meta">
-            <span class="el-num" style={`color:${el.accent}`}>{el.number}</span>
+            <span class="el-num">{el.number}</span>
             <span class="el-total">/ 04</span>
           </div>
           <h3 class="el-name">{el.name}</h3>
           <p  class="el-body">{el.body}</p>
           <p  class="el-sub">{el.sub}</p>
-          <a href="#register" class="el-cta" style={`border-color:${el.accent};color:${el.accent};`}>
+          <a href="#register" class="el-cta">
             {el.cta} →
           </a>
         </div>
@@ -142,6 +142,7 @@ const GAP_REM = 1.5  // matches CSS gap
   /* ── Cards — all absolute, centered at left:50% ──
      GSAP sets xPercent:-50 + x-offset. No double translate. ── */
   .el-card {
+    background: var(--el-bg);
     position: absolute;
     top: 0;
     left: 50%;           /* base: left edge at viewport center */
@@ -168,7 +169,7 @@ const GAP_REM = 1.5  // matches CSS gap
   }
   .el-card-inner { padding: 1.1rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: .4rem; }
   .el-card-meta  { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .2rem; }
-  .el-num  { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-size: .9rem; }
+  .el-num  { color: var(--accent); font-family: 'DM Serif Display', Georgia, serif; font-style: italic; font-size: .9rem; }
   .el-total{ font-family: 'Manrope', system-ui, sans-serif; font-size: 10px; letter-spacing: .1em; color: rgba(234,230,222,.25); }
   .el-name {
     font-family: 'Manrope', system-ui, sans-serif; font-weight: 900;
@@ -178,6 +179,7 @@ const GAP_REM = 1.5  // matches CSS gap
   .el-body { font-family: 'Manrope', system-ui, sans-serif; font-size: 13px; line-height: 1.65; color: rgba(234,230,222,.55); font-weight: 500; }
   .el-sub  { font-family: 'Manrope', system-ui, sans-serif; font-size: 12px; line-height: 1.6;  color: rgba(234,230,222,.32); }
   .el-cta  {
+    color: var(--accent); border-color: var(--accent);
     display: inline-flex; align-items: center; margin-top: .6rem;
     padding: .55rem 1.1rem; font-family: 'Manrope', system-ui, sans-serif;
     font-size: 12px; font-weight: 500; text-decoration: none;

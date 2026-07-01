@@ -2,66 +2,28 @@
 interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
 ---
+<section id="story" class="v1-story">
+  <div class="v1-story-inner">
 
-<section
-  id="story"
-  style="
-    background: var(--color-linen);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem clamp(1.5rem, 6vw, 8rem);
-  "
->
-  <div style="max-width: 52rem; width: 100%; text-align: center;">
-
-    <!-- Geographic accent -->
-    <div class="story-geo" style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:3rem;opacity:0;">
-      <div style="width:2rem;height:1px;background:var(--color-copper);" aria-hidden="true"></div>
-      <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--color-copper);">
-        42°N · 27°E · BLACK SEA
-      </span>
-      <div style="width:2rem;height:1px;background:var(--color-copper);" aria-hidden="true"></div>
+    <div class="story-geo">
+      <div class="story-geo-line" aria-hidden="true"></div>
+      <span class="story-geo-text">42°N · 27°E · BLACK SEA</span>
+      <div class="story-geo-line" aria-hidden="true"></div>
     </div>
 
-    <!-- Pull-quote -->
-    <blockquote
-      id="pull-quote"
-      style="
-        font-family: var(--font-display);
-        font-weight: 300;
-        font-size: clamp(28px, 3.8vw, 56px);
-        line-height: 1.15;
-        letter-spacing: -0.02em;
-        color: var(--color-midnight);
-        margin-bottom: 3rem;
-      "
-    >
+    <blockquote id="pull-quote" class="v1-story-pullquote">
       {t.story.pullquote}
     </blockquote>
 
-    <!-- Thin centred rule -->
-    <div
-      class="story-rule"
-      style="width:3rem;height:1px;background:var(--color-border);margin:0 auto 3rem;opacity:0;"
-      aria-hidden="true"
-    ></div>
+    <div class="story-rule" aria-hidden="true"></div>
 
-    <!-- Body text -->
-    <div class="story-body" style="display:flex;flex-direction:column;gap:1.25rem;opacity:0;">
-      <p style="font-family:var(--font-body);font-size:17px;line-height:1.8;color:var(--color-forest);">
-        {t.story.body1}
-      </p>
-      <p style="font-family:var(--font-body);font-size:17px;line-height:1.8;color:var(--color-forest);">
-        {t.story.body2}
-      </p>
-      <p style="font-family:var(--font-body);font-size:16px;line-height:1.8;color:var(--color-muted);">
-        {t.story.body3}
-      </p>
+    <div class="story-body">
+      <p class="v1-story-p">{t.story.body1}</p>
+      <p class="v1-story-p">{t.story.body2}</p>
+      <p class="v1-story-p v1-story-p-muted">{t.story.body3}</p>
     </div>
 
-    <!-- Buttons -->
-    <div class="story-ctas" style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:2.5rem;opacity:0;">
+    <div class="story-ctas">
       <a href={`/${lang}/story`} class="btn btn-primary">
         {t.story.cta} <span class="arr">→</span>
       </a>
@@ -72,6 +34,47 @@ const { t, lang = 'en' } = Astro.props
 
   </div>
 </section>
+
+<style>
+  .v1-story {
+    background: var(--color-linen);
+    display: flex; align-items: center; justify-content: center;
+    padding: 5rem clamp(1.5rem, 6vw, 8rem);
+  }
+  .v1-story-inner { max-width: 52rem; width: 100%; text-align: center; }
+  .story-geo {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; margin-bottom: 3rem; opacity: 0;
+  }
+  .story-geo-line { width: 2rem; height: 1px; background: var(--color-copper); }
+  .story-geo-text {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.18em; color: var(--color-copper);
+  }
+  .v1-story-pullquote {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(28px, 3.8vw, 56px);
+    line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--color-midnight);
+    margin-bottom: 3rem;
+  }
+  .story-rule {
+    width: 3rem; height: 1px; background: var(--color-border);
+    margin: 0 auto 3rem; opacity: 0;
+  }
+  .story-body { display: flex; flex-direction: column; gap: 1.25rem; opacity: 0; }
+  .story-ctas { opacity: 0; }
+  .qw { display: inline-block; opacity: 0; transform: translateY(10px); }
+  .v1-story-p {
+    font-family: var(--font-body); font-size: 17px;
+    line-height: 1.8; color: var(--color-forest);
+  }
+  .v1-story-p-muted { font-size: 16px; color: var(--color-muted); }
+  .story-ctas {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    justify-content: center; margin-top: 2.5rem;
+  }
+</style>
 
 <script>
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -89,20 +92,18 @@ const { t, lang = 'en' } = Astro.props
       return
     }
 
-    // Geo accent line
     g.fromTo('.story-geo',
       { opacity: 0, y: 12 },
       { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
         scrollTrigger: { trigger: '#story', start: 'top 70%' } }
     )
 
-    // Word-by-word pull-quote
     const q = document.getElementById('pull-quote')
     if (q) {
       const raw = q.textContent?.trim() ?? ''
       q.innerHTML = raw
         .split(' ')
-        .map(w => `<span class="qw" style="display:inline-block;opacity:0;transform:translateY(10px);">${w}&nbsp;</span>`)
+        .map(w => `<span class="qw">${w}&nbsp;</span>`)
         .join('')
       g.to('.qw', {
         opacity: 1, y: 0,
@@ -111,21 +112,16 @@ const { t, lang = 'en' } = Astro.props
       })
     }
 
-    // Rule draws in
     g.fromTo('.story-rule',
       { opacity: 0, width: 0 },
       { opacity: 1, width: '3rem', duration: 0.5, ease: 'power2.out',
         scrollTrigger: { trigger: '.story-rule', start: 'top 88%' } }
     )
-
-    // Body
     g.fromTo('.story-body',
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out',
         scrollTrigger: { trigger: '.story-body', start: 'top 85%' } }
     )
-
-    // CTAs
     g.fromTo('.story-ctas',
       { opacity: 0, y: 12 },
       { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',

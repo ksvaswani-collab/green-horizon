@@ -3,26 +3,25 @@ interface Props { t: any }
 const { t } = Astro.props
 const imgs = ['/images/exp-forest.jpg', '/images/exp-dunes.jpg', '/images/exp-sea.jpg']
 ---
-<section id="experiences" style="background:var(--color-limestone);padding:8rem clamp(1.5rem,4vw,4rem);">
-  <div style="max-width:1400px;margin:0 auto;">
-    <div class="eh" style="margin-bottom:5rem;">
-      <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">{t.experiences.label}</p>
-      <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-midnight);max-width:32rem;">{t.experiences.heading}</h2>
+<section id="experiences" class="v1-exp">
+  <div class="v1-exp-inner">
+    <div class="eh v1-exp-header">
+      <p class="v1-exp-label">{t.experiences.label}</p>
+      <h2 class="v1-exp-heading">{t.experiences.heading}</h2>
     </div>
     <div class="eg">
       {t.experiences.items.map((item: any, i: number) => (
-        <div class="ec" style="display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(24px);">
-          <div style="position:relative;aspect-ratio:3/4;overflow:hidden;flex-shrink:0;border-radius:16px;">
-            <img src={imgs[i]} alt={item.title} loading="lazy" class="ei"
-              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(0.85) contrast(1.02);transition:transform 0.8s cubic-bezier(0.16,1,0.3,1);" />
-            <div style="position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(to top,rgba(13,17,23,0.72) 0%,transparent 100%);" aria-hidden="true"></div>
-            <div style="position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;">
-              <span style="display:block;font-family:var(--font-mono);font-size:11px;color:var(--color-copper);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.5rem;">{item.label}</span>
-              <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.4rem,2.5vw,1.8rem);line-height:1.15;color:#F8F5F0;">{item.title}</h3>
+        <div class="ec">
+          <div class="v1-exp-card-img-wrap">
+            <img src={imgs[i]} alt={item.title} loading="lazy" class="ei v1-exp-img" />
+            <div class="v1-exp-img-scrim" aria-hidden="true"></div>
+            <div class="v1-exp-img-overlay">
+              <span class="v1-exp-item-label">{item.label}</span>
+              <h3 class="v1-exp-item-title">{item.title}</h3>
             </div>
           </div>
-          <div style="padding:1.5rem 0 0;">
-            <p style="font-family:var(--font-body);font-size:15px;line-height:1.7;color:var(--color-forest);">{item.body}</p>
+          <div class="v1-exp-card-body">
+            <p class="v1-exp-body-text">{item.body}</p>
           </div>
         </div>
       ))}
@@ -31,9 +30,43 @@ const imgs = ['/images/exp-forest.jpg', '/images/exp-dunes.jpg', '/images/exp-se
 </section>
 
 <style>
-  .eg{display:grid;grid-template-columns:1fr;gap:3rem;}
-  @media(min-width:768px){.eg{grid-template-columns:repeat(3,1fr);gap:2rem;}}
-  .ec:hover .ei{transform:scale(1.04);}
+  .v1-exp { background: var(--color-limestone); padding: 8rem clamp(1.5rem,4vw,4rem); }
+  .v1-exp-inner { max-width: 1400px; margin: 0 auto; }
+  .v1-exp-header { margin-bottom: 5rem; opacity: 0; }
+  .v1-exp-label {
+    font-family: var(--font-mono); font-size: 11px; color: var(--color-muted);
+    text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.25rem;
+  }
+  .v1-exp-heading {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(32px,4vw,56px); line-height: 1.1;
+    letter-spacing: -0.01em; color: var(--color-midnight); max-width: 32rem;
+  }
+  .eg { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+  @media(min-width:768px) { .eg { grid-template-columns: repeat(3,1fr); gap: 2rem; } }
+  .ec { display: flex; flex-direction: column; overflow: hidden; opacity: 0; transform: translateY(24px); }
+  .v1-exp-card-img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; flex-shrink: 0; border-radius: 16px; }
+  .v1-exp-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; filter: saturate(0.85) contrast(1.02);
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .ec:hover .v1-exp-img { transform: scale(1.04); }
+  .v1-exp-img-scrim {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
+    background: linear-gradient(to top, rgba(13,17,23,0.72) 0%, transparent 100%);
+  }
+  .v1-exp-img-overlay { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; }
+  .v1-exp-item-label {
+    display: block; font-family: var(--font-mono); font-size: 11px; color: var(--color-copper);
+    text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;
+  }
+  .v1-exp-item-title {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(1.4rem,2.5vw,1.8rem); line-height: 1.15; color: #F8F5F0;
+  }
+  .v1-exp-card-body { padding: 1.5rem 0 0; }
+  .v1-exp-body-text { font-family: var(--font-body); font-size: 15px; line-height: 1.7; color: var(--color-forest); }
 </style>
 
 <script>
@@ -43,9 +76,11 @@ const imgs = ['/images/exp-forest.jpg', '/images/exp-dunes.jpg', '/images/exp-se
     if (!g || !ST) { setTimeout(init, 50); return }
     if (!rm) {
       g.fromTo('.eh', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: '#experiences', start: 'top 75%' } })
-      document.querySelectorAll('.ec').forEach((c, i) => { g.to(c, { opacity: 1, y: 0, duration: 0.7, delay: i * 0.12, ease: 'power3.out', scrollTrigger: { trigger: c, start: 'top 85%' } }) })
+      document.querySelectorAll('.ec').forEach((c, i) => {
+        g.to(c, { opacity: 1, y: 0, duration: 0.7, delay: i * 0.12, ease: 'power3.out', scrollTrigger: { trigger: c, start: 'top 85%' } })
+      })
     } else {
-      document.querySelectorAll('.ec').forEach((e: any) => { e.style.opacity = '1'; e.style.transform = 'none' })
+      document.querySelectorAll<HTMLElement>('.ec').forEach(e => { e.style.opacity = '1'; e.style.transform = 'none' })
     }
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()

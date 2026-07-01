@@ -2,70 +2,97 @@
 interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
 ---
-<section style="position:relative;width:100%;height:100svh;overflow:hidden;background:#1A2420;">
+<section class="v1-hero">
   <img
     src="/images/hero.jpg"
     alt="A lone figure standing on a cliff above ancient forested valleys — the landscape of Green Horizon"
     id="hero-img"
+    class="v1-hero-img"
     loading="eager"
     fetchpriority="high"
-    style="
-      position:absolute;inset:0;
-      width:100%;height:100%;
-      object-fit:cover;
-      object-position:center 35%;
-      opacity:0;
-    "
   />
 
-  <!-- Localized text backing: soft vignette ONLY behind the text block, not the image -->
-  <!-- This is not a gradient overlay — it is scoped to the text container footprint only -->
-  <div aria-hidden="true" style="
-    position:absolute;
-    bottom:0;left:0;
-    width:min(56rem,80vw);height:60%;
-    background:radial-gradient(ellipse 80% 80% at 0% 100%, rgba(13,17,23,0.62) 0%, transparent 70%);
-    pointer-events:none;
-  "></div>
+  <div class="v1-hero-vignette" aria-hidden="true"></div>
 
-  <!-- Bottom-left anchored content -->
-  <div style="position:absolute;bottom:4rem;left:clamp(1.5rem,4vw,4rem);max-width:min(42rem,90vw);">
-    <h1 style="
-      font-family:var(--font-display);font-weight:300;
-      font-size:clamp(52px,7vw,96px);
-      line-height:1.05;letter-spacing:-0.02em;
-      color:#F8F5F0;
-      text-shadow:0 2px 24px rgba(13,17,23,0.35);
-    ">
-      <span class="hw" style="display:block;opacity:0;">{t.hero.line1}</span>
-      <span class="hw" style="display:block;opacity:0;">{t.hero.line2}</span>
-      <span class="hw" style="display:block;opacity:0;">{t.hero.line3}</span>
+  <div class="v1-hero-content">
+    <h1 class="v1-hero-h1">
+      <span class="hw">{t.hero.line1}</span>
+      <span class="hw">{t.hero.line2}</span>
+      <span class="hw">{t.hero.line3}</span>
     </h1>
-
-    <div id="hero-ctas" style="margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:0.875rem;align-items:center;opacity:0;">
+    <div id="hero-ctas" class="v1-hero-ctas">
       <a href={`/${lang}/#story`} class="btn btn-primary-inv">
         {t.hero.cta_primary} <span class="arr">→</span>
       </a>
-      <a href={`/${lang}/#contact`} class="btn" style="
-        background:transparent;
-        color:#F8F5F0;
-        border:1px solid rgba(248,245,240,0.4);
-        border-radius:16px;
-      "
-        onmouseover="this.style.borderColor='rgba(248,245,240,0.8)';this.style.background='rgba(248,245,240,0.1)'"
-        onmouseout="this.style.borderColor='rgba(248,245,240,0.4)';this.style.background='transparent'"
-      >
+      <a href={`/${lang}/#contact`} class="btn v1-hero-btn-ghost">
         {t.hero.cta_secondary}
       </a>
     </div>
   </div>
 
-  <!-- Scroll indicator -->
-  <div style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;" aria-hidden="true">
-    <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:rgba(248,245,240,0.45);text-transform:uppercase;">scroll</span>
-    <div id="scroll-line" style="width:1px;height:0;background:rgba(248,245,240,0.5);"></div>
+  <div class="v1-scroll-indicator" aria-hidden="true">
+    <span class="v1-scroll-label">scroll</span>
+    <div id="scroll-line" class="v1-scroll-line"></div>
   </div>
 </section>
+
+<style>
+  .v1-hero {
+    position: relative; width: 100%; height: 100svh;
+    overflow: hidden; background: #1A2420;
+  }
+  .v1-hero-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 35%;
+    opacity: 0;
+  }
+  .v1-hero-vignette {
+    position: absolute; bottom: 0; left: 0;
+    width: min(56rem, 80vw); height: 60%;
+    background: radial-gradient(ellipse 80% 80% at 0% 100%, rgba(13,17,23,0.62) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .v1-hero-content {
+    position: absolute; bottom: 4rem;
+    left: clamp(1.5rem, 4vw, 4rem);
+    max-width: min(42rem, 90vw);
+  }
+  .v1-hero-h1 {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 1.05; letter-spacing: -0.02em;
+    color: #F8F5F0;
+    text-shadow: 0 2px 24px rgba(13,17,23,0.35);
+  }
+  .hw { display: block; opacity: 0; }
+  .v1-hero-ctas {
+    margin-top: 2.5rem;
+    display: flex; flex-wrap: wrap; gap: 0.875rem; align-items: center;
+    opacity: 0;
+  }
+  .v1-hero-btn-ghost {
+    background: transparent;
+    color: #F8F5F0;
+    border: 1px solid rgba(248,245,240,0.4);
+    border-radius: 16px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .v1-hero-btn-ghost:hover {
+    border-color: rgba(248,245,240,0.8);
+    background: rgba(248,245,240,0.1);
+  }
+  .v1-scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .v1-scroll-label {
+    font-family: var(--font-mono); font-size: 9px;
+    letter-spacing: 0.15em; color: rgba(248,245,240,0.45);
+    text-transform: uppercase;
+  }
+  .v1-scroll-line { width: 1px; height: 0; background: rgba(248,245,240,0.5); }
+</style>
 
 <script>
   const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -84,24 +111,16 @@ const { t, lang = 'en' } = Astro.props
     }
 
     const tl = g.timeline({ delay: 0.15 })
-
-    // Image drifts in — subtle scale from 1.04 to 1 alongside fade
     tl.fromTo('#hero-img',
       { opacity: 0, scale: 1.04 },
       { opacity: 1, scale: 1, duration: 2.0, ease: 'power2.out' }
     )
-
-    // Words stagger up
     tl.fromTo('.hw',
       { opacity: 0, y: 28 },
       { opacity: 1, y: 0, duration: 1.0, stagger: 0.2, ease: 'power3.out' },
       '-=1.4'
     )
-
-    // CTAs
     tl.to('#hero-ctas', { opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.4')
-
-    // Scroll line pulse
     tl.fromTo('#scroll-line',
       { height: 0 },
       { height: 48, duration: 1.1, ease: 'power2.inOut', repeat: -1, yoyo: true },

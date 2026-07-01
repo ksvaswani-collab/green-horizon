@@ -3,23 +3,22 @@ interface Props { t: any; lang?: string }
 const { t, lang = 'en' } = Astro.props
 const rimgs = ['/images/room-earth.jpg', '/images/room-water.jpg', '/images/room-fire.jpg', '/images/room-air.jpg']
 ---
-<section id="rooms" style="background:var(--color-limestone);padding:8rem clamp(1.5rem,4vw,4rem);border-top:1px solid var(--color-border);">
-  <div style="max-width:1400px;margin:0 auto;">
-    <div style="margin-bottom:5rem;">
-      <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">{t.rooms.label}</p>
-      <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-0.01em;color:var(--color-midnight);">{t.rooms.heading}</h2>
+<section id="rooms" class="v1-rooms">
+  <div class="v1-rooms-inner">
+    <div class="v1-rooms-header">
+      <p class="v1-rooms-label">{t.rooms.label}</p>
+      <h2 class="v1-rooms-heading">{t.rooms.heading}</h2>
     </div>
     <div class="rg">
       {t.rooms.items.map((r: any, i: number) => (
-        <article class="rc" style="display:flex;flex-direction:column;opacity:0;transform:translateY(20px);">
-          <div style="position:relative;aspect-ratio:4/3;overflow:hidden;margin-bottom:1.5rem;border-radius:16px;">
-            <img src={rimgs[i]} alt={r.name} loading="lazy" class="ri"
-              style="width:100%;height:100%;object-fit:cover;filter:saturate(0.88) contrast(1.02);transition:transform 0.9s cubic-bezier(0.16,1,0.3,1);" />
+        <article class="rc">
+          <div class="v1-room-img-wrap">
+            <img src={rimgs[i]} alt={r.name} loading="lazy" class="ri v1-room-img" />
           </div>
-          <span style="font-family:var(--font-mono);font-size:11px;color:var(--color-copper);letter-spacing:0.15em;margin-bottom:0.5rem;display:block;">{r.element}</span>
-          <h3 style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.2;color:var(--color-midnight);margin-bottom:0.75rem;">{r.name}</h3>
-          <p style="font-family:var(--font-body);font-size:14px;line-height:1.7;color:var(--color-forest);flex:1;">{r.body}</p>
-          <a href={`/${lang}/#contact`} class="btn btn-primary" style="margin-top:1.25rem;align-self:flex-start;font-size:13px;">
+          <span class="v1-room-element">{r.element}</span>
+          <h3 class="v1-room-name">{r.name}</h3>
+          <p class="v1-room-body">{r.body}</p>
+          <a href={`/${lang}/#contact`} class="btn btn-primary v1-room-cta">
             Enquire <span class="arr">→</span>
           </a>
         </article>
@@ -29,12 +28,40 @@ const rimgs = ['/images/room-earth.jpg', '/images/room-water.jpg', '/images/room
 </section>
 
 <style>
-  .rg{display:grid;grid-template-columns:1fr;gap:3rem;}
-  @media(min-width:640px){.rg{grid-template-columns:repeat(2,1fr);}}
-  @media(min-width:1024px){.rg{grid-template-columns:repeat(4,1fr);gap:2rem;}}
-  .rc:hover .ri{transform:scale(1.04);}
-  .rca:hover{border-color:var(--color-copper);}
-  .rca:hover .arr,.rmc:hover .arr{transform:translateX(5px);}
+  .v1-rooms { background: var(--color-limestone); padding: 8rem clamp(1.5rem,4vw,4rem); border-top: 1px solid var(--color-border); }
+  .v1-rooms-inner { max-width: 1400px; margin: 0 auto; }
+  .v1-rooms-header { margin-bottom: 5rem; }
+  .v1-rooms-label {
+    font-family: var(--font-mono); font-size: 11px; color: var(--color-muted);
+    text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.25rem;
+  }
+  .v1-rooms-heading {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(32px,4vw,56px); line-height: 1.1;
+    letter-spacing: -0.01em; color: var(--color-midnight);
+  }
+  .rg { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+  @media(min-width:640px)  { .rg { grid-template-columns: repeat(2,1fr); } }
+  @media(min-width:1024px) { .rg { grid-template-columns: repeat(4,1fr); gap: 2rem; } }
+  .rc { display: flex; flex-direction: column; opacity: 0; transform: translateY(20px); }
+  .v1-room-img-wrap { position: relative; aspect-ratio: 4/3; overflow: hidden; margin-bottom: 1.5rem; border-radius: 16px; }
+  .v1-room-img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.88) contrast(1.02);
+    transition: transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  }
+  .rc:hover .v1-room-img { transform: scale(1.04); }
+  .v1-room-element {
+    font-family: var(--font-mono); font-size: 11px; color: var(--color-copper);
+    letter-spacing: 0.15em; margin-bottom: 0.5rem; display: block;
+  }
+  .v1-room-name {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(1.25rem,2vw,1.6rem); line-height: 1.2;
+    color: var(--color-midnight); margin-bottom: 0.75rem;
+  }
+  .v1-room-body { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--color-forest); flex: 1; }
+  .v1-room-cta { margin-top: 1.25rem; align-self: flex-start; font-size: 13px; }
 </style>
 
 <script>
@@ -42,8 +69,13 @@ const rimgs = ['/images/room-earth.jpg', '/images/room-water.jpg', '/images/room
   const init = () => {
     const g = (window as any).gsap, ST = (window as any).ScrollTrigger
     if (!g || !ST) { setTimeout(init, 50); return }
-    if (!rm) { document.querySelectorAll('.rc').forEach((c, i) => { g.to(c, { opacity: 1, y: 0, duration: 0.7, delay: i * 0.1, ease: 'power3.out', scrollTrigger: { trigger: '#rooms', start: 'top 70%' } }) }) }
-    else { document.querySelectorAll('.rc').forEach((e: any) => { e.style.opacity = '1'; e.style.transform = 'none' }) }
+    if (!rm) {
+      document.querySelectorAll('.rc').forEach((c, i) => {
+        g.to(c, { opacity: 1, y: 0, duration: 0.7, delay: i * 0.1, ease: 'power3.out', scrollTrigger: { trigger: '#rooms', start: 'top 70%' } })
+      })
+    } else {
+      document.querySelectorAll<HTMLElement>('.rc').forEach(e => { e.style.opacity = '1'; e.style.transform = 'none' })
+    }
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 </script>

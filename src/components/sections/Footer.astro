@@ -14,153 +14,130 @@ const groupB = [
 ]
 ---
 
-<footer style="background:var(--color-forest);color:var(--color-limestone);overflow:hidden;">
-
-  <!-- ── UPPER: 3-column row ───────────────────────── -->
-  <div style="
-    padding:7rem clamp(1.5rem,5vw,5rem) 5rem;
-    border-bottom:1px solid rgba(232,228,220,0.1);
-    display:flex;flex-direction:column;gap:4rem;
-  ">
-
-    <!-- Three columns: display heading · nav group A · nav group B -->
+<footer class="v1-footer">
+  <div class="v1-footer-upper">
     <div class="foot-top-row">
-
-      <!-- Col 1: editorial display text -->
-      <div style="flex:1.6;min-width:0;">
-        <p class="foot-line" style="color:var(--color-limestone);">The Black Sea.</p>
-        <p class="foot-line" style="color:rgba(232,228,220,0.4);">The Forest.</p>
-        <p class="foot-line" style="color:rgba(232,228,220,0.2);">The Horizon.</p>
+      <div class="foot-display-col">
+        <p class="foot-line foot-line-1">The Black Sea.</p>
+        <p class="foot-line foot-line-2">The Forest.</p>
+        <p class="foot-line foot-line-3">The Horizon.</p>
       </div>
 
-      <!-- Col 2: Discover links -->
-      <div style="flex:1;min-width:0;" class="foot-nav-col">
+      <div class="foot-nav-col">
         <p class="foot-col-header">Discover</p>
-        <nav aria-label="Discover navigation" style="display:flex;flex-direction:column;gap:0.55rem;">
-          {groupA.map(link => (
-            <a href={link.href} class="foot-nav-link">{link.label}</a>
-          ))}
+        <nav aria-label="Discover navigation" class="foot-nav-list">
+          {groupA.map(link => <a href={link.href} class="foot-nav-link">{link.label}</a>)}
         </nav>
       </div>
 
-      <!-- Col 3: Stay links -->
-      <div style="flex:1;min-width:0;" class="foot-nav-col">
+      <div class="foot-nav-col">
         <p class="foot-col-header">Stay</p>
-        <nav aria-label="Stay navigation" style="display:flex;flex-direction:column;gap:0.55rem;">
-          {groupB.map(link => (
-            <a href={link.href} class="foot-nav-link">{link.label}</a>
-          ))}
+        <nav aria-label="Stay navigation" class="foot-nav-list">
+          {groupB.map(link => <a href={link.href} class="foot-nav-link">{link.label}</a>)}
         </nav>
       </div>
     </div>
 
-    <!-- Sub-row: coords + tagline + CTA -->
-    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:2rem;">
+    <div class="foot-subrow">
       <div>
-        <p style="font-family:var(--font-mono);font-size:11px;color:rgba(232,228,220,0.45);letter-spacing:0.15em;margin-bottom:0.75rem;">
-          {t.footer.coordinates}
-        </p>
-        <p style="font-family:var(--font-body);font-size:15px;color:rgba(232,228,220,0.6);max-width:24rem;line-height:1.65;">
-          {t.footer.tagline}
-        </p>
+        <p class="foot-coords">{t.footer.coordinates}</p>
+        <p class="foot-tagline">{t.footer.tagline}</p>
       </div>
-
-      <a href={`${lp}/#contact`} class="btn" style="
-        background:transparent;color:var(--color-limestone);
-        border:1px solid rgba(232,228,220,0.3);border-radius:16px;
-        padding:0.8rem 1.75rem;
-        font-family:var(--font-body);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;text-decoration:none;
-        display:inline-flex;align-items:center;gap:0.5rem;
-        transition:border-color 0.2s ease,background 0.2s ease;
-        align-self:flex-end;
-      "
-        onmouseover="this.style.borderColor='rgba(232,228,220,0.7)';this.style.background='rgba(232,228,220,0.06)'"
-        onmouseout="this.style.borderColor='rgba(232,228,220,0.3)';this.style.background='transparent'"
-      >
+      <a href={`${lp}/#contact`} class="btn foot-cta-btn">
         Register Interest <span class="foot-arr">→</span>
       </a>
     </div>
   </div>
 
-  <!-- ── LOWER BAR ───────────────────────────────────── -->
-  <div style="
-    padding:2rem clamp(1.5rem,5vw,5rem);
-    display:flex;flex-wrap:wrap;
-    align-items:center;justify-content:space-between;
-    gap:1.5rem;
-  ">
-
-    <!-- Left: wordmark + email with icon -->
-    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:2rem;">
+  <div class="v1-footer-lower">
+    <div class="foot-lower-left">
       <a href={`${lp}/`} class="foot-wordmark">HORIZON</a>
       <a href="mailto:hello@greenhorizon.bg" class="foot-email-link" aria-label="Email us">
-        <!-- Mail icon -->
-        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true" style="flex-shrink:0;opacity:0.6;">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true" class="foot-mail-icon">
           <rect x="0.5" y="0.5" width="13" height="10" rx="1.5" stroke="currentColor"/>
           <path d="M1 1.5l6 4.5 6-4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         hello@greenhorizon.bg
       </a>
     </div>
-
-    <!-- Right: legal + cookie + copyright -->
-    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;">
+    <div class="foot-lower-right">
       <a href={`${lp}/privacy`} class="foot-legal-link">{t.footer.legal}</a>
-      <span style="color:rgba(232,228,220,0.2);font-size:10px;" aria-hidden="true">·</span>
+      <span class="foot-dot" aria-hidden="true">·</span>
       <a href={`${lp}/cookies`} class="foot-legal-link">Cookie policy</a>
-      <span style="color:rgba(232,228,220,0.2);font-size:10px;" aria-hidden="true">·</span>
+      <span class="foot-dot" aria-hidden="true">·</span>
       <span class="foot-copyright">© 2026 Green Horizon</span>
     </div>
   </div>
-
 </footer>
 
 <style>
-  /* Display heading lines */
-  .foot-line {
-    font-family: var(--font-display);
-    font-weight: 300;
-    font-size: clamp(2.5rem, 5.5vw, 5.5rem);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
+  .v1-footer { background: var(--color-forest); color: var(--color-limestone); overflow: hidden; }
+
+  .v1-footer-upper {
+    padding: 7rem clamp(1.5rem,5vw,5rem) 5rem;
+    border-bottom: 1px solid rgba(232,228,220,0.1);
+    display: flex; flex-direction: column; gap: 4rem;
   }
 
-  /* Three-column top row */
-  .foot-top-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 5rem;
-  }
+  .foot-top-row { display: flex; align-items: flex-start; gap: 5rem; }
   @media (max-width: 860px) {
     .foot-top-row { flex-direction: column; gap: 2.5rem; }
     .foot-nav-col { display: flex; flex-direction: row; gap: 3rem; align-items: flex-start; flex-wrap: wrap; }
   }
-  @media (max-width: 480px) {
-    .foot-nav-col { flex-direction: column; gap: 1.5rem; }
-  }
+  @media (max-width: 480px) { .foot-nav-col { flex-direction: column; gap: 1.5rem; } }
 
-  /* Nav column header */
+  .foot-display-col { flex: 1.6; min-width: 0; }
+  .foot-line {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(2.5rem,5.5vw,5.5rem); line-height: 1.08; letter-spacing: -0.02em;
+  }
+  .foot-line-1 { color: var(--color-limestone); }
+  .foot-line-2 { color: rgba(232,228,220,0.4); }
+  .foot-line-3 { color: rgba(232,228,220,0.2); }
+
+  .foot-nav-col { flex: 1; min-width: 0; }
   .foot-col-header {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(232,228,220,0.3);
-    margin-bottom: 1rem;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(232,228,220,0.3); margin-bottom: 1rem;
   }
-
-  /* Nav links */
+  .foot-nav-list { display: flex; flex-direction: column; gap: 0.55rem; }
   .foot-nav-link {
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 400;
-    color: rgba(232,228,220,0.6);
-    text-decoration: none;
-    transition: color 0.2s ease;
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    color: rgba(232,228,220,0.6); text-decoration: none; transition: color 0.2s ease;
   }
   .foot-nav-link:hover { color: rgba(232,228,220,1); }
 
-  /* Wordmark */
+  .foot-subrow {
+    display: flex; flex-wrap: wrap;
+    align-items: flex-end; justify-content: space-between; gap: 2rem;
+  }
+  .foot-coords {
+    font-family: var(--font-mono); font-size: 11px;
+    color: rgba(232,228,220,0.45); letter-spacing: 0.15em; margin-bottom: 0.75rem;
+  }
+  .foot-tagline {
+    font-family: var(--font-body); font-size: 15px;
+    color: rgba(232,228,220,0.6); max-width: 24rem; line-height: 1.65;
+  }
+
+  .foot-cta-btn {
+    background: transparent; color: var(--color-limestone);
+    border: 1px solid rgba(232,228,220,0.3); border-radius: 16px;
+    padding: 0.8rem 1.75rem; align-self: flex-end;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .foot-cta-btn:hover { border-color: rgba(232,228,220,0.7); background: rgba(232,228,220,0.06); }
+  .foot-arr { display: inline-block; transition: transform 0.3s ease; }
+  .foot-cta-btn:hover .foot-arr { transform: translateX(4px); }
+
+  .v1-footer-lower {
+    padding: 2rem clamp(1.5rem,5vw,5rem);
+    display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: space-between; gap: 1.5rem;
+  }
+  .foot-lower-left  { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; }
+  .foot-lower-right { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; }
+
   .foot-wordmark {
     font-family: var(--font-display); font-weight: 300; font-size: 1rem;
     color: var(--color-limestone); text-decoration: none; letter-spacing: -0.01em;
@@ -168,36 +145,19 @@ const groupB = [
   }
   .foot-wordmark:hover { opacity: 0.6; }
 
-  /* Email link with icon */
   .foot-email-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-body);
-    font-size: 15px;
-    color: rgba(232,228,220,0.7);
-    text-decoration: none;
-    transition: color 0.2s ease;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-body); font-size: 15px;
+    color: rgba(232,228,220,0.7); text-decoration: none; transition: color 0.2s ease;
   }
   .foot-email-link:hover { color: rgba(232,228,220,1); }
+  .foot-mail-icon { flex-shrink: 0; opacity: 0.6; }
 
-  /* Legal links */
   .foot-legal-link {
-    font-family: var(--font-body);
-    font-size: 14px;
-    color: rgba(232,228,220,0.55);
-    text-decoration: none;
-    transition: color 0.2s ease;
+    font-family: var(--font-body); font-size: 14px;
+    color: rgba(232,228,220,0.55); text-decoration: none; transition: color 0.2s ease;
   }
   .foot-legal-link:hover { color: rgba(232,228,220,0.85); }
-
-  /* Copyright */
-  .foot-copyright {
-    font-family: var(--font-body);
-    font-size: 14px;
-    color: rgba(232,228,220,0.65);
-  }
-
-  .foot-arr { display: inline-block; transition: transform 0.3s ease; }
-  footer a:hover .foot-arr { transform: translateX(4px); }
+  .foot-dot { color: rgba(232,228,220,0.2); font-size: 10px; }
+  .foot-copyright { font-family: var(--font-body); font-size: 14px; color: rgba(232,228,220,0.65); }
 </style>
