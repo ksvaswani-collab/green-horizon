@@ -53,15 +53,6 @@ body {
 @media (max-width: 768px) {
   body { font-size: 12px; }
 }
-
-<<<<<<< Updated upstream
-=======
-@media (max-width: 768px) {
-  html { font-size: 12px; }
-  body { font-size: 1rem; }
-}
-
->>>>>>> Stashed changes
 .text-hero    { font-size: clamp(52px,7vw,96px);   line-height: 1.05; letter-spacing: -0.02em; }
 .text-section { font-size: clamp(32px,4vw,56px);   line-height: 1.1;  letter-spacing: -0.01em; }
 .text-element { font-size: clamp(80px,10vw,140px); line-height: 0.9; }
