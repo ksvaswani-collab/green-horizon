@@ -13,7 +13,7 @@
 
     <div class="v3-reg-right" data-v3-reveal="left" data-v3-delay="80">
       <form class="v3-reg-form" name="v3-register" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <p style="display:none"><label>Leave empty: <input name="bot-field" tabindex="-1" /></label></p>
+        <p class="v3-honeypot"><label>Leave empty: <input name="bot-field" tabindex="-1" /></label></p>
 
         <div class="v3-reg-field">
           <label class="v3-reg-label" for="v3-name">Full name *</label>
@@ -54,3 +54,7 @@
 
   </div>
 </section>
+
+<style>
+  .v3-honeypot { display: none; }
+</style>
