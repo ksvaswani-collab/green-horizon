@@ -3,10 +3,6 @@ interface Props { t: any; lang?: string }
 const { t } = Astro.props
 ---
 <section id="contact" class="v1-cta">
-
-  <!-- Gradient bridge: dissolves from limestone Rooms above into dark CTA -->
-  <div class="v1-cta-fade" aria-hidden="true"></div>
-
   <div class="v1-cta-inner">
 
     <div class="v1-cta-meta">
@@ -34,16 +30,9 @@ const { t } = Astro.props
 <style>
   .v1-cta {
     position: relative;
-    background: var(--color-midnight);
-    padding: 0 clamp(1.5rem, 4vw, 6rem) 9rem;
+    background: linear-gradient(to bottom, var(--color-limestone) 0%, var(--color-midnight) 10rem);
+    padding: 5rem clamp(1.5rem, 4vw, 6rem) 9rem;
     overflow: hidden;
-  }
-
-  .v1-cta-fade {
-    height: 8rem;
-    background: linear-gradient(to bottom, var(--color-limestone), var(--color-midnight));
-    margin: 0 calc(-1 * clamp(1.5rem, 4vw, 6rem));
-    margin-bottom: 4rem;
   }
 
   .v1-cta-inner {
