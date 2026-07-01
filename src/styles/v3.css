@@ -57,6 +57,14 @@ body {
   overflow-x: hidden;
   position: relative;
 }
+<<<<<<< Updated upstream
+=======
+@media (max-width: 768px) {
+  html { font-size: 12px; }
+  body { font-size: 1rem; }
+}
+.v3-no-scroll { overflow: hidden; }
+>>>>>>> Stashed changes
 
 /* Grain overlay — subtle SVG noise applied over everything */
 body::after {

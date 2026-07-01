@@ -48,6 +48,7 @@
   "register": {
     "heading": "Wees de eerste aan de horizon.",
     "body": "Green Horizon opent in 2026. Registreer uw interesse voor vroege toegang tot kamerselectie, updates van de bouw en een eerste aanbod van het team.",
+    "cta": "Registreer uw interesse",
     "fields": { "firstname": "Voornaam", "lastname": "Achternaam", "email": "E-mailadres", "interest": "Selecteer uw interesse", "interest_options": ["Kamers","Villa's","Beide","Ervaringen","Alles van het bovenstaande"], "note": "Een notitie aan Hanneke (optioneel)" },
     "submit": "Stuur mijn interesse",
     "note": "We reageren persoonlijk binnen 48 uur."

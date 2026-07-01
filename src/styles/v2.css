@@ -52,6 +52,11 @@ body {
   cursor: none; /* replaced by custom cursor */
 }
 
+@media (max-width: 768px) {
+  html { font-size: 12px; }
+  body { font-size: 1rem; }
+}
+
 img, video {
   display: block;
   max-width: 100%;

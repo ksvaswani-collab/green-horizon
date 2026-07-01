@@ -48,6 +48,7 @@
   "register": {
     "heading": "Be first on the horizon.",
     "body": "Green Horizon opens in 2026. Register your interest for early access to room selection, updates from the build, and a first offer from the team.",
+    "cta": "Register your interest",
     "fields": { "firstname": "First name", "lastname": "Last name", "email": "Email address", "interest": "Select your interest", "interest_options": ["Rooms","Villas","Both","Experiences","All of the above"], "note": "A note to Hanneke (optional)" },
     "submit": "Send my interest",
     "note": "We respond personally within 48 hours."

@@ -38,17 +38,25 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 16px; }
 body {
   background-color: var(--color-linen);   /* light theme base */
   color: var(--color-midnight);
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
 }
 :lang(bg) { --font-display: 'Alegreya', Georgia, serif; }
 
+<<<<<<< Updated upstream
+=======
+@media (max-width: 768px) {
+  html { font-size: 12px; }
+  body { font-size: 1rem; }
+}
+
+>>>>>>> Stashed changes
 .text-hero    { font-size: clamp(52px,7vw,96px);   line-height: 1.05; letter-spacing: -0.02em; }
 .text-section { font-size: clamp(32px,4vw,56px);   line-height: 1.1;  letter-spacing: -0.01em; }
 .text-element { font-size: clamp(80px,10vw,140px); line-height: 0.9; }
