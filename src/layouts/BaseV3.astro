@@ -1,145 +1,124 @@
 ---
-import '../styles/V3.css'
-// BaseV3.astro — Green Horizon V3 "Paper & Grain"
-// Horizontal fixed top nav, no sidebar, no GSAP, DM Serif Display throughout
-
 export interface Props {
   title?: string;
   description?: string;
-  ogImage?: string;
 }
 
 const {
   title = "Green Horizon — A cliff-edge hotel on Bulgaria's Black Sea coast",
-  description = 'Green Horizon is a family-built boutique hotel perched on an ancient volcanic cliff above the Black Sea, on the southern coast of Bulgaria. Opening 2026.',
-  ogImage = '/images/og-image.jpg',
+  description = "Green Horizon is a family-built boutique hotel perched on an ancient volcanic cliff above the Black Sea. Opening 2026.",
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://greenhorizon.bg');
+import '../styles/v3.css';
 ---
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="generator" content={Astro.generator} />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonicalURL.toString()} />
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content={canonicalURL.toString()} />
-  <meta property="og:title"       content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image"       content={ogImage} />
-  <meta property="og:locale"      content="en_GB" />
-  <meta property="og:site_name"   content="Green Horizon" />
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content={title} />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:image"       content={ogImage} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
-
 <body>
-  <!-- Skip to main content (WCAG 2.4.1) -->
-  <a href="#main-content" class="v3-skip-link">Skip to main content</a>
+  <a href="#main-content" class="v3-skip">Skip to main content</a>
 
-  <!-- ── Top Navigation ──────────────────────────────────────── -->
-  <header class="v3-header" role="banner" id="v3-header">
-    <div class="v3-header-inner">
-
-      <!-- Wordmark -->
-      <a href="/v3/" class="v3-header-wordmark" aria-label="Green Horizon — home">
-        Green Horizon
-      </a>
-
-      <!-- Centre nav links (desktop) -->
-      <nav class="v3-header-nav" role="navigation" aria-label="Main" id="main-nav">
-        <a href="#story"       class="v3-nav-link">Our Story</a>
-        <a href="#elements"    class="v3-nav-link">Elements</a>
-        <a href="#experiences" class="v3-nav-link">Experiences</a>
-        <a href="#build"       class="v3-nav-link">The Build</a>
-        <a href="#suites"      class="v3-nav-link">Suites</a>
+  <header class="v3-nav" id="v3-nav">
+    <div class="v3-nav-inner">
+      <a href="/v3/" class="v3-nav-wordmark">Green Horizon</a>
+      <nav class="v3-nav-links" id="v3-nav-links" aria-label="Main navigation">
+        <a href="#" class="v3-nav-link">Our Story</a>
+        <a href="#" class="v3-nav-link">Elements</a>
+        <a href="#" class="v3-nav-link">Experiences</a>
+        <a href="#" class="v3-nav-link">The Build</a>
+        <a href="#" class="v3-nav-link">Suites</a>
       </nav>
-
-      <!-- Right: CTA + hamburger -->
-      <div class="v3-header-right">
-        <a href="#register" class="v3-header-cta">Register interest</a>
-
-        <!-- Mobile hamburger -->
+      <div class="v3-nav-right">
+        <a href="#" class="v3-nav-cta">Register interest</a>
         <button
           class="v3-hamburger"
-          aria-controls="main-nav"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-          type="button"
+          aria-controls="v3-nav-links"
+          aria-label="Toggle menu"
         >
-          <span class="v3-hamburger-line"></span>
-          <span class="v3-hamburger-line"></span>
-          <span class="v3-hamburger-line v3-hamburger-line--short"></span>
+          <span class="v3-burger-line"></span>
+          <span class="v3-burger-line"></span>
+          <span class="v3-burger-line v3-burger-short"></span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- ── Main Content ──────────────────────────────────────────── -->
   <main class="v3-main" id="main-content" tabindex="-1">
     <slot />
   </main>
 
-  <!-- ── Mobile nav / hamburger script ───────────────────────── -->
   <script>
-    const toggle = document.querySelector('.v3-hamburger') as HTMLButtonElement | null;
-    const nav    = document.getElementById('main-nav') as HTMLElement | null;
+    import gsap from 'gsap'
+    import ScrollTrigger from 'gsap/ScrollTrigger'
+    gsap.registerPlugin(ScrollTrigger)
 
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => {
-        const isOpen = nav.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', String(isOpen));
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-      });
-      nav.querySelectorAll('.v3-nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-          nav.classList.remove('is-open');
-          toggle.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        });
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-          nav.classList.remove('is-open');
-          toggle.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-          toggle.focus();
-        }
-      });
+    // ── Scroll-reveal ──────────────────────────────────────────
+    // Elements marked data-v3-reveal="up|left|right" animate in when they enter viewport
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (!rm) {
+      // fade-up (default)
+      gsap.utils.toArray<HTMLElement>('[data-v3-reveal="up"]').forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          y: 28,
+          opacity: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          delay: Number(el.dataset.v3Delay ?? 0) / 1000,
+        })
+      })
+
+      // fade-right
+      gsap.utils.toArray<HTMLElement>('[data-v3-reveal="right"]').forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          x: -32,
+          opacity: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          delay: Number(el.dataset.v3Delay ?? 0) / 1000,
+        })
+      })
+
+      // fade-left
+      gsap.utils.toArray<HTMLElement>('[data-v3-reveal="left"]').forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          x: 32,
+          opacity: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          delay: Number(el.dataset.v3Delay ?? 0) / 1000,
+        })
+      })
     }
 
-    // Scrolled state for header shadow
-    const header = document.getElementById('v3-header');
-    if (header) {
-      window.addEventListener('scroll', () => {
-        header.classList.toggle('is-scrolled', window.scrollY > 48);
-      }, { passive: true });
-    }
-  </script>
+    // ── Nav scroll state ───────────────────────────────────────
+    const nav = document.getElementById('v3-nav')
+    window.addEventListener('scroll', () => {
+      nav?.classList.toggle('v3-nav--scrolled', window.scrollY > 48)
+    }, { passive: true })
 
-  <!-- ── Global scroll-reveal IntersectionObserver ───────────── -->
-  <script>
-    const reveals = document.querySelectorAll('.v3-reveal');
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('v3-visible');
-          observer.unobserve(e.target);
-        }
-      }),
-      { threshold: 0.15 }
-    );
-    reveals.forEach(el => observer.observe(el));
-  </script>
+    // ── Hamburger ──────────────────────────────────────────────
+    const hamburger = document.querySelector('.v3-hamburger') as HTMLButtonElement
+    const navLinks  = document.getElementById('v3-nav-links')
+    hamburger?.addEventListener('click', () => {
+      const open = navLinks?.classList.toggle('v3-nav-links--open')
+      hamburger.setAttribute('aria-expanded', String(open))
+      document.body.classList.toggle('v3-no-scroll', !!open)
+    })
 
+    // Prevent nav links from scrolling to sections
+    document.querySelectorAll('.v3-nav-link').forEach(link => {
+      link.addEventListener('click', e => e.preventDefault())
+    })
+  </script>
 </body>
 </html>

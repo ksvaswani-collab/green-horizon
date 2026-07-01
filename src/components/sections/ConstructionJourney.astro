@@ -84,7 +84,7 @@ const eimgs = ['/images/build-june-2025.jpg', '/images/build-march-2025.jpg', '/
       scaleY: 1,
       duration: 1.2,
       ease: 'power2.out',
-      scrollTrigger: { trigger: '#timeline', start: 'top 80%' },
+      scrollTrigger: { trigger: '#timeline', start: 'top 85%' },
     })
 
     // 2 — Per-entry: text slide-up + dot pop + image clip reveal
@@ -94,27 +94,27 @@ const eimgs = ['/images/build-june-2025.jpg', '/images/build-march-2025.jpg', '/
       const img     = entry.querySelector<HTMLElement>('.te-img')
 
       const tl = g.timeline({
-        scrollTrigger: { trigger: entry, start: 'top 82%' },
+        scrollTrigger: { trigger: entry, start: 'top 100%' },
       })
 
       // Text + dot
       tl.to(entry, { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' })
       tl.to(dot,   { scale: 1,   duration: 0.35, ease: 'back.out(2)' }, '-=0.4')
 
-      // Image: clip wipe from bottom + simultaneous de-scale
+      // Image: clip wipe + de-scale — starts at same time as text (no extra delay)
       if (imgWrap) {
         tl.to(imgWrap, {
           clipPath: 'inset(0% 0 0 0 round 16px)',
           duration: 0.9,
           ease: 'power3.out',
-        }, '-=0.3')
+        }, 0) // start at t=0, same as text
       }
       if (img) {
         tl.to(img, {
           scale: 1,
           duration: 0.9,
           ease: 'power3.out',
-        }, '<') // same time as clip
+        }, 0) // same time as clip
       }
     })
   }

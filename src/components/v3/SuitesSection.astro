@@ -1,278 +1,32 @@
 ---
-// SuitesSection.astro — V3 "Paper & Grain"
-// Full-width horizontal spreads, alternating image/text sides
-// No cards, no rounded corners, editorial layout
-// Background: v3-bg
-
 const suites = [
-  {
-    number: 'I',
-    name: 'The Cliff Room',
-    area: '42 m²',
-    orientation: 'Full south-facing sea view',
-    body: 'The largest of the rooms. One wall is almost entirely glass — the Plovdiv glazing. From the bed you see nothing but water and sky. The bathroom is behind you, in the rock-face side of the room, lined in the Provadia limestone. There is no minibar. There is a kettle, local honey, and a view that makes everything else feel unnecessary.',
-    image: '/images/room-earth.jpg',
-    imageAlt: 'Spacious hotel room interior with floor-to-ceiling sea view, simple linen bed, stone wall to the left',
-    imageLeft: true,
-  },
-  {
-    number: 'II',
-    name: 'The Forest Room',
-    area: '34 m²',
-    orientation: 'North-east, into the oak canopy',
-    body: 'Set slightly back from the cliff edge, the Forest Room looks into the tree canopy. In summer, the light through the leaves moves constantly across the white plaster ceiling. In autumn, the same canopy turns copper and the room glows at midday. One terrace, one hammock point, one outdoor shower fed by the same water system as the hotel pool.',
-    image: '/images/room-water.jpg',
-    imageAlt: 'Hotel room terrace looking into old oak forest, morning light, simple wooden furniture',
-    imageLeft: false,
-  },
-  {
-    number: 'III',
-    name: 'The Horizon Suite',
-    area: '68 m²',
-    orientation: 'Full 180° sea panorama, private terrace',
-    body: 'Two rooms, one terrace, and the widest sea view on the property. The suite occupies the north-east corner of the top floor. The stone terrace is twelve metres long. There is a day bed, an outdoor table, and a point where, in clear weather, you can see the silhouette of the Romanian coast. We do not charge by view. The suite is priced by what it costs to build and run it properly.',
-    image: '/images/room-fire.jpg',
-    imageAlt: 'Large private stone terrace with long day bed, panoramic sea view, late afternoon light',
-    imageLeft: true,
-  },
-  {
-    number: 'IV',
-    name: 'The Garden Room',
-    area: '28 m²',
-    orientation: 'Ground level, garden access',
-    body: 'The smallest room. No sea view — by design. If you want to sleep with the windows open and hear the nightingales in the garden rather than the sea, this is the room. Direct access to the hotel garden. Lowest rate. No compromise on the bed, the linen, or the bathroom.',
-    image: '/images/room-air.jpg',
-    imageAlt: 'Ground-floor hotel room with open French doors to a walled garden, simple interior, evening light',
-    imageLeft: false,
-  },
-];
+  { n:'I',   name:'The Cliff Room',    specs:'40 m²  ·  Full sea view  ·  Sea terrace',      body:'The largest of the rooms. One wall is almost entirely glass — the Plovdiv glazing. From the bed you see nothing but water and sky. The bathroom is in the rock face, lined in Provadia limestone. There is no minibar. There is local honey.', image:'/images/room-earth.jpg', alt:'The Cliff Room',    rev:false },
+  { n:'II',  name:'The Forest Room',   specs:'36 m²  ·  Forest view  ·  Own balcony',        body:'Set slightly back from the cliff edge, the Forest Room looks into the tree canopy. In summer, light through the leaves moves constantly across the white plaster ceiling. One terrace, one hammock point, one outdoor shower.',              image:'/images/room-water.jpg', alt:'The Forest Room',   rev:true  },
+  { n:'III', name:'The Horizon Suite', specs:'67 m²  ·  Sea view  ·  Twelve-metre terrace',  body:'Two rooms, one terrace, the widest sea view on the property. The stone terrace is twelve metres long. In clear weather you can see the silhouette of the Romanian coast. We do not charge by view.',                                         image:'/images/room-fire.jpg',  alt:'The Horizon Suite', rev:false },
+  { n:'IV',  name:'The Garden Room',   specs:'31 m²  ·  Garden level  ·  Garden access',     body:'No sea view — by design. If you want to hear nightingales rather than the sea, this is the room. Direct access to the hotel garden. Lowest rate. No compromise on feel, linen, or bathroom.',                                                 image:'/images/room-air.jpg',   alt:'The Garden Room',   rev:true  },
+]
 ---
-
-<section id="suites" class="v3-section v3-suites" aria-labelledby="suites-heading">
-
-  <hr class="v3-rule" aria-hidden="true" />
-
-  <!-- Section header -->
-  <header class="v3-suites__header v3-reveal">
-    <span class="v3-label" aria-hidden="true">—05—</span>
-    <div>
-      <p class="v3-label">Suites &amp; Rooms</p>
-      <h2 id="suites-heading">Four rooms.<br />One standard.</h2>
-    </div>
-  </header>
-
-  <hr class="v3-rule" aria-hidden="true" />
-
-  <!-- Suite spreads -->
-  {suites.map((suite) => (
-    <article class="v3-suites__spread v3-reveal" aria-label={`Suite ${suite.number}: ${suite.name}`}>
-
-      {suite.imageLeft ? (
-        <>
-          <!-- Image left, text right -->
-          <figure class="v3-suites__figure v3-suites__figure--left">
-            <img
-              src={suite.image}
-              alt={suite.imageAlt}
-              class="v3-suites__img"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-
-          <div class="v3-suites__text v3-suites__text--right">
-            <p class="v3-suites__number v3-text-muted" aria-hidden="true">
-              <em>{suite.number}</em>
-            </p>
-            <h3 class="v3-suites__name">{suite.name}</h3>
-            <p class="v3-suites__meta">
-              <span class="v3-label">{suite.area} — {suite.orientation}</span>
-            </p>
-            <p class="v3-suites__body">{suite.body}</p>
-            <a
-              href="#register"
-              class="v3-text-link"
-              aria-label={`Enquire about ${suite.name}`}
-            >
-              Enquire
-            </a>
+<section id="suites" class="v3-suites">
+  <div class="v3-suites-inner">
+    <p class="v3-suites-label">Suites &amp; Rooms</p>
+    <h2 class="v3-suites-title" data-v3-reveal="up">Four rooms. One standard.</h2>
+    <hr class="v3-hr" />
+    {suites.map((s, i) => (
+      <div>
+        <div class={`v3-suite${s.rev ? ' v3-suite-rev' : ''}`} data-v3-reveal="up" data-v3-delay={i * 60}>
+          <div class="v3-suite-imgwrap">
+            <img class="v3-suite-img" src={s.image} alt={s.alt} loading="lazy" />
           </div>
-        </>
-      ) : (
-        <>
-          <!-- Text left, image right -->
-          <div class="v3-suites__text v3-suites__text--left">
-            <p class="v3-suites__number v3-text-muted" aria-hidden="true">
-              <em>{suite.number}</em>
-            </p>
-            <h3 class="v3-suites__name">{suite.name}</h3>
-            <p class="v3-suites__meta">
-              <span class="v3-label">{suite.area} — {suite.orientation}</span>
-            </p>
-            <p class="v3-suites__body">{suite.body}</p>
-            <a
-              href="#register"
-              class="v3-text-link"
-              aria-label={`Enquire about ${suite.name}`}
-            >
-              Enquire
-            </a>
+          <div class="v3-suite-textcol">
+            <p class="v3-suite-n" aria-hidden="true">{s.n}</p>
+            <h3 class="v3-suite-name">{s.name}</h3>
+            <p class="v3-suite-specs">{s.specs}</p>
+            <p class="v3-suite-body">{s.body}</p>
+            <a href="#" class="v3-suite-link">Enquire</a>
           </div>
-
-          <figure class="v3-suites__figure v3-suites__figure--right">
-            <img
-              src={suite.image}
-              alt={suite.imageAlt}
-              class="v3-suites__img"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-        </>
-      )}
-
-    </article>
-    <hr class="v3-rule" aria-hidden="true" />
-  ))}
-
+        </div>
+        {i < suites.length - 1 && <hr class="v3-hr" />}
+      </div>
+    ))}
+  </div>
 </section>
-
-<style>
-  .v3-suites {
-    background-color: var(--v3-bg);
-    padding-top: 0;
-  }
-
-  /* Section header */
-  .v3-suites__header {
-    display: grid;
-    grid-template-columns: 4rem 1fr;
-    gap: 2rem;
-    align-items: end;
-    padding: 3rem 0 3rem;
-  }
-
-  .v3-suites__header > .v3-label {
-    font-size: 13px;
-    color: var(--v3-muted);
-    text-align: right;
-    padding-bottom: 0.3em;
-  }
-
-  .v3-suites__header h2 {
-    font-family: var(--font-v3-primary);
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    line-height: 1.1;
-    font-weight: 400;
-  }
-
-  /* ── Suite spread ─────────────────────────────────────────── */
-  .v3-suites__spread {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-    padding: 5rem 0;
-  }
-
-  /* Image — 45% effective width, deliberate whitespace via padding */
-  .v3-suites__figure {
-    margin: 0;
-    padding: 0 2rem;
-  }
-
-  .v3-suites__figure--left {
-    padding-left: 0;
-  }
-
-  .v3-suites__figure--right {
-    padding-right: 0;
-  }
-
-  .v3-suites__img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    filter: grayscale(1) contrast(1.1);
-    /* No border-radius */
-  }
-
-  /* Suite text */
-  .v3-suites__text {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  /* Suite number — large italic muted */
-  .v3-suites__number {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: clamp(2rem, 4vw, 4rem);
-    line-height: 1;
-    color: var(--v3-muted);
-    opacity: 0.5;
-    margin-bottom: -0.25rem;
-  }
-
-  /* Suite name */
-  .v3-suites__name {
-    font-family: var(--font-v3-primary);
-    font-size: clamp(1.6rem, 2.5vw, 2.5rem);
-    font-weight: 400;
-    line-height: 1.15;
-    color: var(--v3-ink);
-    margin-bottom: 0.25rem;
-  }
-
-  /* Meta / label */
-  .v3-suites__meta {
-    margin-bottom: 0.5rem;
-  }
-
-  /* Body text */
-  .v3-suites__body {
-    font-size: 17px;
-    line-height: 1.85;
-    color: var(--v3-ink);
-    max-width: 48ch;
-    margin-bottom: 0.5rem;
-  }
-
-  /* ── Tablet ─────────────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .v3-suites__spread {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-      padding: 3.5rem 0;
-    }
-
-    /* On mobile: image always stacks before text */
-    .v3-suites__figure {
-      padding: 0;
-      order: -1;
-    }
-
-    .v3-suites__figure--left {
-      order: -1;
-    }
-
-    .v3-suites__figure--right {
-      order: -1;
-    }
-
-    .v3-suites__text--left,
-    .v3-suites__text--right {
-      order: 0;
-    }
-
-    .v3-suites__header {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-
-    .v3-suites__header > .v3-label {
-      text-align: left;
-    }
-  }
-</style>

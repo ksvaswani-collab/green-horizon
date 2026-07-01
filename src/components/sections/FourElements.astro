@@ -157,6 +157,20 @@ const els = [
 
       let last = -1
 
+      // Animate first panel immediately when section enters view
+      ST.create({
+        trigger: '#epw',
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          if (last === -1) {
+            last = 0
+            if (hls[0]) g.to(hls[0], { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' })
+            if (bds[0]) g.to(bds[0], { opacity: 1, duration: 0.6, delay: 0.12, ease: 'power2.out' })
+          }
+        },
+      })
+
       g.to('#et', {
         x: () => -(track.scrollWidth - window.innerWidth),
         ease: 'none',

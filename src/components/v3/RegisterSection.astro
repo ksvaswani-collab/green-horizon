@@ -1,356 +1,56 @@
 ---
-// RegisterSection.astro — V3 "Paper & Grain"
-// Dark warm background, registration form
-// Bottom-border-only inputs, DM Serif throughout, 4px-radius submit only
-
-const formId = 'v3-register-form';
-const noteId = 'v3-register-note';
 ---
+<section id="register" class="v3-reg">
+  <div class="v3-reg-inner">
 
-<section id="register" class="v3-section v3-register" aria-labelledby="register-heading">
-
-  <div class="v3-register__inner">
-
-    <!-- Left: heading and copy -->
-    <div class="v3-register__left v3-reveal">
-
-      <p class="v3-label v3-register__label" aria-hidden="true">—06—</p>
-
-      <h2 id="register-heading" class="v3-register__heading">
-        <em>Be first<br />on the horizon.</em>
-      </h2>
-
-      <p class="v3-register__body">
-        We are opening in 2026. Before we publish rates or take bookings through
-        any platform, we will write to everyone on this list directly —
-        with dates, with prices, and with first right of refusal on the
-        rooms that are hardest to get.
-      </p>
-
-      <p class="v3-register__body">
-        We do not sell your details. We do not send newsletters.
-        You will hear from us when there is something worth saying.
-      </p>
-
-      <p class="v3-register__pullquote">
-        <em>«&thinsp;One conviction. One cliff. One sea.&thinsp;»</em>
-      </p>
-
+    <div class="v3-reg-left" data-v3-reveal="right">
+      <p class="v3-reg-marker">—06—</p>
+      <h2 class="v3-reg-heading">Be first on the horizon.</h2>
+      <p class="v3-reg-body">We are opening in 2026. Before we publish rates or take bookings through any platform, we will write to everyone on this list directly — with dates, prices, and first right of refusal on the rooms that are hardest to get.</p>
+      <p class="v3-reg-body">We do not sell your details. We do not send newsletters. You will hear from us when there is something worth saying.</p>
+      <blockquote class="v3-reg-quote">« One conviction. One cliff. One sea. »</blockquote>
     </div>
 
-    <!-- Right: form -->
-    <div class="v3-register__right v3-reveal">
+    <div class="v3-reg-right" data-v3-reveal="left" data-v3-delay="80">
+      <form class="v3-reg-form" name="v3-register" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <p style="display:none"><label>Leave empty: <input name="bot-field" tabindex="-1" /></label></p>
 
-      <form
-        id={formId}
-        class="v3-register__form"
-        method="POST"
-        action="/api/register"
-        novalidate
-        aria-describedby={noteId}
-      >
-
-        <!-- Name -->
-        <div class="v3-form__field">
-          <label for="reg-name" class="v3-form__label">
-            Full name <span class="v3-form__required" aria-hidden="true">*</span>
-          </label>
-          <input
-            type="text"
-            id="reg-name"
-            name="name"
-            class="v3-form__input"
-            required
-            aria-required="true"
-            autocomplete="name"
-            placeholder="Your name"
-          />
+        <div class="v3-reg-field">
+          <label class="v3-reg-label" for="v3-name">Full name *</label>
+          <input class="v3-reg-input" id="v3-name" type="text" name="name" required autocomplete="name" placeholder="Your name" />
         </div>
 
-        <!-- Email -->
-        <div class="v3-form__field">
-          <label for="reg-email" class="v3-form__label">
-            Email address <span class="v3-form__required" aria-hidden="true">*</span>
-          </label>
-          <input
-            type="email"
-            id="reg-email"
-            name="email"
-            class="v3-form__input"
-            required
-            aria-required="true"
-            autocomplete="email"
-            placeholder="you@example.com"
-          />
+        <div class="v3-reg-field">
+          <label class="v3-reg-label" for="v3-email">Email address *</label>
+          <input class="v3-reg-input" id="v3-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" />
         </div>
 
-        <!-- Country -->
-        <div class="v3-form__field">
-          <label for="reg-country" class="v3-form__label">
-            Country of residence
-          </label>
-          <input
-            type="text"
-            id="reg-country"
-            name="country"
-            class="v3-form__input"
-            autocomplete="country-name"
-            placeholder="Where are you writing from?"
-          />
+        <div class="v3-reg-field">
+          <label class="v3-reg-label" for="v3-country">Country of residence</label>
+          <input class="v3-reg-input" id="v3-country" type="text" name="country" autocomplete="country-name" placeholder="Where are you writing from?" />
         </div>
 
-        <!-- How did you find us -->
-        <div class="v3-form__field">
-          <label for="reg-source" class="v3-form__label">
-            How did you find Green Horizon?
-          </label>
-          <input
-            type="text"
-            id="reg-source"
-            name="source"
-            class="v3-form__input"
-            placeholder="Word of mouth, press, social media…"
-          />
+        <div class="v3-reg-field">
+          <label class="v3-reg-label" for="v3-source">How did you find Green Horizon?</label>
+          <select class="v3-reg-input v3-reg-select" id="v3-source" name="source">
+            <option value="" disabled selected>Word of mouth, press, social…</option>
+            <option value="word-of-mouth">Word of mouth</option>
+            <option value="press">Press</option>
+            <option value="social-media">Social media</option>
+            <option value="other">Other</option>
+          </select>
         </div>
 
-        <!-- Message / anything you want to say -->
-        <div class="v3-form__field">
-          <label for="reg-message" class="v3-form__label">
-            Anything you would like to say
-          </label>
-          <textarea
-            id="reg-message"
-            name="message"
-            class="v3-form__input v3-form__textarea"
-            rows="4"
-            placeholder="Questions, preferred dates, room preferences…"
-          ></textarea>
+        <div class="v3-reg-field">
+          <label class="v3-reg-label" for="v3-msg">Anything you would like to say</label>
+          <textarea class="v3-reg-input v3-reg-textarea" id="v3-msg" name="message" rows="3" placeholder="Questions, preferred dates, room preferences…"></textarea>
         </div>
 
-        <!-- Privacy note -->
-        <p id={noteId} class="v3-form__note v3-fine">
-          Your details are held securely and used only to contact you about Green Horizon.
-          We do not share or sell your data. You can ask to be removed from this list at any time
-          by emailing <a href="mailto:hello@greenhorizon.bg" class="v3-form__note-link">hello@greenhorizon.bg</a>.
-        </p>
+        <p class="v3-reg-privacy">Your details are held securely and used only to contact you about Green Horizon. We do not share or sell your data. Fields marked * are required.</p>
 
-        <!-- Required field note -->
-        <p class="v3-form__required-note v3-fine">
-          Fields marked <span aria-hidden="true">*</span><span class="v3-visually-hidden">with an asterisk</span> are required.
-        </p>
-
-        <!-- Submit -->
-        <button
-          type="submit"
-          class="v3-submit"
-          aria-label="Submit your registration of interest"
-        >
-          Register interest
-        </button>
-
+        <button class="v3-reg-submit" type="submit">Register interest</button>
       </form>
-
     </div>
 
   </div>
-
 </section>
-
-<style>
-  .v3-register {
-    background-color: var(--v3-dark);
-    color: var(--v3-bg);
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-
-  /* Override global p/h color for dark section */
-  .v3-register p,
-  .v3-register h2,
-  .v3-register label {
-    color: var(--v3-bg);
-  }
-
-  /* Inner: two-column grid */
-  .v3-register__inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: start;
-  }
-
-  /* Left column */
-  .v3-register__label {
-    color: rgba(247, 242, 234, 0.45);
-    margin-bottom: 1.5rem;
-  }
-
-  .v3-register__heading {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    line-height: 1.1;
-    color: var(--v3-bg);
-    margin-bottom: 2rem;
-  }
-
-  .v3-register__body {
-    font-family: var(--font-v3-primary);
-    font-size: 17px;
-    line-height: 1.85;
-    color: rgba(247, 242, 234, 0.8);
-    margin-bottom: 1.4em;
-    max-width: 44ch;
-  }
-
-  .v3-register__pullquote {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
-    color: rgba(247, 242, 234, 0.55);
-    margin-top: 2rem;
-    line-height: 1.5;
-  }
-
-  /* ── Form ──────────────────────────────────────────────────── */
-  .v3-register__form {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .v3-form__field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-bottom: 1.75rem;
-  }
-
-  .v3-form__label {
-    font-family: var(--font-v3-primary);
-    font-size: 14px;
-    font-style: italic;
-    letter-spacing: 0.04em;
-    color: rgba(247, 242, 234, 0.7);
-  }
-
-  .v3-form__required {
-    color: var(--v3-rust);
-    margin-left: 0.1em;
-  }
-
-  /* Inputs: bottom border only — flat, anti-digital */
-  .v3-form__input {
-    font-family: var(--font-v3-primary);
-    font-size: 17px;
-    color: var(--v3-bg);
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(247, 242, 234, 0.3);
-    border-radius: 0;
-    padding: 0.6em 0;
-    outline: none;
-    width: 100%;
-    transition: border-color 0.2s ease;
-    line-height: 1.6;
-    /* Remove browser default styling */
-    -webkit-appearance: none;
-    appearance: none;
-  }
-
-  .v3-form__input::placeholder {
-    color: rgba(247, 242, 234, 0.25);
-    font-style: italic;
-    font-size: 15px;
-  }
-
-  .v3-form__input:focus {
-    border-bottom-color: var(--v3-bg);
-    outline: none;
-  }
-
-  .v3-form__input:focus-visible {
-    /* Override global focus-visible for this context */
-    outline: none;
-    border-bottom: 2px solid var(--v3-rust);
-  }
-
-  /* Textarea specific */
-  .v3-form__textarea {
-    resize: vertical;
-    min-height: 100px;
-    border: none;
-    border-bottom: 1px solid rgba(247, 242, 234, 0.3);
-    padding-top: 0.4em;
-  }
-
-  /* Note text */
-  .v3-form__note {
-    font-family: var(--font-v3-fine) !important;
-    font-size: 11px !important;
-    color: rgba(247, 242, 234, 0.45) !important;
-    line-height: 1.7;
-    margin-bottom: 0.75rem;
-  }
-
-  .v3-form__note-link {
-    color: rgba(247, 242, 234, 0.6);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  .v3-form__note-link:hover {
-    color: var(--v3-bg);
-  }
-
-  .v3-form__required-note {
-    font-family: var(--font-v3-fine) !important;
-    font-size: 11px !important;
-    color: rgba(247, 242, 234, 0.4) !important;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Submit — 4px border-radius only */
-  .v3-register .v3-submit {
-    align-self: flex-start;
-    background-color: #2B4A3C;
-    border-radius: 4px;
-    font-size: 14px;
-    padding: 0.85em 2.2em;
-    color: var(--v3-bg);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-  }
-
-  .v3-register .v3-submit:hover {
-    background-color: #1e3529;
-  }
-
-  .v3-register .v3-submit:focus-visible {
-    outline: 2px solid var(--v3-rust);
-    outline-offset: 3px;
-  }
-
-  /* ── Tablet ─────────────────────────────────────────────── */
-  @media (max-width: 960px) {
-    .v3-register__inner {
-      grid-template-columns: 1fr;
-      gap: 3.5rem;
-    }
-
-    .v3-register__body {
-      max-width: 100%;
-    }
-  }
-
-  /* ── Mobile ─────────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .v3-register {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-    }
-  }
-</style>

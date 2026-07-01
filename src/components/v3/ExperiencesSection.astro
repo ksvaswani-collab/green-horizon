@@ -1,245 +1,42 @@
 ---
-const experiences = [
-  {
-    n: '01',
-    heading: 'On the cliff path.',
-    label: 'Strandzha to the north — 11 km',
-    body: 'The path runs north along the cliff top, passing three villages and two cape headlands before turning inland near the nature reserve at Yaylata. Start at first light. Return for lunch.',
-    src: '/images/exp-forest.jpg',
-    alt: 'Ancient Strandzha forest on the cliff path heading north',
-  },
-  {
-    n: '02',
-    heading: 'At the table.',
-    label: 'One sitting. One menu. Whatever arrived today.',
-    body: 'The kitchen is not a restaurant. One sitting per service, built from what has arrived that morning. Wine is Bulgarian. You may bring your own — we will not charge corkage.',
-    src: '/images/exp-dunes.jpg',
-    alt: 'The open-air dining terrace at golden hour, cliff edge',
-  },
-  {
-    n: '03',
-    heading: 'On the water.',
-    label: 'By kayak, by foot, or by swimming',
-    body: 'At the base of the cliff, a cut staircase leads to a simple landing dock. Kayaks available for independent use. Fishing trips arranged with the men from Kamen Bryag.',
-    src: '/images/exp-sea.jpg',
-    alt: 'The Black Sea from the cliff base at morning light',
-  },
-]
 ---
+<section id="experiences" class="v3-exp">
+  <div class="v3-exp-inner">
+    <p class="v3-exp-overline">Experiences</p>
+    <h2 class="v3-exp-title" data-v3-reveal="up">The Black Sea, your way.</h2>
+    <hr class="v3-hr" />
+    <div class="v3-exp-grid">
 
-<section id="experiences" class="exp" aria-labelledby="exp-hdg">
-  <div class="exp-head">
-    <h2 class="exp-title" id="exp-hdg">The Black Sea,<br>your way.</h2>
-    <p class="exp-count" aria-hidden="true">03 experiences</p>
-  </div>
-
-  <div class="exp-list">
-    {experiences.map((item) => (
-      <article class="exp-entry v3-reveal" tabindex="0" aria-label={`${item.heading} — ${item.label}`}>
-        <div class="exp-img-wrap" aria-hidden="true">
-          <img class="exp-img" src={item.src} alt={item.alt} loading="lazy" />
-          <div class="exp-img-overlay">
-            <p class="exp-overlay-body">{item.body}</p>
+      <div class="v3-exp-col">
+        <div class="v3-exp-item" data-v3-reveal="right">
+          <div class="v3-exp-imgwrap">
+            <img class="v3-exp-img v3-exp-img-portrait" src="/images/exp-forest.jpg" alt="The cliff path heading north through Strandzha forest" loading="lazy" />
           </div>
+          <p class="v3-exp-caption">Strandzha to the north</p>
+          <h3 class="v3-exp-itemhd">On the cliff path.</h3>
+          <p class="v3-exp-body">The path runs north along the cliff top for eleven kilometres, passing three villages and two cape headlands before turning inland near the nature reserve at Yaylata. Start from the hotel gate at first light. Return for lunch.</p>
         </div>
+      </div>
 
-        <div class="exp-meta">
-          <span class="exp-n" aria-hidden="true">{item.n}</span>
-          <div class="exp-text">
-            <h3 class="exp-heading">{item.heading}</h3>
-            <p class="exp-label">{item.label}</p>
+      <div class="v3-exp-col">
+        <div class="v3-exp-item" data-v3-reveal="left" data-v3-delay="80">
+          <div class="v3-exp-imgwrap">
+            <img class="v3-exp-img v3-exp-img-land" src="/images/exp-dunes.jpg" alt="One-sitting dining service at golden hour" loading="lazy" />
           </div>
-          <span class="exp-arrow" aria-hidden="true">↗</span>
+          <p class="v3-exp-caption">One sitting. One menu.</p>
+          <h3 class="v3-exp-itemhd">At the table.</h3>
+          <p class="v3-exp-body">The kitchen is not a restaurant. There is one sitting, one menu per service, built from what has arrived that morning. Wine is Bulgarian. You may bring your own — we will not charge corkage.</p>
         </div>
-      </article>
-    ))}
+        <div class="v3-exp-item" data-v3-reveal="left" data-v3-delay="140">
+          <div class="v3-exp-imgwrap">
+            <img class="v3-exp-img v3-exp-img-wide" src="/images/exp-sea.jpg" alt="The Black Sea from the cliff base, morning light" loading="lazy" />
+          </div>
+          <p class="v3-exp-caption">By kayak, by foot, or by swimming</p>
+          <h3 class="v3-exp-itemhd">On the water.</h3>
+          <p class="v3-exp-body">At the base of the cliff, accessed by a cut staircase through the rock, a simple landing dock. Kayaks for independent use. Fishing trips arranged with the men from Kamen Bryag.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
-
-<style>
-  .exp {
-    background: var(--v3-bg);
-    padding: 6rem clamp(2rem, 6vw, 6rem);
-    border-top: 1px solid var(--v3-rule);
-  }
-
-  .exp-head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 3rem;
-    max-width: 80rem;
-    margin-inline: auto;
-  }
-
-  .exp-title {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    line-height: 1;
-    color: var(--v3-ink);
-    font-weight: 400;
-    margin: 0;
-    letter-spacing: -0.02em;
-  }
-
-  .exp-count {
-    font-family: var(--font-v3-fine);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--v3-muted);
-    margin: 0;
-    padding-bottom: 0.3rem;
-  }
-
-  .exp-list {
-    max-width: 80rem;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .exp-entry {
-    border-top: 1px solid var(--v3-rule);
-    cursor: pointer;
-    outline: none;
-  }
-
-  .exp-entry:last-child { border-bottom: 1px solid var(--v3-rule); }
-
-  .exp-img-wrap {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .exp-entry:hover .exp-img-wrap,
-  .exp-entry:focus-within .exp-img-wrap {
-    max-height: 520px;
-  }
-
-  .exp-img {
-    width: 100%;
-    aspect-ratio: 16 / 7;
-    object-fit: cover;
-    display: block;
-    filter: brightness(0.88);
-    transform: scale(1.05);
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-  }
-
-  .exp-entry:hover .exp-img,
-  .exp-entry:focus-within .exp-img {
-    transform: scale(1);
-    filter: brightness(0.95);
-  }
-
-  .exp-img-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 2rem 2rem 1.5rem;
-    background: linear-gradient(to top, rgba(42, 31, 22, 0.75) 0%, transparent 100%);
-    transform: translateY(100%);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
-  }
-
-  .exp-entry:hover .exp-img-overlay,
-  .exp-entry:focus-within .exp-img-overlay {
-    transform: translateY(0);
-  }
-
-  .exp-overlay-body {
-    font-family: var(--font-v3-primary);
-    font-size: 15px;
-    line-height: 1.7;
-    color: rgba(245, 240, 232, 0.88);
-    margin: 0;
-    max-width: 48ch;
-    font-weight: 400;
-  }
-
-  .exp-meta {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
-  }
-
-  .exp-n {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: 0.85rem;
-    color: var(--v3-muted);
-    flex-shrink: 0;
-    transition: color 0.25s ease;
-    min-width: 2rem;
-  }
-
-  .exp-entry:hover .exp-n,
-  .exp-entry:focus-within .exp-n {
-    color: var(--v3-rust);
-  }
-
-  .exp-text { flex: 1; }
-
-  .exp-heading {
-    font-family: var(--font-v3-primary);
-    font-style: italic;
-    font-size: clamp(1.4rem, 3vw, 2.2rem);
-    line-height: 1.1;
-    color: var(--v3-ink);
-    font-weight: 400;
-    margin: 0 0 0.3rem;
-    letter-spacing: -0.01em;
-    background-image: linear-gradient(var(--v3-ink), var(--v3-ink));
-    background-size: 0 1px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    transition: background-size 0.4s ease;
-  }
-
-  .exp-entry:hover .exp-heading,
-  .exp-entry:focus-within .exp-heading {
-    background-size: 100% 1px;
-  }
-
-  .exp-label {
-    font-family: var(--font-v3-fine);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--v3-muted);
-    margin: 0;
-    transition: color 0.25s ease;
-  }
-
-  .exp-entry:hover .exp-label { color: var(--v3-ink); }
-
-  .exp-arrow {
-    font-size: 1.2rem;
-    color: var(--v3-muted);
-    flex-shrink: 0;
-    opacity: 0;
-    transform: translate(-6px, 6px);
-    transition: opacity 0.3s ease, transform 0.3s ease, color 0.25s ease;
-  }
-
-  .exp-entry:hover .exp-arrow,
-  .exp-entry:focus-within .exp-arrow {
-    opacity: 1;
-    transform: translate(0, 0);
-    color: var(--v3-rust);
-  }
-
-  @media (max-width: 768px) {
-    .exp-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; margin-bottom: 2rem; }
-    .exp-entry:hover .exp-img-wrap { max-height: 260px; }
-    .exp-img { aspect-ratio: 16/9; }
-  }
-</style>

@@ -49,6 +49,10 @@ body {
 }
 :lang(bg) { --font-display: 'Alegreya', Georgia, serif; }
 
+@media (max-width: 768px) {
+  body { font-size: 12px; }
+}
+
 <<<<<<< Updated upstream
 =======
 @media (max-width: 768px) {
